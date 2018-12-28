@@ -6,4 +6,6 @@
     <color name="colorSplashbg">#D66F6F</color>
     <color name="colorSplasheadline">#AD3D3D</color>
     <color name="colorSplashtext">#EAEAEA</color>
+    <color name="colorIntroActive">#eec5d3</color>
+    <color name="colorIntroInActive">#c9c4c5</color>
 </resources>

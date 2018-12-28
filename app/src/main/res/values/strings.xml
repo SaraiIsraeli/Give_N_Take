@@ -2,4 +2,5 @@
     <string name="app_name">לתת ולקחת</string>
     <string name="splash_screen">&quot;לפעמים מחשבה על אחרים, עושה את כל ההבדל.&quot;</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="next">הבא</string>
 </resources>
