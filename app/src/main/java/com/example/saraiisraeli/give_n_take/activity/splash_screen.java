@@ -27,7 +27,8 @@ public class splash_screen extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent i = new Intent(splash_screen.this,MainActivity.class);
+                //Calling Login page:
+                Intent i = new Intent(splash_screen.this,EmailPasswordActivity.class);
                 startActivity(i);
                 finish();
             }
@@ -35,7 +36,7 @@ public class splash_screen extends AppCompatActivity {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Path path = new Path();
-        //    path.arcTo(200, 0f, 1000f, 1000f, 0f, 180f, true);
+            //    path.arcTo(200, 0f, 1000f, 1000f, 0f, 180f, true);
             path.moveTo(170,1200);
             path.lineTo(170,400);
             ObjectAnimator animator = ObjectAnimator.ofFloat(logo, logo.X, logo.Y, path);
