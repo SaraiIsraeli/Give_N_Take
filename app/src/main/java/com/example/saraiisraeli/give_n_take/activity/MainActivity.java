@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void launchMain() {
         preferenceManager.setFirstTimeLaunch(false);
-        startActivity(new Intent(MainActivity.this, login.class));
+        startActivity(new Intent(MainActivity.this, splash_screen.class));
         finish();
     }
 
