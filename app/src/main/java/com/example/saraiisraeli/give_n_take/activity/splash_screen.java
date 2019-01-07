@@ -1,5 +1,6 @@
 package com.example.saraiisraeli.give_n_take.activity;
 import android.animation.ObjectAnimator;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Path;
 import android.os.Build;
@@ -28,7 +29,7 @@ public class splash_screen extends AppCompatActivity {
             @Override
             public void run() {
                 //Calling Login page:
-                Intent i = new Intent(splash_screen.this,EmailPasswordActivity.class);
+                Intent i = new Intent(splash_screen.this,MainActivity.class);
                 startActivity(i);
                 finish();
             }
@@ -37,8 +38,8 @@ public class splash_screen extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Path path = new Path();
             //    path.arcTo(200, 0f, 1000f, 1000f, 0f, 180f, true);
-            path.moveTo(170,1200);
-            path.lineTo(170,400);
+            path.moveTo(40,1200);
+            path.lineTo(40,400);
             ObjectAnimator animator = ObjectAnimator.ofFloat(logo, logo.X, logo.Y, path);
             animator.setDuration(1500);
             animator.start();
