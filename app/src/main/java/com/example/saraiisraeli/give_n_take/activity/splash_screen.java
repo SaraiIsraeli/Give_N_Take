@@ -28,7 +28,7 @@ public class splash_screen extends AppCompatActivity {
             @Override
             public void run() {
                 //Calling Login page:
-                Intent i = new Intent(splash_screen.this,MyProfileActivity.class);
+                Intent i = new Intent(splash_screen.this,LoginActivity.class);
                 startActivity(i);
                 finish();
             }

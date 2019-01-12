@@ -1,8 +1,8 @@
 package com.example.saraiisraeli.give_n_take.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -16,7 +16,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class SignUpActivity extends AppCompatActivity implements View.OnClickListener
+public class SignUpActivity extends LoginActivity implements View.OnClickListener
 {
     private static final String TAG = "";
     private EditText RegEmail;
@@ -27,11 +27,17 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-
+        setContentView(R.layout.activity_signup);
+        //Views
         RegEmail = findViewById(R.id.input_email);
         RegPassword = findViewById(R.id.input_password);
-        mAuth = FirebaseAuth.getInstance();
         btn_CreateAccount = findViewById(R.id.btn_signup);
+
+        //Button
+        findViewById(R.id.btn_signup).setOnClickListener(this);
+
+        mAuth = FirebaseAuth.getInstance();
+
     }
 
     @Override
@@ -50,11 +56,12 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-
-    public void  createAccount()
-        {
+    private void  createAccount()
+    {
         String Email = RegEmail.getText().toString().trim();
         String Pass = RegPassword.getText().toString().trim();
+        Log.d(TAG, "createAccount:" + Email);
+
         mAuth.createUserWithEmailAndPassword(Email, Pass)
             .addOnCompleteListener(this, new OnCompleteListener<AuthResult>()
             {
@@ -63,16 +70,17 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 {
                     if (task.isSuccessful())
                     {
-                        // Sign in success, update UI with the signed-in user's information
+
                         Log.d(TAG, "createUserWithEmail:success");
                         FirebaseUser FbUser = mAuth.getCurrentUser();
+                        updateUI(FbUser);
                     }
                     else
                     {
-                        // If sign in fails, display a message to the user.
                         Log.w(TAG, "createUserWithEmail:failure", task.getException());
                         Toast.makeText(SignUpActivity.this, "Something Went Wrong..",
-                                Toast.LENGTH_SHORT).show();
+                        Toast.LENGTH_SHORT).show();
+                        updateUI(null);
                     }
                 }
             });
@@ -102,9 +110,9 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 RegPassword.setError("Required.");
                 valid = false;
             }
-            if (password.length() < 6)
+            if (password.length() < 8)
             {
-                RegPassword.setError("Password Length must be over 6 characters");
+                RegPassword.setError("Password Length must be over 8 characters");
                 valid = false;
             }
             else
@@ -113,6 +121,22 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             }
             return valid;
     }
+
+    private void updateUI(FirebaseUser user) {
+        if (user != null)
+        {
+            myIntnet = new Intent(SignUpActivity.this ,MyProfileActivity.class);
+            startActivity(myIntnet);
+            finish();
+        }
+        else
+        {
+            findViewById(R.id.btn_signup).setVisibility(View.GONE);
+            findViewById(R.id.input_email).setVisibility(View.VISIBLE);
+            findViewById(R.id.input_password).setVisibility(View.VISIBLE);
+        }
+    }
+
 
 
 }
