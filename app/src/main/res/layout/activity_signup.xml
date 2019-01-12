@@ -6,7 +6,7 @@
     android:background="@color/colorSplashbg">
 
     <TextView
-        android:id="@+id/Login_HeadLine"
+        android:id="@+id/register_Headline"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -16,12 +16,13 @@
         android:layout_marginLeft="0dp"
         android:layout_marginTop="0dp"
         android:includeFontPadding="true"
-        android:text="@string/SignIn"
+        android:text="@string/Register"
         android:textAlignment="center"
         android:textColor="@color/colorSplashtext"
         android:textSize="68sp"
         android:textStyle="bold"
-        app:fontFamily="@font/comicbold" />
+        app:fontFamily="@font/comicbold"
+        tools:text="לתת ולקחת" />
 
     <TextView
         android:id="@+id/text_splash"
@@ -43,45 +44,36 @@
         android:id="@+id/input_email"
         android:layout_width="217dp"
         android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/input_password"
+        android:layout_alignStart="@+id/input_password"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="169dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginLeft="3dp"
+        android:layout_marginTop="172dp"
         android:hint="אימייל"
         android:inputType="textEmailAddress"
         android:textAlignment="center" />
 
     <EditText
         android:id="@+id/input_password"
-        android:layout_width="wrap_content"
+        android:layout_width="223dp"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/input_email"
-        android:layout_alignLeft="@+id/input_email"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="227dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="235dp"
         android:ems="10"
         android:hint="סיסמה"
         android:inputType="textPassword"
         android:textAlignment="center" />
 
     <Button
-        android:id="@+id/btn_login"
+        android:id="@+id/btn_signup"
         android:layout_width="160dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="219dp"
-        android:text="@string/sign_in" />
-
-    <TextView
-        android:id="@+id/link_signup"
-        android:layout_width="209dp"
-        android:layout_height="32dp"
-        android:layout_above="@+id/btn_login"
-        android:layout_alignStart="@+id/input_email"
-        android:layout_alignLeft="@+id/input_email"
-        android:layout_marginBottom="10dp"
-        android:gravity="center"
-        android:text="\לא רשום עדיין ? צור חשבון" />
+        android:text="@string/RegisterNow" />
 
 
 </RelativeLayout>
