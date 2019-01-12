@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorSplashbg">
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/hands_shake"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/image_intro3" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="מסך 3"
+        android:textColor="@android:color/white"
+        android:textSize="50dp"
+        android:textStyle="bold"
+        android:layout_below="@+id/image_intro3"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="32dp">
+
+    </TextView>
+</RelativeLayout>

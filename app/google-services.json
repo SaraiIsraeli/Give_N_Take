@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "551119288993",
+    "firebase_url": "https://giventake-57f16.firebaseio.com",
+    "project_id": "giventake-57f16",
+    "storage_bucket": "giventake-57f16.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:551119288993:android:24973e159a6b2f58",
+        "android_client_info": {
+          "package_name": "com.example.saraiisraeli.give_n_take"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "551119288993-v2g8kukjfa4k7l5bitbge9ug5ffh9v26.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.saraiisraeli.give_n_take",
+            "certificate_hash": "0f132e0972a8bdf009171d3b394c71a777095d7e"
+          }
+        },
+        {
+          "client_id": "551119288993-icsrc8pcg4vosoqm414n24c2jbmluev1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTbEyfv_vgQMkz_HIsf8MuCTy32Zy1et4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "551119288993-icsrc8pcg4vosoqm414n24c2jbmluev1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
