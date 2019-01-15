@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.PathInterpolator;
@@ -19,16 +20,18 @@ public class splash_screen extends AppCompatActivity {
     private static int splashTimeOut=4500;
     Intent myIntent;
     ImageView logo;
+    private static final String TAG = "splash";
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_screen);
+        Log.d(TAG, "entered splash screen" );
         logo = (ImageView)findViewById(R.id.logo);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 //Calling Login page:
-                Intent i = new Intent(splash_screen.this,EmailPasswordActivity.class);
+                Intent i = new Intent(splash_screen.this,intro.class);
                 startActivity(i);
                 finish();
             }
@@ -42,6 +45,7 @@ public class splash_screen extends AppCompatActivity {
             ObjectAnimator animator = ObjectAnimator.ofFloat(logo, logo.X, logo.Y, path);
             animator.setDuration(1500);
             animator.start();
+            Log.d(TAG, "photo animation" );
         } else {
             // Create animator without using curved path
         }

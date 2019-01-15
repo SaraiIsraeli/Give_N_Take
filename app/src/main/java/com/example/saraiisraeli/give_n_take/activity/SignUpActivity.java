@@ -70,7 +70,6 @@ public class SignUpActivity extends LoginActivity implements View.OnClickListene
                 {
                     if (task.isSuccessful())
                     {
-
                         Log.d(TAG, "createUserWithEmail:success");
                         FirebaseUser FbUser = mAuth.getCurrentUser();
                         updateUI(FbUser);
@@ -131,7 +130,7 @@ public class SignUpActivity extends LoginActivity implements View.OnClickListene
         }
         else
         {
-            findViewById(R.id.btn_signup).setVisibility(View.GONE);
+            findViewById(R.id.btn_signup).setVisibility(View.VISIBLE);
             findViewById(R.id.input_email).setVisibility(View.VISIBLE);
             findViewById(R.id.input_password).setVisibility(View.VISIBLE);
         }

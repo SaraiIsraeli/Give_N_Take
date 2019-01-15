@@ -1,8 +1,11 @@
 package com.example.saraiisraeli.give_n_take.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -74,8 +77,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 {
                     if (!task.isSuccessful())
                     {
-                        Toast.makeText(LoginActivity.this, "log in failed",
-                        Toast.LENGTH_SHORT).show();
+                        AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(LoginActivity.this);
+                        dlgAlert.setMessage("Wrong Password or email");
+                        dlgAlert.setTitle("Log In Failed");
+                        dlgAlert.setPositiveButton("OK", null);
+                        dlgAlert.setCancelable(true);
+                        dlgAlert.create().show();
+                        dlgAlert.setPositiveButton("Ok",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                    }});
                         updateUI(null);
                     }
                     else
@@ -96,7 +107,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
         else
         {
-            findViewById(R.id.btn_login).setVisibility(View.GONE);
+            findViewById(R.id.btn_login).setVisibility(View.VISIBLE);
             findViewById(R.id.input_email).setVisibility(View.VISIBLE);
             findViewById(R.id.input_password).setVisibility(View.VISIBLE);
         }

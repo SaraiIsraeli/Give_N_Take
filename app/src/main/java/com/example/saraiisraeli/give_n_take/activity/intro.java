@@ -3,7 +3,6 @@ package com.example.saraiisraeli.give_n_take.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -16,8 +15,9 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.example.saraiisraeli.give_n_take.R;
+import com.example.saraiisraeli.give_n_take.models.User;
 
-public class MainActivity extends AppCompatActivity {
+public class intro extends AppCompatActivity {
 
    com.example.saraiisraeli.give_n_take.models.PreferenceManager preferenceManager;
     LinearLayout Layout_bars;
@@ -26,12 +26,13 @@ public class MainActivity extends AppCompatActivity {
     Button Skip, Next;
     ViewPager vp;
     MyViewPagerAdapter myvpAdapter;
-
+    private static final String TAG = "intro";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.intro);
+        Log.d(TAG, "entered intro" );
         vp = (ViewPager) findViewById(R.id.view_pager);
         Layout_bars = (LinearLayout) findViewById(R.id.layoutBars);
         Skip = (Button) findViewById(R.id.skip);
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         preferenceManager = new com.example.saraiisraeli.give_n_take.models.PreferenceManager(this);
         vp.addOnPageChangeListener(viewPagerPageChangeListener);
         if (!preferenceManager.FirstLaunch()) {
+            Log.d(TAG, "already saw intro-not firstlaunch");
             launchMain();
             finish();
         }
@@ -79,14 +81,12 @@ public class MainActivity extends AppCompatActivity {
                         R.color.colorIntroActive
                 };
 
-        Log.d("lTAG", String.valueOf(screens.length));
         bottomBars = new TextView[screens.length];
-        Log.d("lTAG", String.valueOf(bottomBars.length));
         Layout_bars.removeAllViews();
         for (int i = 0; i < bottomBars.length; i++) {
             bottomBars[i] = new TextView(this);
             bottomBars[i].setTextSize(100);
-            bottomBars[i].setText(Html.fromHtml("¯"));
+            bottomBars[i].setText(Html.fromHtml(("¯")));
             Layout_bars.addView(bottomBars[i]);
             bottomBars[i].setTextColor(colorsActive[thisScreen]);
         }
@@ -94,14 +94,13 @@ public class MainActivity extends AppCompatActivity {
             bottomBars[thisScreen].setTextColor(colorsActive[thisScreen]);
     }
 
-
     private int getItem(int i) {
         return vp.getCurrentItem() + i;
     }
 
     private void launchMain() {
         preferenceManager.setFirstTimeLaunch(false);
-        startActivity(new Intent(MainActivity.this, EmailPasswordActivity.class));
+        startActivity(new Intent(intro.this, LoginActivity.class));
         finish();
     }
 
@@ -110,10 +109,23 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onPageSelected(int position) {
            ColoredBars(position);
+            Skip.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    launchMain();
+                }
+            });
             if (position == screens.length - 1) {
+                Log.d(TAG, "3rd intro screen" );
                 Next.setText("start");
-                Skip.setVisibility(View.GONE);
+                Next.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        launchMain();
+                    }
+                });
             } else {
+                if (position==1){ Log.d(TAG, "2nd intro screen" );}
                 Next.setText(getString(R.string.next));
                 Skip.setVisibility(View.VISIBLE);
             }
