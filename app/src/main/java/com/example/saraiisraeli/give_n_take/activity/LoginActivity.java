@@ -44,7 +44,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         sign.setOnClickListener(this);
         firebaseAuth = FirebaseAuth.getInstance();
     }
-
+    @Override
+    public void onBackPressed() {
+    }
     @Override
     public void onClick(View view)
     {

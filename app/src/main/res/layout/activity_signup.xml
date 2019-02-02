@@ -10,11 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="0dp"
+        android:layout_marginTop="54dp"
         android:includeFontPadding="true"
         android:text="@string/Register"
         android:textAlignment="center"
@@ -22,7 +19,8 @@
         android:textSize="68sp"
         android:textStyle="bold"
         app:fontFamily="@font/comicbold"
-        tools:text="לתת ולקחת" />
+        tools:text="לתת ולקחת"
+        android:layout_alignParentLeft="true" />
 
     <TextView
         android:id="@+id/text_splash"
@@ -44,12 +42,9 @@
         android:id="@+id/input_email"
         android:layout_width="217dp"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@id/input_password"
-        android:layout_alignStart="@+id/input_password"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="3dp"
-        android:layout_marginLeft="3dp"
-        android:layout_marginTop="172dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="207dp"
         android:hint="אימייל"
         android:inputType="textEmailAddress"
         android:textAlignment="center" />
@@ -60,7 +55,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="235dp"
+        android:layout_marginTop="285dp"
         android:ems="10"
         android:hint="סיסמה"
         android:inputType="textPassword"

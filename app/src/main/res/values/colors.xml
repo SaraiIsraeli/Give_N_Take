@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#D66F6F</color>
-    <color name="colorPrimaryDark">#D66F6F</color>
-    <color name="colorAccent">#FF4081</color>
-    <color name="colorSplashbg">#D66F6F</color>
-    <color name="colorSplasheadline">#AD3D3D</color>
+    <color name="colorPrimary">#283D63</color>
+    <color name="colorPrimaryDark">#283D63</color>
+    <color name="colorAccent">#d2ddf1</color>
+    <color name="colorSplashbg">#283D63</color>
+    <color name="colorSplasheadline">#d2ddf1</color>
     <color name="colorSplashtext">#EAEAEA</color>
     <color name="colorIntroActive">#eec5d3</color>
     <color name="colorIntroInActive">#c9c4c5</color>

@@ -18,7 +18,7 @@
         android:includeFontPadding="true"
         android:text="@string/SignIn"
         android:textAlignment="center"
-        android:textColor="@color/colorSplashtext"
+        android:textColor="@color/colorSplasheadline"
         android:textSize="68sp"
         android:textStyle="bold"
         app:fontFamily="@font/comicbold" />
@@ -34,7 +34,7 @@
         android:includeFontPadding="true"
         android:text="@string/splash_screen"
         android:textAlignment="center"
-        android:textColor="@color/colorSplasheadline"
+        android:textColor="@color/colorSplashtext"
         android:textSize="30sp"
         android:textStyle="bold"
         app:fontFamily="@font/yehuda" />
