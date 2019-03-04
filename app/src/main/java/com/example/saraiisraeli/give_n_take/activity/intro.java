@@ -46,12 +46,12 @@ public class intro extends AppCompatActivity {
         vp.setAdapter(myvpAdapter);
         preferenceManager = new com.example.saraiisraeli.give_n_take.models.PreferenceManager(this);
         vp.addOnPageChangeListener(viewPagerPageChangeListener);
-        if (!preferenceManager.FirstLaunch()) {
-            Log.d(TAG, "already saw intro-not firstlaunch");
-            launchMain();
-            finish();
-        }
-        ColoredBars(0);
+       // if (!preferenceManager.FirstLaunch()) {
+         //   Log.d(TAG, "already saw intro-not firstlaunch");
+           // launchMain();
+            //finish();
+        //}
+        //ColoredBars(0);
     }
 
     public void next(View v) {

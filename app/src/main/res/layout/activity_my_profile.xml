@@ -49,7 +49,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="277dp"
         android:ems="10"
-        android:hint="טלפון"
+        android:hint="טלפון ליצירת @string/common_google_play_services_wear_update_text"
         android:inputType="phone"
         android:textAlignment="center" />
 

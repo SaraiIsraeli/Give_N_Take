@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorSplashbg">
+
+    <Button
+        android:id="@+id/myProfileButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/itemsButton"
+        android:layout_marginStart="37dp"
+        android:background="@drawable/round_button"
+        android:text="פרופיל אישי"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="37dp" />
+
+    <Button
+        android:id="@+id/itemsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="18dp"
+        android:background="@drawable/round_button"
+        android:text="המוצרים שלי" />
+
+    <Button
+        android:id="@+id/searchButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/myProfileButton"
+        android:layout_marginEnd="38dp"
+        android:background="@drawable/round_button"
+        android:text="הגדרות חיפוש"
+        android:layout_marginRight="38dp"
+        android:layout_alignParentRight="true" />
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="wrap_content"
+        android:layout_height="263dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_marginBottom="181dp"
+        android:layout_weight="1"
+        android:src="@drawable/hands_shake" />
+
+    <Button
+        android:id="@+id/noButoon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="54dp"
+        android:layout_marginStart="47dp"
+        android:background="@drawable/round_button"
+        android:text="לא"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="47dp" />
+
+    <Button
+        android:id="@+id/yesButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/noButoon"
+        android:layout_marginEnd="46dp"
+        android:background="@drawable/round_button"
+        android:text="כן"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="46dp" />
+
+</RelativeLayout>

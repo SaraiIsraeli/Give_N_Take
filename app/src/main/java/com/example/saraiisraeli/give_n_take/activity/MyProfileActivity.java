@@ -1,5 +1,6 @@
 package com.example.saraiisraeli.give_n_take.activity;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ public class MyProfileActivity extends AppCompatActivity {
     EditText m_name;
     EditText m_phoneNumber;
     Button m_start;
+    Intent myIntnet;
     private FirebaseAuth firebaseAuth;
     private FirebaseDatabase firebaseDatabase;
     private FirebaseAuth.AuthStateListener firebaseAuthListner;
@@ -58,6 +60,9 @@ public class MyProfileActivity extends AppCompatActivity {
                     dbRef.child("users").child(userId).setValue(user);
                     Log.d(TAG, "update user in Firebase - " + "user name: " +  user.getName()+
                             " user phone number: "  + user.getPhoneNumber());
+                    myIntnet = new Intent(MyProfileActivity.this ,MainActivity.class);
+                    startActivity(myIntnet);
+                    finish();
                 }
             }
         });
