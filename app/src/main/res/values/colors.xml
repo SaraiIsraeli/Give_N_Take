@@ -10,5 +10,6 @@
     <color name="colorIntroInActive">#c9c4c5</color>
     <color name="myprofilebutton">#f7fbfa</color>
     <color name="buttonsColor">#7aa4ef</color>
+    <color name="buttonLine">#FF2E394E</color>
 
 </resources>

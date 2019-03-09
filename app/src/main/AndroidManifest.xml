@@ -29,9 +29,12 @@
         <activity
             android:name=".activity.SignUpActivity"
             android:parentActivityName=".activity.LoginActivity" />
-        <activity android:name=".activity.MyProfileActivity"></activity>
+        <activity android:name=".activity.MyProfileActivity" />
         <activity android:name=".activity.intro" />
-        <activity android:name=".activity.MainActivity"></activity>
+        <activity android:name=".activity.MainActivity" />
+        <activity android:name=".activity.Items" />
+        <activity android:name=".activity.EditProfile" />
+        <activity android:name=".activity.Search"></activity>
     </application>
 
 </manifest>
