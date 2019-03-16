@@ -4,6 +4,6 @@
     <stroke
         android:color="@color/buttonLine"
         android:width="1dip"/>
-    <solid android:color="@color/buttonsColor"/>
+    <solid android:color="@color/buttonbg"/>
     <size android:width="100dp" android:height="100dp"/>
 </shape>

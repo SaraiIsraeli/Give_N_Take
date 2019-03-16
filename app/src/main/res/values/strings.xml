@@ -13,7 +13,7 @@
     <string name="sign_in">התחבר</string>
     <string name="RegisterNow">הירשם כעת</string>
     <string name="Register">הרשמה</string>
-
+    <string name="noItemsError">פריטים יופיעו בהתאם להגדרות החיפוש שלך, ניתן להגדיר אותן בכפתור המתאים. </string>
     <string name="create_account">צור חשבון</string>
     <string name="send_link">Send Link</string>
     <string name="sign_out">התנתק</string>
