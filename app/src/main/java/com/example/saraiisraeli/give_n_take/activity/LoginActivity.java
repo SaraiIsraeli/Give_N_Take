@@ -3,16 +3,13 @@ package com.example.saraiisraeli.give_n_take.activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.saraiisraeli.give_n_take.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -36,7 +33,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        UserEmail = findViewById(R.id.input_email);
+        UserEmail = findViewById(R.id.Input_email);
         UserPassword = findViewById(R.id.input_password);
         linkToRegister = findViewById(R.id.link_signup);
         linkToRegister.setOnClickListener(this);
@@ -110,7 +107,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         else
         {
             findViewById(R.id.btn_login).setVisibility(View.VISIBLE);
-            findViewById(R.id.input_email).setVisibility(View.VISIBLE);
+            findViewById(R.id.Input_email).setVisibility(View.VISIBLE);
             findViewById(R.id.input_password).setVisibility(View.VISIBLE);
         }
     }

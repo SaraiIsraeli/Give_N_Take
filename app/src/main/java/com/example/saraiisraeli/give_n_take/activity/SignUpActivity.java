@@ -29,7 +29,7 @@ public class SignUpActivity extends LoginActivity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
         //Views
-        RegEmail = findViewById(R.id.input_email);
+        RegEmail = findViewById(R.id.Input_email);
         RegPassword = findViewById(R.id.input_password);
         btn_CreateAccount = findViewById(R.id.btn_signup);
 
@@ -131,7 +131,7 @@ public class SignUpActivity extends LoginActivity implements View.OnClickListene
         else
         {
             findViewById(R.id.btn_signup).setVisibility(View.VISIBLE);
-            findViewById(R.id.input_email).setVisibility(View.VISIBLE);
+            findViewById(R.id.Input_email).setVisibility(View.VISIBLE);
             findViewById(R.id.input_password).setVisibility(View.VISIBLE);
         }
     }

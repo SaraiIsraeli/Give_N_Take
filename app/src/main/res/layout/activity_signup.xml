@@ -39,7 +39,7 @@
         app:fontFamily="@font/yehuda" />
 
     <EditText
-        android:id="@+id/input_email"
+        android:id="@+id/Input_email"
         android:layout_width="217dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"

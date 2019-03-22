@@ -23,14 +23,67 @@
         android:textStyle="bold"
         app:fontFamily="@font/comicbold" />
 
+
+    <!--EMAIL Input-->
+    <EditText
+        android:id="@+id/Input_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="150dp"
+        android:hint="אימייל"
+        android:inputType="textEmailAddress"
+        android:textAlignment="center"
+        android:textColor="@color/colorAccent"
+        android:textColorHint="@color/colorAccent" />
+
+
+    <!--Password Input-->
+    <EditText
+        android:id="@+id/input_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/Input_email"
+        android:layout_alignLeft="@+id/Input_email"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="220dp"
+        android:ems="10"
+        android:hint="סיסמה"
+        android:inputType="textPassword"
+        android:textAlignment="center"
+        android:textColor="@color/colorAccent"
+        android:textColorHint="@color/colorAccent" />
+
+
+    <!--Login Button-->
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="330dp"
+        android:text="@string/sign_in" />
+
+
+    <!--Sign UP Link-->
+    <TextView
+        android:id="@+id/link_signup"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="430dp"
+        android:gravity="center"
+        android:text="\לא רשום עדיין ? צור חשבון"
+        android:textStyle=""
+        android:textColor="@color/colorAccent"
+        android:textSize="24dp" />
+
+    <!--Down Text-->
     <TextView
         android:id="@+id/text_splash"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="65dp"
+        android:layout_marginTop="500dp"
         android:includeFontPadding="true"
         android:text="@string/splash_screen"
         android:textAlignment="center"
@@ -38,50 +91,6 @@
         android:textSize="30sp"
         android:textStyle="bold"
         app:fontFamily="@font/yehuda" />
-
-    <EditText
-        android:id="@+id/input_email"
-        android:layout_width="217dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="169dp"
-        android:hint="אימייל"
-        android:inputType="textEmailAddress"
-        android:textAlignment="center" />
-
-    <EditText
-        android:id="@+id/input_password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/input_email"
-        android:layout_alignLeft="@+id/input_email"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="227dp"
-        android:ems="10"
-        android:hint="סיסמה"
-        android:inputType="textPassword"
-        android:textAlignment="center" />
-
-    <Button
-        android:id="@+id/btn_login"
-        android:layout_width="160dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="219dp"
-        android:text="@string/sign_in" />
-
-    <TextView
-        android:id="@+id/link_signup"
-        android:layout_width="209dp"
-        android:layout_height="32dp"
-        android:layout_above="@+id/btn_login"
-        android:layout_alignStart="@+id/input_email"
-        android:layout_alignLeft="@+id/input_email"
-        android:layout_marginBottom="10dp"
-        android:gravity="center"
-        android:text="\לא רשום עדיין ? צור חשבון" />
 
 
 </RelativeLayout>
