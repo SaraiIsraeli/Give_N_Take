@@ -7,7 +7,7 @@
     android:background="@color/colorSplashbg"
     android:layoutDirection="rtl">
 
-    <Button
+    <ImageButton
         android:id="@+id/myProfileButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -15,11 +15,24 @@
         android:layout_alignTop="@+id/searchButton"
         android:layout_marginEnd="38dp"
         android:background="@drawable/round_button"
-        android:text="פרופיל אישי"
+        android:src="@drawable/user"
         android:layout_marginRight="38dp"
         android:layout_alignParentRight="true" />
 
-    <Button
+    <TextView
+        android:id="@+id/searchText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/myProfileButton"
+        android:textAlignment="center"
+        android:layout_marginRight="22dp"
+        android:textColor="@color/colorSplashtext"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:fontFamily="@font/yehuda"
+        android:text="הגדרות חיפוש"/>
+
+    <ImageButton
         android:id="@+id/searchButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -27,28 +40,78 @@
         android:layout_alignTop="@+id/itemsButton"
         android:layout_marginStart="37dp"
         android:background="@drawable/round_button"
-        android:text="הגדרות חיפוש"
+        android:src="@drawable/search"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="37dp" />
 
-    <Button
+    <TextView
+        android:id="@+id/profileText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/myProfileButton"
+        android:textAlignment="center"
+        android:layout_marginRight="280dp"
+        android:textColor="@color/colorSplashtext"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:fontFamily="@font/yehuda"
+        android:text="פרופיל אישי"/>
+
+    <ImageButton
         android:id="@+id/itemsButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="18dp"
-        android:background="@drawable/round_button"
-        android:text="המוצרים שלי" />
+        android:src="@drawable/cart"
+        android:background="@drawable/round_button" />
+
+
+    <TextView
+        android:id="@+id/itemsText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/myProfileButton"
+        android:textAlignment="center"
+        android:layout_marginRight="155dp"
+        android:textColor="@color/colorSplashtext"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:fontFamily="@font/yehuda"
+        android:text="המוצרים שלי"/>
 
     <ImageView
         android:id="@+id/logo"
         android:layout_width="wrap_content"
-        android:layout_height="263dp"
-        android:layout_centerInParent="true"
+        android:layout_height="228dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         android:layout_gravity="center"
+        android:layout_marginBottom="220dp"
         android:layout_weight="1"
-        android:src="@drawable/hands_shake"/>
+        android:background="@color/colorSplashbg"
+        android:src="@drawable/error3"
+        android:tag="noItemsToShow" />
+
+    <TextView
+        android:id="@+id/noItemsErrorMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="151dp"
+        android:layout_weight="1"
+        android:includeFontPadding="true"
+        android:padding="5dp"
+        android:text="@string/noItemsError"
+        android:textAlignment="center"
+        android:textColor="@color/colorSplashtext"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:fontFamily="@font/yehuda"
+        android:layout_alignParentLeft="true" />
 
     <Button
         android:id="@+id/noButoon"
@@ -56,10 +119,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignStart="@+id/myProfileButton"
-        android:layout_marginBottom="55dp"
+        android:layout_marginBottom="40dp"
         android:background="@drawable/round_button"
         android:text="לא"
-        android:layout_alignLeft="@+id/searchButton" />
+        android:visibility="invisible"
+        android:layout_alignLeft="@+id/myProfileButton" />
 
     <Button
         android:id="@+id/yesButton"
@@ -69,6 +133,7 @@
         android:layout_alignTop="@+id/noButoon"
         android:background="@drawable/round_button"
         android:text="כן"
+        android:visibility="invisible"
         android:layout_alignLeft="@+id/myProfileButton" />
 
 </RelativeLayout>
