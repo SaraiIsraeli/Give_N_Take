@@ -17,6 +17,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -25,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private static final String TAG = "activity main";
     Intent myIntnet;
-    Button itemsButton,profileButton,searchButton;
+    ImageButton itemsButton,profileButton,searchButton;
     ImageView imageView;
 
     @SuppressLint("ClickableViewAccessibility")
@@ -33,25 +34,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        itemsButton = (Button) findViewById(R.id.itemsButton);
-        profileButton = (Button) findViewById(R.id.myProfileButton);
-        searchButton = (Button) findViewById(R.id.searchButton);
-        imageView= (ImageView) findViewById(R.id.logo);
-
-       imageView.setOnTouchListener(new OnSwipeTouchListener(MainActivity.this) {
-            public void onSwipeTop() {
-                Toast.makeText(MainActivity.this, "top", Toast.LENGTH_SHORT).show();
-            }
-            public void onSwipeRight() {
-                Toast.makeText(MainActivity.this, "right", Toast.LENGTH_SHORT).show();
-            }
-            public void onSwipeLeft() {
-                Toast.makeText(MainActivity.this, "left", Toast.LENGTH_SHORT).show();
-            }
-            public void onSwipeBottom() {
-                Toast.makeText(MainActivity.this, "bottom", Toast.LENGTH_SHORT).show();
-            }
-        });
+        itemsButton = (ImageButton) findViewById(R.id.itemsButton);
+        profileButton = (ImageButton) findViewById(R.id.myProfileButton);
+        searchButton = (ImageButton) findViewById(R.id.searchButton);
+        imageView= (ImageView) findViewById(R.id.noItemsLogo);
+        if (!imageView.getTag().equals("noItemsToShow")){ // swipe is enable only if there is items
+            imageView.setOnTouchListener(new OnSwipeTouchListener(MainActivity.this) {
+                public void onSwipeTop() {
+                    Toast.makeText(MainActivity.this, "top", Toast.LENGTH_SHORT).show();
+                }
+                public void onSwipeRight() {
+                    Toast.makeText(MainActivity.this, "right", Toast.LENGTH_SHORT).show();
+                }
+                public void onSwipeLeft() {
+                    Toast.makeText(MainActivity.this, "left", Toast.LENGTH_SHORT).show();
+                }
+                public void onSwipeBottom() {
+                    Toast.makeText(MainActivity.this, "bottom", Toast.LENGTH_SHORT).show();
+                }
+            });}
 
         searchButton.setOnClickListener(this); // calling onClick() method
         profileButton.setOnClickListener(this);
@@ -84,5 +85,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 }
+
 
 

@@ -82,7 +82,7 @@
         android:text="המוצרים שלי"/>
 
     <ImageView
-        android:id="@+id/logo"
+        android:id="@+id/noItemsLogo"
         android:layout_width="wrap_content"
         android:layout_height="228dp"
         android:layout_alignParentBottom="true"
