@@ -51,7 +51,7 @@ public class intro extends AppCompatActivity {
            // launchMain();
             //finish();
         //}
-        //ColoredBars(0);
+        ColoredBars(0);
     }
 
     public void next(View v) {
@@ -63,7 +63,7 @@ public class intro extends AppCompatActivity {
         }
     }
 
-    public void skip(View view) {
+    public void skip(View v) {
         launchMain();
     }
 
@@ -109,26 +109,12 @@ public class intro extends AppCompatActivity {
         @Override
         public void onPageSelected(int position) {
            ColoredBars(position);
-            Skip.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    launchMain();
-                }
-            });
             if (position == screens.length - 1) {
                 Log.d(TAG, "3rd intro screen" );
                 Next.setText("start");
-                Next.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        launchMain();
-                    }
-                });
-            } else {
-                if (position==1){ Log.d(TAG, "2nd intro screen" );}
+            } else if (position==1){ Log.d(TAG, "2nd intro screen" );}
                 Next.setText(getString(R.string.next));
                 Skip.setVisibility(View.VISIBLE);
-            }
         }
 
         @Override
