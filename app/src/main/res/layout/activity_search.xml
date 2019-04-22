@@ -12,16 +12,16 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="0dp"
+        android:layout_marginStart="201dp"
+        android:layout_marginLeft="201dp"
+        android:layout_marginTop="3dp"
         android:includeFontPadding="true"
         android:text="@string/SearchSettings"
         android:textAlignment="center"
         android:textColor="@color/colorSplashtext"
-        android:textSize="68sp"
+        android:textSize="36sp"
         android:textStyle="bold"
-        app:fontFamily="@font/comicbold"/>
+        app:fontFamily="@font/comicbold" />
 
     <TextView
         android:id="@+id/textView3"
@@ -95,14 +95,14 @@
         app:hintAnimationEnabled="true"
         app:hintEnabled="true">
 
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/ProductSearch"
-            style="@style/AppThemeThree"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/ProductSearch"
-            android:hint="הקלד שם מוצר"
-            android:textColor="@color/colorAccent"/>
+    <android.support.design.widget.TextInputEditText
+        android:id="@+id/ProductSearch"
+        style="@style/AppThemeThree"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ProductSearch"
+        android:hint="הקלד שם מוצר"
+        android:textColor="@color/colorAccent"/>
     </android.support.design.widget.TextInputLayout>
 
     <Button
@@ -111,6 +111,14 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="500dp"
         android:text="שמור הגדרות" />
+
+    <Button
+        android:id="@+id/Back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginBottom="679dp"
+        android:text="חזור" />
 
     <TextView
         android:id="@+id/SliderValue"

@@ -22,7 +22,7 @@ public class SignUpActivity extends LoginActivity implements View.OnClickListene
     private EditText RegEmail;
     private EditText RegPassword;
     private FirebaseAuth mAuth;
-    private Button  btn_CreateAccount;
+    private Button  btn_CreateAccount,Back;
 
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -32,17 +32,20 @@ public class SignUpActivity extends LoginActivity implements View.OnClickListene
         RegEmail = findViewById(R.id.Input_email);
         RegPassword = findViewById(R.id.input_password);
         btn_CreateAccount = findViewById(R.id.btn_signup);
-
+        Back = findViewById(R.id.Back);
         //Button
         findViewById(R.id.btn_signup).setOnClickListener(this);
-
+        findViewById(R.id.Back).setOnClickListener(this);
         mAuth = FirebaseAuth.getInstance();
-
     }
 
     @Override
     public void onClick(View view)
     {
+        if (view == Back)
+        {
+            returnToLogin();
+        }
         if (view == btn_CreateAccount )
         {
             if (!validateForm())
@@ -54,6 +57,13 @@ public class SignUpActivity extends LoginActivity implements View.OnClickListene
                createAccount();
             }
         }
+    }
+
+    private void returnToLogin()
+    {
+        Log.d(TAG, "user back to login Page");
+        Intent myIntent = new Intent(SignUpActivity.this, LoginActivity.class);
+        startActivity(myIntent);
     }
 
     private void  createAccount()

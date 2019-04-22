@@ -14,7 +14,6 @@
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -29,13 +28,15 @@
         </activity>
         <activity
             android:name=".activity.SignUpActivity"
-            android:parentActivityName=".activity.LoginActivity"/>
+            android:parentActivityName=".activity.LoginActivity"
+            android:label="@string/app_name"/>
         <activity android:name=".activity.MyProfileActivity" />
         <activity android:name=".activity.intro" />
         <activity android:name=".activity.MainActivity" />
         <activity android:name=".activity.Items" />
         <activity android:name=".activity.EditProfile" />
-        <activity android:name=".activity.Search"></activity>
+        <activity android:name=".activity.Search"
+            android:label="@string/app_name"/>
     </application>
 
 </manifest>
