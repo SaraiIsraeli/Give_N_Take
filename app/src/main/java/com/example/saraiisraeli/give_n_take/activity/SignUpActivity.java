@@ -61,13 +61,14 @@ public class SignUpActivity extends LoginActivity implements View.OnClickListene
 
     private void returnToLogin()
     {
-        Log.d(TAG, "user back to login Page");
+        Log.d(TAG, "Start Method: returnToLogin");
         Intent myIntent = new Intent(SignUpActivity.this, LoginActivity.class);
         startActivity(myIntent);
     }
 
     private void  createAccount()
     {
+        Log.d(TAG, "Start Method: createAccount");
         String Email = RegEmail.getText().toString().trim();
         String Pass = RegPassword.getText().toString().trim();
         Log.d(TAG, "createAccount:" + Email);
@@ -97,6 +98,7 @@ public class SignUpActivity extends LoginActivity implements View.OnClickListene
 
     private boolean validateForm()
     {
+        Log.d(TAG, "Start Method: validateForm");
             boolean valid = true;
             String email = RegEmail.getText().toString();
             if (TextUtils.isEmpty(email))
@@ -132,6 +134,7 @@ public class SignUpActivity extends LoginActivity implements View.OnClickListene
     }
 
     private void updateUI(FirebaseUser user) {
+        Log.d(TAG, "Start Method: updateUI");
         if (user != null)
         {
             myIntnet = new Intent(SignUpActivity.this ,MyProfileActivity.class);
