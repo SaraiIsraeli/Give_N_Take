@@ -114,7 +114,6 @@ public class Search extends AppCompatActivity implements View.OnClickListener
                 if (!SettingsValues.isEmpty())
                 {
                     data.SaveDistanceSettings(SettingsValues);
-
                 }
 
             }
