@@ -24,6 +24,9 @@ public class User {
     public String getName() {
         return name;
     }
+    public String getUserByToken() {
+        return token;
+    }
 
     public String getPhoneNumber() {
         return phoneNumber;
