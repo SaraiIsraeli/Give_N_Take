@@ -1,6 +1,8 @@
 package com.example.saraiisraeli.give_n_take.models;
 
 
+import android.util.Log;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -12,8 +14,10 @@ import java.util.Map;
 
 public class AppData
 {
+    private static final String TAG = "";
     private DatabaseReference mDatabase;
     private FirebaseUser mAuth;
+
     public AppData()
     {
         try
@@ -28,6 +32,7 @@ public class AppData
 
     public void SaveDistanceSettings(Map<String, Object> SettingsValues)
     {
+        Log.d(TAG, "Start Method: SaveDistanceSettings");
         String userToken = (String) SettingsValues.get("userToken");
         int  distance  = (int) SettingsValues.get("distance");
         int role  = (int) SettingsValues.get("Role");
@@ -44,9 +49,11 @@ public class AppData
                 ex.printStackTrace();
             }
         }
+        Log.d(TAG, "End Method: SaveDistanceSettings");
     }
     public FirebaseUser getCurrentUser()
     {
+        Log.d(TAG, "Start Method: getCurrentUser");
         mAuth = FirebaseAuth.getInstance().getCurrentUser();
         if (mAuth != null)
         {
