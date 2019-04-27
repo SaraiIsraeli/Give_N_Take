@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 //import android.widget.Button;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -17,8 +18,14 @@ import com.example.saraiisraeli.give_n_take.models.UserSettings;
 import java.util.Map;
 
 
+//TODO:
+// 1.add alert after save ,
+// 2. Save state of user ,
+// 3. add logs
+
 public class Search extends AppCompatActivity implements View.OnClickListener
 {
+    private static final String TAG = "";
     private String dis = " KM";
     private Button Back, SaveSettings_btn;
     private SeekBar sBar;
@@ -81,6 +88,7 @@ public class Search extends AppCompatActivity implements View.OnClickListener
     @Override
     public void onClick(View view)
     {
+        Log.d(TAG, "Start Method: onClick");
         if (view == Back)
         {
             ReturnToMain();
@@ -93,12 +101,14 @@ public class Search extends AppCompatActivity implements View.OnClickListener
 
     private void ReturnToMain()
     {
+        Log.d(TAG, "Start Method: ReturnToMain");
         Intent myIntent = new Intent(Search.this, MainActivity.class);
         startActivity(myIntent);
     }
 
     private void SaveSettingsToDB()
     {
+        Log.d(TAG, "Start Method: SaveSettingsToDB");
         //validate Distance field contains a valid value
         //save the settings to DB
         boolean isRoleValid = ValidateRoleField();
@@ -115,6 +125,9 @@ public class Search extends AppCompatActivity implements View.OnClickListener
                 if (!SettingsValues.isEmpty())
                 {
                     data.SaveDistanceSettings(SettingsValues);
+                    SaveSettings_btn.setError("Settings Saved");
+                    ReturnToMain();
+                    Log.d(TAG, "End Method: SaveSettingsToDB");
                 }
 
             }
@@ -127,16 +140,20 @@ public class Search extends AppCompatActivity implements View.OnClickListener
 
     private boolean ValidateRoleField()
     {
+        Log.d(TAG, "Start Method: ValidateRoleField");
         boolean checked = true;
         if (!(get_Checkbox.isChecked()) && (!give_Checkbox.isChecked())) // both not checked
         {
             SaveSettings_btn.setError("Must choose at least one");
             checked = false;
         }
+        Log.d(TAG, "End Method: ValidateRoleField");
         return checked;
+
     }
     private int GetRoleValue()
     {
+        Log.d(TAG, "Start Method: GetRoleValue");
         int role = 0; // by defualt - Buyer
         boolean RoleCheck = ValidateRoleField();
         if (RoleCheck)
@@ -154,20 +171,24 @@ public class Search extends AppCompatActivity implements View.OnClickListener
                 role = 0;
             }
         }
+        Log.d(TAG, "End Method: GetRoleValue");
         return role;
     }
     private int GetDisValue()
     {
+        Log.d(TAG, "Start Method: GetDisValue");
         int dis = 0;
         int progress = sBar.getProgress();
         if(progress > 0)
         {
             dis = progress;
         }
+        Log.d(TAG, "End Method: GetDisValue");
         return dis;
     }
     private boolean ValidateDistanceField()
     {
+        Log.d(TAG, "Start Method: ValidateDistanceField");
         boolean isValid = false;
         int progress = sBar.getProgress();
         if(progress > 0)
@@ -176,8 +197,9 @@ public class Search extends AppCompatActivity implements View.OnClickListener
         }
         else
         {
-            SaveSettings_btn.setError("Distance cant be 0");
+            SaveSettings_btn.setError("Distance can't be 0");
         }
+        Log.d(TAG, "End Method: ValidateDistanceField");
         return isValid;
     }
 
