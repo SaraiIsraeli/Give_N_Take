@@ -91,7 +91,8 @@ public class Search extends AppCompatActivity implements View.OnClickListener
         }
     }
 
-    private void ReturnToMain() {
+    private void ReturnToMain()
+    {
         Intent myIntent = new Intent(Search.this, MainActivity.class);
         startActivity(myIntent);
     }
