@@ -1,6 +1,10 @@
 package com.example.saraiisraeli.give_n_take.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 //import android.widget.Button;
@@ -17,6 +21,9 @@ import com.example.saraiisraeli.give_n_take.models.UserSettings;
 
 import java.util.Map;
 
+import static android.support.design.widget.Snackbar.LENGTH_LONG;
+import static android.support.design.widget.Snackbar.LENGTH_SHORT;
+
 
 //TODO:
 // 1.add alert after save ,
@@ -27,15 +34,14 @@ public class Search extends AppCompatActivity implements View.OnClickListener
 {
     private static final String TAG = "";
     private String dis = " KM";
+    private String afterSaveMsg = "Save Succeed ";
     private Button Back, SaveSettings_btn;
     private SeekBar sBar;
     private TextView tView;
     private CheckBox give_Checkbox,get_Checkbox;
-
+    private Snackbar saveMsg;
     AppData data = new AppData();
-    //User user = new User();
-    //UserSettings us = new UserSettings();
-
+    private View currView;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -54,6 +60,10 @@ public class Search extends AppCompatActivity implements View.OnClickListener
         give_Checkbox = findViewById(R.id.Role_Give_checkbox);
         get_Checkbox = findViewById(R.id.Role_Get_checkbox);
 
+        currView = findViewById(R.id.SearchSettingsLayout);
+
+        saveMsg = Snackbar.make(currView, afterSaveMsg, LENGTH_LONG);
+
         sBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener()
         {
             int pval = 0;
@@ -70,20 +80,8 @@ public class Search extends AppCompatActivity implements View.OnClickListener
                 tView.setText(pval + dis);
             }
         });
+
     }
-//
-//    @Override
-//    public void onSaveInstanceState(Bundle savedInstanceState)
-//    {
-//        int dis = GetDisValue();
-//        int role = GetRoleValue();
-//
-//        savedInstanceState.putString(“Name”, strName);
-//        savedInstanceState.putString(“Email”, strEmail);
-//        savedInstanceState.putBoolean(“TandC”, blnTandC);
-//
-//        super.onSaveInstanceState(savedInstanceState);
-//    }
 
     @Override
     public void onClick(View view)
@@ -104,10 +102,12 @@ public class Search extends AppCompatActivity implements View.OnClickListener
         Log.d(TAG, "Start Method: ReturnToMain");
         Intent myIntent = new Intent(Search.this, MainActivity.class);
         startActivity(myIntent);
+        finish();
     }
 
     private void SaveSettingsToDB()
     {
+        Object obj = null;
         Log.d(TAG, "Start Method: SaveSettingsToDB");
         //validate Distance field contains a valid value
         //save the settings to DB
@@ -125,8 +125,7 @@ public class Search extends AppCompatActivity implements View.OnClickListener
                 if (!SettingsValues.isEmpty())
                 {
                     data.SaveDistanceSettings(SettingsValues);
-                    SaveSettings_btn.setError("Settings Saved");
-                    ReturnToMain();
+                    saveMsg.show();
                     Log.d(TAG, "End Method: SaveSettingsToDB");
                 }
 

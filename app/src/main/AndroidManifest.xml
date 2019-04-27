@@ -29,13 +29,28 @@
             android:name=".activity.SignUpActivity"
             android:parentActivityName=".activity.LoginActivity"
             android:label="@string/app_name"/>
-        <activity android:name=".activity.MyProfileActivity" />
-        <activity android:name=".activity.intro" />
-        <activity android:name=".activity.MainActivity" />
-        <activity android:name=".activity.Items" />
-        <activity android:name=".activity.EditProfile" />
-        <activity android:name=".activity.Search"
+
+        <activity android:name=".activity.MyProfileActivity"
             android:label="@string/app_name"/>
+
+        <activity android:name=".activity.intro"
+            android:label="@string/app_name"/>
+
+        <activity android:name=".activity.MainActivity"
+            android:label="@string/app_name">
+        <intent-filter>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
+
+        <activity android:name=".activity.Items"
+            android:label="@string/app_name"/>
+        <activity android:name=".activity.EditProfile"
+            android:label="@string/app_name"/>
+        <activity android:name=".activity.Search"
+            android:label="@string/app_name"
+            android:parentActivityName=".activity.MainActivity"/>
     </application>
 
 </manifest>
