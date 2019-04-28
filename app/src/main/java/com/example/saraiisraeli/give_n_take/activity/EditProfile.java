@@ -59,10 +59,9 @@ public class EditProfile extends AppCompatActivity {
 
         back.setOnClickListener(new View.OnClickListener() {
             private Intent myIntent;
-
             @Override
             public void onClick(View v) {
-                myIntent = new Intent(Items.this, MainActivity.class);
+                myIntent = new Intent(EditProfile.this, MainActivity.class);
                 startActivity(myIntent);
                 checkHistory();
             }
