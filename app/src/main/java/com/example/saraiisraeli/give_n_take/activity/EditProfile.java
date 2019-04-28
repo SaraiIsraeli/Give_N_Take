@@ -35,6 +35,7 @@ public class EditProfile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
         Button save = (Button) findViewById(R.id.save);
+        Button back = (Button) findViewById(R.id.back);
         name = (EditText) findViewById(R.id.name);
         phone = (EditText) findViewById(R.id.phone);
             super.onCreate(savedInstanceState);
@@ -54,6 +55,20 @@ public class EditProfile extends AppCompatActivity {
             } ;
             name.setText(user.getDisplayName());
             phone.setText(user.getPhoneNumber());
+            //back.setOnClickListener(ne);
+
+        back.setOnClickListener(new View.OnClickListener() {
+            private Intent myIntent;
+
+            @Override
+            public void onClick(View v) {
+                myIntent = new Intent(Items.this, MainActivity.class);
+                startActivity(myIntent);
+                checkHistory();
+            }
+            private void checkHistory() {
+            }
+        });
                  save.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view){
@@ -108,4 +123,5 @@ public class EditProfile extends AppCompatActivity {
                 return true;
 
             }
+
 }
