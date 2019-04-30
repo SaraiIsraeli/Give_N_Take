@@ -37,7 +37,7 @@ public class AppData
         int  distance  = (int) SettingsValues.get("distance");
         int role  = (int) SettingsValues.get("Role");
         if((!userToken.isEmpty()) && (distance > 0)  && (role <= 2))
-        {
+        { 
             try
             {
                 mDatabase.child("userSettings").setValue(userToken);
