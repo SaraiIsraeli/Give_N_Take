@@ -40,9 +40,9 @@ public class AppData
         {
             try
             {
-                mDatabase.child("userSettings").child("userToken").setValue(userToken);
-                mDatabase.child("userSettings").child("userToken").child("distance").setValue(distance);
-                mDatabase.child("userSettings").child("userToken").child("Role").setValue(role);
+                mDatabase.child("userSettings").setValue(userToken);
+                mDatabase.child("userSettings").child(userToken).child("distance").setValue(distance);
+                mDatabase.child("userSettings").child(userToken).child("Role").setValue(role);
             }
             catch (Exception ex)
             {
