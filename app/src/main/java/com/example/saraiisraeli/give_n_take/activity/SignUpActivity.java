@@ -130,10 +130,12 @@ public class SignUpActivity extends LoginActivity implements View.OnClickListene
             {
                 RegPassword.setError(null);
             }
+        Log.d(TAG, "End Method: validateForm");
             return valid;
     }
 
-    private void updateUI(FirebaseUser user) {
+    private void updateUI(FirebaseUser user)
+    {
         Log.d(TAG, "Start Method: updateUI");
         if (user != null)
         {
@@ -147,6 +149,7 @@ public class SignUpActivity extends LoginActivity implements View.OnClickListene
             findViewById(R.id.Input_email).setVisibility(View.VISIBLE);
             findViewById(R.id.input_password).setVisibility(View.VISIBLE);
         }
+        Log.d(TAG, "End Method: updateUI");
     }
 
 
