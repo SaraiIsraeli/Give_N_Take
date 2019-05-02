@@ -10,7 +10,7 @@
     <string name="hint_user_id">User ID</string>
     <string name="next">הבא</string>
     <string name="start">אני מוכן!</string>
-    <string name="sign_in">התחבר</string>
+    <string name="sign_in">התחבר כעת</string>
     <string name="RegisterNow">הירשם כעת</string>
     <string name="Register">הרשמה</string>
     <string name="noItemsError">פריטים יופיעו בהתאם להגדרות החיפוש שלך, ניתן להגדיר אותן בכפתור המתאים. </string>
@@ -26,6 +26,12 @@
     <string name="hint_password">סיסמה</string>
     <string name="auth_failed">התחברות נכשלה</string>
     <string name="SignIn">התחברות</string>
+    <string name="SearchSettings">הגדרות חיפוש</string>
+    <string name="Dis">KM</string>
+    <string name="Role">אני מעוניין</string>
+
+
+
 
     <string name="start_phone_auth">Start</string>
     <string name="verify_phone_auth">Verify</string>

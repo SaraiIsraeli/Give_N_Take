@@ -5,22 +5,31 @@
     android:layout_height="match_parent"
     android:background="@color/colorSplashbg">
 
+    <Button
+        android:id="@+id/Back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginBottom="679dp"
+        android:text="חזור" />
+
     <TextView
         android:id="@+id/register_Headline"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="278dp"
+        android:layout_height="62dp"
         android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="54dp"
+        android:layout_marginStart="59dp"
+        android:layout_marginLeft="59dp"
+        android:layout_marginTop="67dp"
         android:includeFontPadding="true"
         android:text="@string/Register"
         android:textAlignment="center"
         android:textColor="@color/colorSplashtext"
-        android:textSize="68sp"
+        android:textSize="62sp"
         android:textStyle="bold"
-        app:fontFamily="@font/comicbold"
-        tools:text="לתת ולקחת"
-        android:layout_alignParentLeft="true" />
+        app:fontFamily="@font/comicbold" />
 
     <TextView
         android:id="@+id/text_splash"
@@ -39,19 +48,22 @@
         app:fontFamily="@font/yehuda" />
 
     <EditText
-        android:id="@+id/input_email"
-        android:layout_width="217dp"
+        android:id="@+id/Input_email"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="207dp"
         android:hint="אימייל"
         android:inputType="textEmailAddress"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
+        android:textColorHighlight="@android:color/white"
+        android:textColorHint="@android:color/white" />
 
     <EditText
         android:id="@+id/input_password"
-        android:layout_width="223dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
@@ -59,11 +71,14 @@
         android:ems="10"
         android:hint="סיסמה"
         android:inputType="textPassword"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
+        android:textColorHighlight="@android:color/white"
+        android:textColorHint="@android:color/white" />
 
     <Button
         android:id="@+id/btn_signup"
-        android:layout_width="160dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"

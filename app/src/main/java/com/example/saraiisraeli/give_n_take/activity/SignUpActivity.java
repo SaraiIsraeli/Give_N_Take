@@ -22,27 +22,30 @@ public class SignUpActivity extends LoginActivity implements View.OnClickListene
     private EditText RegEmail;
     private EditText RegPassword;
     private FirebaseAuth mAuth;
-    private Button  btn_CreateAccount;
+    private Button  btn_CreateAccount,Back;
 
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
         //Views
-        RegEmail = findViewById(R.id.input_email);
+        RegEmail = findViewById(R.id.Input_email);
         RegPassword = findViewById(R.id.input_password);
         btn_CreateAccount = findViewById(R.id.btn_signup);
-
+        Back = findViewById(R.id.Back);
         //Button
         findViewById(R.id.btn_signup).setOnClickListener(this);
-
+        findViewById(R.id.Back).setOnClickListener(this);
         mAuth = FirebaseAuth.getInstance();
-
     }
 
     @Override
     public void onClick(View view)
     {
+        if (view == Back)
+        {
+            returnToLogin();
+        }
         if (view == btn_CreateAccount )
         {
             if (!validateForm())
@@ -56,8 +59,16 @@ public class SignUpActivity extends LoginActivity implements View.OnClickListene
         }
     }
 
+    private void returnToLogin()
+    {
+        Log.d(TAG, "Start Method: returnToLogin");
+        Intent myIntent = new Intent(SignUpActivity.this, LoginActivity.class);
+        startActivity(myIntent);
+    }
+
     private void  createAccount()
     {
+        Log.d(TAG, "Start Method: createAccount");
         String Email = RegEmail.getText().toString().trim();
         String Pass = RegPassword.getText().toString().trim();
         Log.d(TAG, "createAccount:" + Email);
@@ -87,6 +98,7 @@ public class SignUpActivity extends LoginActivity implements View.OnClickListene
 
     private boolean validateForm()
     {
+        Log.d(TAG, "Start Method: validateForm");
             boolean valid = true;
             String email = RegEmail.getText().toString();
             if (TextUtils.isEmpty(email))
@@ -122,6 +134,7 @@ public class SignUpActivity extends LoginActivity implements View.OnClickListene
     }
 
     private void updateUI(FirebaseUser user) {
+        Log.d(TAG, "Start Method: updateUI");
         if (user != null)
         {
             myIntnet = new Intent(SignUpActivity.this ,MyProfileActivity.class);
@@ -131,7 +144,7 @@ public class SignUpActivity extends LoginActivity implements View.OnClickListene
         else
         {
             findViewById(R.id.btn_signup).setVisibility(View.VISIBLE);
-            findViewById(R.id.input_email).setVisibility(View.VISIBLE);
+            findViewById(R.id.Input_email).setVisibility(View.VISIBLE);
             findViewById(R.id.input_password).setVisibility(View.VISIBLE);
         }
     }

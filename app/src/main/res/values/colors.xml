@@ -12,5 +12,5 @@
     <color name="buttonsColor">#7aa4ef</color>
     <color name="buttonLine">#FF2E394E</color>
     <color name="buttonbg">#FF324E82</color>
-
+    <color name="white">#FFFFFF</color>
 </resources>
