@@ -17,9 +17,8 @@
         android:textColor="@android:color/white"
         android:textSize="50dp"
         android:textStyle="bold"
-        android:layout_below="@+id/image_intro3"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="32dp">
-
     </TextView>
+
 </RelativeLayout>

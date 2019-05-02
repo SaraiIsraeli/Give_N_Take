@@ -1,163 +1,90 @@
 package com.example.saraiisraeli.give_n_take.activity;
 
-import android.content.Context;
+import android.annotation.SuppressLint;
+import android.content.ClipData;
 import android.content.Intent;
-import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Html;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.os.Bundle;
+
 import com.example.saraiisraeli.give_n_take.R;
+import com.example.saraiisraeli.give_n_take.models.User;
 
-public class MainActivity extends AppCompatActivity {
+import android.content.Context;
+import android.util.Log;
+import android.view.GestureDetector;
+import android.view.GestureDetector.SimpleOnGestureListener;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.OnTouchListener;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
-   com.example.saraiisraeli.give_n_take.models.PreferenceManager preferenceManager;
-    LinearLayout Layout_bars;
-    TextView[] bottomBars;
-    int[] screens;
-    Button Skip, Next;
-    ViewPager vp;
-    MyViewPagerAdapter myvpAdapter;
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private static final String TAG = "activity main";
+    Intent myIntnet;
+    ImageButton itemsButton,profileButton,searchButton;
+    ImageView imageView;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        vp = (ViewPager) findViewById(R.id.view_pager);
-        Layout_bars = (LinearLayout) findViewById(R.id.layoutBars);
-        Skip = (Button) findViewById(R.id.skip);
-        Next = (Button) findViewById(R.id.next);
-        myvpAdapter = new MyViewPagerAdapter();
-        screens = new int[]{
-                R.layout.intro_screen1,
-                R.layout.intro_screen2,
-                R.layout.intro_screen3
-        };
-        vp.setAdapter(myvpAdapter);
-        preferenceManager = new com.example.saraiisraeli.give_n_take.models.PreferenceManager(this);
-        vp.addOnPageChangeListener(viewPagerPageChangeListener);
-        if (!preferenceManager.FirstLaunch()) {
-            launchMain();
-            finish();
-        }
-        ColoredBars(0);
+        itemsButton = (ImageButton) findViewById(R.id.itemsButton);
+        profileButton = (ImageButton) findViewById(R.id.myProfileButton);
+        searchButton = (ImageButton) findViewById(R.id.searchButton);
+        imageView= (ImageView) findViewById(R.id.noItemsLogo);
+        if (!imageView.getTag().equals("noItemsToShow")){ // swipe is enable only if there is items
+            imageView.setOnTouchListener(new OnSwipeTouchListener(MainActivity.this) {
+                public void onSwipeTop() {
+                    Toast.makeText(MainActivity.this, "top", Toast.LENGTH_SHORT).show();
+                }
+                public void onSwipeRight() {
+                    Toast.makeText(MainActivity.this, "right", Toast.LENGTH_SHORT).show();
+                }
+                public void onSwipeLeft() {
+                    Toast.makeText(MainActivity.this, "left", Toast.LENGTH_SHORT).show();
+                }
+                public void onSwipeBottom() {
+                    Toast.makeText(MainActivity.this, "bottom", Toast.LENGTH_SHORT).show();
+                }
+            });}
+
+        searchButton.setOnClickListener(this); // calling onClick() method
+        profileButton.setOnClickListener(this);
+        itemsButton.setOnClickListener(this);
     }
 
-    public void next(View v) {
-        int i = getItem(+1);
-        if (i < screens.length) {
-            vp.setCurrentItem(i);
-        } else {
-            launchMain();
-        }
-    }
-
-    public void skip(View view) {
-        launchMain();
-    }
-
-    private void ColoredBars(int thisScreen) {
-        int[] colorsInactive = new int []
-                {
-                        R.color.colorIntroInActive,
-                        R.color.colorIntroInActive,
-                        R.color.colorIntroInActive
-                };
-        int[] colorsActive = new int []
-                {
-                        R.color.colorIntroActive,
-                        R.color.colorIntroActive,
-                        R.color.colorIntroActive
-                };
-
-        Log.d("lTAG", String.valueOf(screens.length));
-        bottomBars = new TextView[screens.length];
-        Log.d("lTAG", String.valueOf(bottomBars.length));
-        Layout_bars.removeAllViews();
-        for (int i = 0; i < bottomBars.length; i++) {
-            bottomBars[i] = new TextView(this);
-            bottomBars[i].setTextSize(100);
-            bottomBars[i].setText(Html.fromHtml("¯"));
-            Layout_bars.addView(bottomBars[i]);
-            bottomBars[i].setTextColor(colorsActive[thisScreen]);
-        }
-        if (bottomBars.length > 0)
-            bottomBars[thisScreen].setTextColor(colorsActive[thisScreen]);
-    }
-
-
-    private int getItem(int i) {
-        return vp.getCurrentItem() + i;
-    }
-
-    private void launchMain() {
-        preferenceManager.setFirstTimeLaunch(false);
-        startActivity(new Intent(MainActivity.this, splash_screen.class));
-        finish();
-    }
-
-    ViewPager.OnPageChangeListener viewPagerPageChangeListener = new ViewPager.OnPageChangeListener() {
-
-        @Override
-        public void onPageSelected(int position) {
-           ColoredBars(position);
-            if (position == screens.length - 1) {
-                Next.setText("start");
-                Skip.setVisibility(View.GONE);
-            } else {
-                Next.setText(getString(R.string.next));
-                Skip.setVisibility(View.VISIBLE);
-            }
-        }
-
-        @Override
-        public void onPageScrolled(int arg0, float arg1, int arg2) {
-
-        }
-
-        @Override
-        public void onPageScrollStateChanged(int arg0) {
-
-        }
-    };
-
-    public class MyViewPagerAdapter extends PagerAdapter {
-        private LayoutInflater inflater;
-
-        public MyViewPagerAdapter() {
-        }
-
-        @Override
-        public Object instantiateItem(ViewGroup container, int position) {
-            inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View view = inflater.inflate(screens[position], container, false);
-            container.addView(view);
-            return view;
-        }
-
-        @Override
-        public int getCount() {
-            return screens.length;
-       }
-
-        @Override
-        public void destroyItem(ViewGroup container, int position, Object object) {
-            View v = (View) object;
-            container.removeView(v);
-        }
-
-        @Override
-        public boolean isViewFromObject(View v, Object object) {
-            return v == object;
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.myProfileButton:
+                Log.d(TAG, "profile button pressed" );
+                myIntnet = new Intent(MainActivity.this ,EditProfile.class);
+                startActivity(myIntnet);
+                finish();
+                break;
+            case R.id.searchButton:
+                Log.d(TAG, "search button pressed" );
+                myIntnet = new Intent(MainActivity.this ,Search.class);
+                startActivity(myIntnet);
+                finish();
+                break;
+            case R.id.itemsButton:
+                Log.d(TAG, "items button pressed" );
+                myIntnet = new Intent(MainActivity.this ,Items.class);
+                startActivity(myIntnet);
+                finish();
+                break;
+            default:
+                break;
         }
     }
 }
+
+
+

@@ -1,50 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <android.support.v4.view.ViewPager
-        android:id="@+id/view_pager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    android:layout_height="match_parent"
+    android:background="@color/colorSplashbg"
+    android:layoutDirection="rtl">
 
-    <LinearLayout
-        android:id="@+id/layoutBars"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="51dp"
-        android:gravity="center"
-        android:orientation="horizontal">
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/next"
+    <ImageButton
+        android:id="@+id/myProfileButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@null"
-        android:text="next"
-        android:textSize="20dp"
-        android:textColor="@android:color/white"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:alpha=".4"
-        android:background="@android:color/white"
-        android:layout_above="@+id/next"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true" />
-    <Button
-        android:id="@+id/skip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@null"
-        android:text="skip"
-        android:textSize="20dp"
-        android:textColor="@android:color/white"
-        android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="34dp"
+        android:layout_alignTop="@+id/searchButton"
+        android:layout_marginEnd="38dp"
+        android:background="@drawable/round_button"
+        android:src="@drawable/user"
+        android:layout_marginRight="38dp"
         android:layout_alignParentRight="true" />
+
+    <TextView
+        android:id="@+id/searchText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/myProfileButton"
+        android:textAlignment="center"
+        android:layout_marginRight="22dp"
+        android:textColor="@color/colorSplashtext"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:fontFamily="@font/yehuda"
+        android:text="הגדרות חיפוש"/>
+
+    <ImageButton
+        android:id="@+id/searchButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/itemsButton"
+        android:layout_marginStart="37dp"
+        android:background="@drawable/round_button"
+        android:src="@drawable/search"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="37dp" />
+
+    <TextView
+        android:id="@+id/profileText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/myProfileButton"
+        android:textAlignment="center"
+        android:layout_marginRight="280dp"
+        android:textColor="@color/colorSplashtext"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:fontFamily="@font/yehuda"
+        android:text="פרופיל אישי"/>
+
+    <ImageButton
+        android:id="@+id/itemsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="18dp"
+        android:src="@drawable/cart"
+        android:background="@drawable/round_button" />
+
+
+    <TextView
+        android:id="@+id/itemsText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/myProfileButton"
+        android:textAlignment="center"
+        android:layout_marginRight="155dp"
+        android:textColor="@color/colorSplashtext"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:fontFamily="@font/yehuda"
+        android:text="המוצרים שלי"/>
+
+    <ImageView
+        android:id="@+id/noItemsLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="228dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_marginBottom="220dp"
+        android:layout_weight="1"
+        android:background="@color/colorSplashbg"
+        android:src="@drawable/error3"
+        android:tag="noItemsToShow" />
+
+    <TextView
+        android:id="@+id/noItemsErrorMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="151dp"
+        android:layout_weight="1"
+        android:includeFontPadding="true"
+        android:padding="5dp"
+        android:text="@string/noItemsError"
+        android:textAlignment="center"
+        android:textColor="@color/colorSplashtext"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:fontFamily="@font/yehuda"
+        android:layout_alignParentLeft="true" />
+
+    <Button
+        android:id="@+id/noButoon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/myProfileButton"
+        android:layout_marginBottom="40dp"
+        android:background="@drawable/round_button"
+        android:text="לא"
+        android:visibility="invisible"
+        android:layout_alignLeft="@+id/myProfileButton" />
+
+    <Button
+        android:id="@+id/yesButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/searchButton"
+        android:layout_alignTop="@+id/noButoon"
+        android:background="@drawable/round_button"
+        android:text="כן"
+        android:visibility="invisible"
+        android:layout_alignLeft="@+id/myProfileButton" />
+
 </RelativeLayout>
