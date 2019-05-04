@@ -18,11 +18,18 @@ import com.example.saraiisraeli.give_n_take.R;
 import com.example.saraiisraeli.give_n_take.models.AppData;
 import com.example.saraiisraeli.give_n_take.models.User;
 import com.example.saraiisraeli.give_n_take.models.UserSettings;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import static android.support.design.widget.Snackbar.LENGTH_LONG;
 import static android.support.design.widget.Snackbar.LENGTH_SHORT;
+import static java.lang.Integer.valueOf;
 
 
 //TODO:
@@ -33,6 +40,11 @@ import static android.support.design.widget.Snackbar.LENGTH_SHORT;
 public class Search extends AppCompatActivity implements View.OnClickListener
 {
     private static final String TAG = "";
+    Map<String, Object> SettingsValues;
+    AppData mAppData = new AppData();
+    //User user = new User();
+    //UserSettings us = new UserSettings()
+    String userToken = (mAppData.getCurrentUser().getUid());
     private String dis = " KM";
     private String afterSaveMsg = "Save Succeed ";
     private Button Back, SaveSettings_btn;
@@ -40,9 +52,9 @@ public class Search extends AppCompatActivity implements View.OnClickListener
     private TextView tView;
     private CheckBox give_Checkbox,get_Checkbox;
     private Snackbar saveMsg;
-    AppData data = new AppData();
     private View currView;
-    @Override
+
+@Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
@@ -80,9 +92,8 @@ public class Search extends AppCompatActivity implements View.OnClickListener
                 tView.setText(pval + dis);
             }
         });
-
+        mAppData.getDistanceSettings(userToken,this);
     }
-
     @Override
     public void onClick(View view)
     {
@@ -117,16 +128,18 @@ public class Search extends AppCompatActivity implements View.OnClickListener
         {
             try
             {
-                String userToken = (data.getCurrentUser().getUid());
-                int dis = GetDisValue();
-                int role = GetRoleValue();
+                userToken = (mAppData.getCurrentUser().getUid());
+                String dis = GetDisValue();
+                String role = GetRoleValue();
                 UserSettings us = new UserSettings(userToken,dis,role);
-                Map<String, Object> SettingsValues = us.toMap();
+                SettingsValues = us.toMap();
                 if (!SettingsValues.isEmpty())
                 {
-                    data.SaveDistanceSettings(SettingsValues);
+                    mAppData.setDistanceSettings(SettingsValues);
                     saveMsg.show();
                     Log.d(TAG, "End Method: SaveSettingsToDB");
+
+                    mAppData.setDistanceSettings(SettingsValues);
                 }
 
             }
@@ -150,37 +163,37 @@ public class Search extends AppCompatActivity implements View.OnClickListener
         return checked;
 
     }
-    private int GetRoleValue()
+    private String GetRoleValue()
     {
         Log.d(TAG, "Start Method: GetRoleValue");
-        int role = 0; // by defualt - Buyer
+        String role = "0"; // by defualt - Buyer
         boolean RoleCheck = ValidateRoleField();
         if (RoleCheck)
         {
             if (get_Checkbox.isChecked() && give_Checkbox.isChecked())
             {// User is Seller and Buyer
-                role = 2;
+                role = "2";
             }
             if (!(get_Checkbox.isChecked()) && give_Checkbox.isChecked())
             {//User is Seller only
-                role = 1;
+                role = "1";
             }
             else
             {//User is Buyer
-                role = 0;
+                role = "0";
             }
         }
         Log.d(TAG, "End Method: GetRoleValue");
         return role;
     }
-    private int GetDisValue()
+    private String GetDisValue()
     {
         Log.d(TAG, "Start Method: GetDisValue");
-        int dis = 0;
+        String dis = "0";
         int progress = sBar.getProgress();
         if(progress > 0)
         {
-            dis = progress;
+            dis = String.valueOf(progress);
         }
         Log.d(TAG, "End Method: GetDisValue");
         return dis;
@@ -202,5 +215,23 @@ public class Search extends AppCompatActivity implements View.OnClickListener
         return isValid;
     }
 
+
+    public void setDataFromDB(Map<String, Object> settingsValues)
+    {
+        Log.i (TAG,"setting values:" + settingsValues.get("Role") + settingsValues.get("distance"));
+        String distance = settingsValues.get("distance").toString();
+        String role = settingsValues.get("Role").toString();
+        switch (role){
+            case "0": get_Checkbox.setChecked(true); break;
+            case "1": give_Checkbox.setChecked(true); break;
+            case "2": get_Checkbox.setChecked(true);
+                give_Checkbox.setChecked(true);
+                break;
+            default: break;
+        }
+
+        sBar.setProgress(Integer.valueOf(distance));
+        tView.setText(distance);
+    }
 }
 
