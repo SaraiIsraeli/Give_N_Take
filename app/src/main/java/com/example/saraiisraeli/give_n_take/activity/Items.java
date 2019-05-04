@@ -20,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class Items extends AppCompatActivity implements View.OnClickListener{
 
+    String sssss;
     private static final String TAG = "my profile";
     String userId;
     EditText m_itemName;
@@ -100,11 +101,11 @@ public class Items extends AppCompatActivity implements View.OnClickListener{
     }
 
     private String getCurrentLocation(){
-        String location = "";
+      String location = "";
 
-        return location;
+      return location;
     }
-
+// test 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
