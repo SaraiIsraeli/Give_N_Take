@@ -104,7 +104,7 @@ public class Items extends AppCompatActivity implements View.OnClickListener{
 
       return location;
     }
-
+// test 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
