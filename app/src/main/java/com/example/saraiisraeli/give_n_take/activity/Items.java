@@ -20,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class Items extends AppCompatActivity implements View.OnClickListener{
 
+    String sssss;
     private static final String TAG = "my profile";
     String userId;
     EditText m_itemName;
