@@ -100,7 +100,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (user != null)
         {
             // need to move to the main App!
-            myIntnet = new Intent(LoginActivity.this ,MainActivity.class);
+            myIntnet = new Intent(LoginActivity.this ,MyProfileActivity.class);
             startActivity(myIntnet);
             finish();
         }
