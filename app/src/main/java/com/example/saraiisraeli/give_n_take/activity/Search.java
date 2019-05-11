@@ -225,19 +225,19 @@ public class Search extends AppCompatActivity implements View.OnClickListener
         switch (role){
             case "0":
                 {
-                get_Checkbox.setChecked(true);
-                break;
+                   get_Checkbox.setChecked(true);
+                   break;
                 }
             case "1":
                 {
-                give_Checkbox.setChecked(true);
-                break;
+                   give_Checkbox.setChecked(true);
+                   break;
                 }
             case "2":
                 {
                     get_Checkbox.setChecked(true);
-                      give_Checkbox.setChecked(true);
-                      break;
+                    give_Checkbox.setChecked(true);
+                    break;
                 }
             default: break;
         }
