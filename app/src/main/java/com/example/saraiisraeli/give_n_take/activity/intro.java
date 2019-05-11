@@ -88,7 +88,7 @@ public class intro extends AppCompatActivity {
             bottomBars[i].setTextSize(100);
             bottomBars[i].setText(Html.fromHtml(("¯")));
             Layout_bars.addView(bottomBars[i]);
-            bottomBars[i].setTextColor(colorsActive[thisScreen]);
+            bottomBars[i].setTextColor(colorsInactive[i]);
         }
         if (bottomBars.length > 0)
             bottomBars[thisScreen].setTextColor(colorsActive[thisScreen]);
