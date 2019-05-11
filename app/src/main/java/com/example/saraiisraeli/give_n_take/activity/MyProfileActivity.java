@@ -60,7 +60,7 @@ public class MyProfileActivity extends AppCompatActivity {
                     dbRef.child("users").child(userId).setValue(user);
                     Log.d(TAG, "update user in Firebase - " + "user name: " +  user.getName()+
                             " user phone number: "  + user.getPhoneNumber());
-                    myIntnet = new Intent(MyProfileActivity.this ,MainActivity.class);
+                    myIntnet = new Intent(MyProfileActivity.this ,Search.class);
                     startActivity(myIntnet);
                     finish();
                 }
