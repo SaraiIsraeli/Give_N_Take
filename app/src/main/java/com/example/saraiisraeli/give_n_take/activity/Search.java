@@ -148,6 +148,7 @@ public class Search extends AppCompatActivity implements View.OnClickListener
                 ex.printStackTrace();
             }
         }
+        ReturnToMain();
     }
 
     private boolean ValidateRoleField()
@@ -174,7 +175,7 @@ public class Search extends AppCompatActivity implements View.OnClickListener
             {// User is Seller and Buyer
                 role = "2";
             }
-            if (!(get_Checkbox.isChecked()) && give_Checkbox.isChecked())
+            else if (!(get_Checkbox.isChecked()) && give_Checkbox.isChecked())
             {//User is Seller only
                 role = "1";
             }
@@ -222,11 +223,22 @@ public class Search extends AppCompatActivity implements View.OnClickListener
         String distance = settingsValues.get("distance").toString();
         String role = settingsValues.get("Role").toString();
         switch (role){
-            case "0": get_Checkbox.setChecked(true); break;
-            case "1": give_Checkbox.setChecked(true); break;
-            case "2": get_Checkbox.setChecked(true);
-                give_Checkbox.setChecked(true);
-                break;
+            case "0":
+                {
+                   get_Checkbox.setChecked(true);
+                   break;
+                }
+            case "1":
+                {
+                   give_Checkbox.setChecked(true);
+                   break;
+                }
+            case "2":
+                {
+                    get_Checkbox.setChecked(true);
+                    give_Checkbox.setChecked(true);
+                    break;
+                }
             default: break;
         }
 
