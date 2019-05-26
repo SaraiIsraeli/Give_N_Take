@@ -35,11 +35,11 @@
         android:layout_marginLeft="0dp"
         android:layout_marginTop="79dp"
         android:saveEnabled="true"
-        android:text="מרחק חיפוש:"
+        android:text="@string/SearchDistance"
         android:textColor="@color/colorSplashtext"
         android:textSize="25sp"
         android:textStyle="bold"
-        tools:text=":מרחק חיפוש" />
+        tools:text="@string/SearchDistance" />
 
     <SeekBar
         android:id="@+id/seekBar"
@@ -67,11 +67,11 @@
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="192dp"
-        android:text="הגדרות מתקדם"
+        android:text="@string/AdvnacedSettings"
         android:textColor="@color/colorSplashtext"
         android:textSize="25sp"
         android:textStyle="bold"
-        tools:text="הגדרות מתקדם" />
+        tools:text="@string/AdvnacedSettings" />
 
     <TextView
         android:id="@+id/textView5"
@@ -87,7 +87,7 @@
         android:textColor="@color/colorSplashtext"
         android:textSize="18sp"
         android:textStyle="bold"
-        tools:text="אני מחפש.." />
+        tools:text="@string/LookingFor" />
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
@@ -103,7 +103,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="140dp"
-            android:hint="הקלד שם מוצר"
+            android:hint="@string/TypeProdName"
             android:textColor="@color/colorAccent" />
     </android.support.design.widget.TextInputLayout>
 
@@ -112,7 +112,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="500dp"
-        android:text="שמור הגדרות" />
+        android:text="@string/SaveSettings" />
 
     <Button
         android:id="@+id/Back"
@@ -120,7 +120,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:layout_marginBottom="679dp"
-        android:text="חזור" />
+        android:text="@string/back" />
 
     <TextView
         android:id="@+id/SliderValue"
@@ -141,7 +141,7 @@
         android:textColor="@color/colorAccent"
         android:saveEnabled="true"
         android:textStyle="bold"
-        android:text="לחפש מוצר" />
+        android:text="@string/ProdSearch" />
 
     <CheckBox
         android:id="@+id/Role_Give_checkbox"
@@ -150,7 +150,7 @@
         android:layout_marginLeft="120dp"
         android:layout_marginTop="430dp"
         android:saveEnabled="true"
-        android:text="לתת מוצר"
+        android:text="@string/ProdGive"
         android:textColor="@color/colorAccent"
         android:textStyle="bold" />
 
@@ -164,7 +164,7 @@
         android:layout_marginStart="11dp"
         android:layout_marginLeft="11dp"
         android:layout_marginTop="380dp"
-        android:text="@string/Role"
+        android:text="@string/IntrestingIn"
         android:textColor="@color/colorAccent"
         android:textSize="25sp"
         android:textStyle="bold" />
