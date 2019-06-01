@@ -22,9 +22,8 @@ public class AppData
 {
     private DatabaseReference mDatabase;
     private FirebaseUser mAuth;
-    Search mSearch;
     private static final String TAG = "appData";
-    Map<String, Object> settingsValues = new HashMap<>();
+
     public AppData()
     {
         try

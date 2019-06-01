@@ -39,7 +39,8 @@ public class Items extends AppCompatActivity implements View.OnClickListener{
     Boolean m_ischecked;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_items);
         Log.d(TAG, "entered items" );
@@ -84,12 +85,13 @@ public class Items extends AppCompatActivity implements View.OnClickListener{
         events();
     }
 
-    private void events(){
-
+    private void events()
+    {
         getItemDetails();
     }
 
-    private void getItemDetails(){
+    private void getItemDetails()
+    {
         m_itemDecStr = m_itemDesc.getText().toString();
         m_itemNameStr = m_itemName.getText().toString();
         if (m_ischecked == true){
@@ -100,14 +102,16 @@ public class Items extends AppCompatActivity implements View.OnClickListener{
         }
     }
 
-    private String getCurrentLocation(){
+    private String getCurrentLocation()
+    {
       String location = "";
 
       return location;
     }
 // test 
     @Override
-    public void onClick(View view) {
+    public void onClick(View view)
+    {
         switch (view.getId()) {
             case R.id.HistoryBtn:
                 Log.d(TAG, "HistoryItems button pressed" );

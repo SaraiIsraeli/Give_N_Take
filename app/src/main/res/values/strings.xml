@@ -28,8 +28,17 @@
     <string name="SignIn">התחברות</string>
     <string name="SearchSettings">הגדרות חיפוש</string>
     <string name="Dis">KM</string>
+    <string name="back">חזור</string>
+    <string name="AdvnacedSettings">מתקדם</string>
+    <string name="LookingFor">..אני מחפש </string>
     <string name="Role">אני מעוניין</string>
-
+    <string name="hint_register">לא רשום עדיין ? הירשם כעת</string>
+    <string name="SearchDistance">מרחק חיפוש:</string>
+    <string name="TypeProdName">הקלד שם מוצר</string>
+    <string name="SaveSettings">שמור הגדרות</string>
+    <string name="ProdSearch">לחפש מוצר</string>
+    <string name="ProdGive">לתת מוצר</string>
+    <string name="IntrestingIn">אני מעוניין..</string>
 
     <string name="start_phone_auth">Start</string>
     <string name="verify_phone_auth">Verify</string>
