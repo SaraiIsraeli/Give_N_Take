@@ -14,6 +14,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
 
 public class SignUpActivity extends LoginActivity implements View.OnClickListener
@@ -87,10 +89,30 @@ public class SignUpActivity extends LoginActivity implements View.OnClickListene
                     }
                     else
                     {
+                        try
+                        {
+                            throw task.getException();
+                        }
+                        catch (FirebaseAuthInvalidCredentialsException malformedEmail)
+                        {
+                            Log.d(TAG, "onComplete: malformed_email");
+                            Toast.makeText(SignUpActivity.this, "email address is malformed",
+                            Toast.LENGTH_SHORT).show();
+                            updateUI(null);
+                        }
+                        catch (FirebaseAuthUserCollisionException existEmail)
+                        {
+                            Log.d(TAG, "onComplete: exist_email");
+                            Toast.makeText(SignUpActivity.this, "Email Address already exists!",
+                            Toast.LENGTH_SHORT).show();
+                            updateUI(null);
+                        }
+                        catch (Exception e)
+                        {
+                            Log.d(TAG, "onComplete: " + e.getMessage());
+                        }
                         Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                        Toast.makeText(SignUpActivity.this, "Something Went Wrong..",
-                        Toast.LENGTH_SHORT).show();
-                        updateUI(null);
+
                     }
                 }
             });
@@ -133,7 +155,6 @@ public class SignUpActivity extends LoginActivity implements View.OnClickListene
         Log.d(TAG, "End Method: validateForm");
             return valid;
     }
-
     private void updateUI(FirebaseUser user)
     {
         Log.d(TAG, "Start Method: updateUI");
@@ -151,7 +172,5 @@ public class SignUpActivity extends LoginActivity implements View.OnClickListene
         }
         Log.d(TAG, "End Method: updateUI");
     }
-
-
 
 }

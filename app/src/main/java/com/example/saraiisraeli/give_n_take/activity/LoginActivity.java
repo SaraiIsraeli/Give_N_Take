@@ -20,7 +20,6 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener
 {
-
     Intent myIntnet;
     public TextView linkToRegister;
     private Button sign;
@@ -42,8 +41,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         firebaseAuth = FirebaseAuth.getInstance();
     }
     @Override
-    public void onBackPressed() {
-    }
+    public void onBackPressed() { }
     @Override
     public void onClick(View view)
     {
@@ -96,7 +94,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }
             });
     }
-    private void updateUI(FirebaseUser user) {
+    private void updateUI(FirebaseUser user)
+    {
         if (user != null)
         {
             // need to move to the main App!
