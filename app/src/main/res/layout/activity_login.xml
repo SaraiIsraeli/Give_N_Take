@@ -92,5 +92,4 @@
         android:textStyle="bold"
         app:fontFamily="@font/yehuda" />
 
-
 </RelativeLayout>

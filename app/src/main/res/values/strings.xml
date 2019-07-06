@@ -66,4 +66,5 @@
     <string name="upload_photo_header">בחר תמונה שברצונך להעלות</string>
     <string name="choose_photo">בחירת תמונה</string>
     <string name="upload_photo">העלאת תמונה</string>
+    <string name="logout">בטוח שברצונך להתנתק  ?</string>
 </resources>

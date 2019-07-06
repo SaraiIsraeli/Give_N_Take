@@ -32,18 +32,11 @@ import static android.support.design.widget.Snackbar.LENGTH_SHORT;
 import static java.lang.Integer.valueOf;
 
 
-//TODO:
-// 1.add alert after save ,
-// 2. Save state of user ,
-// 3. add logs
-
 public class Search extends AppCompatActivity implements View.OnClickListener
 {
     private static final String TAG = "";
     Map<String, Object> SettingsValues;
     AppData mAppData = new AppData();
-    //User user = new User();
-    //UserSettings us = new UserSettings()
     String userToken = (mAppData.getCurrentUser().getUid());
     private String dis = " KM";
     private String afterSaveMsg = "Save Succeed ";
@@ -118,7 +111,6 @@ public class Search extends AppCompatActivity implements View.OnClickListener
 
     private void SaveSettingsToDB()
     {
-        Object obj = null;
         Log.d(TAG, "Start Method: SaveSettingsToDB");
         //validate Distance field contains a valid value
         //save the settings to DB
