@@ -2,7 +2,7 @@ package com.example.saraiisraeli.give_n_take.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import com.example.saraiisraeli.give_n_take.R;
 import com.google.firebase.auth.FirebaseUser;
@@ -12,6 +12,8 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import static androidx.core.content.ContextCompat.startActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
