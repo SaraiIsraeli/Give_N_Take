@@ -7,11 +7,9 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.InputType;
 import android.util.Base64;
 import android.util.Log;
@@ -21,8 +19,11 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RadioButton;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.saraiisraeli.give_n_take.R;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -190,7 +191,7 @@ public class Items extends AppCompatActivity implements View.OnClickListener{
 
     private void selectImage() {
         final CharSequence[] options = {"Choose from Gallery","Cancel" };
-        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(Items.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Add Photo:");
         builder.setItems(options, new DialogInterface.OnClickListener() {
             @Override

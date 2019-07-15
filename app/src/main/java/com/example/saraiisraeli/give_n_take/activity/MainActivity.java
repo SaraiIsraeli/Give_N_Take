@@ -1,26 +1,19 @@
 package com.example.saraiisraeli.give_n_take.activity;
 
 import android.annotation.SuppressLint;
-import android.content.ClipData;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-
 import com.example.saraiisraeli.give_n_take.R;
-import com.example.saraiisraeli.give_n_take.models.User;
+import com.google.firebase.auth.FirebaseUser;
 
-import android.content.Context;
 import android.util.Log;
-import android.view.GestureDetector;
-import android.view.GestureDetector.SimpleOnGestureListener;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnTouchListener;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import static androidx.core.content.ContextCompat.startActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -28,16 +21,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Intent myIntnet;
     ImageButton itemsButton,profileButton,searchButton;
     ImageView imageView;
-
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        itemsButton = (ImageButton) findViewById(R.id.itemsButton);
-        profileButton = (ImageButton) findViewById(R.id.myProfileButton);
-        searchButton = (ImageButton) findViewById(R.id.searchButton);
-        imageView= (ImageView) findViewById(R.id.noItemsLogo);
+        itemsButton = findViewById(R.id.itemsButton);
+        profileButton = findViewById(R.id.myProfileButton);
+        searchButton = findViewById(R.id.searchButton);
+        imageView= findViewById(R.id.noItemsLogo);
         if (!imageView.getTag().equals("noItemsToShow")){ // swipe is enable only if there is items
             imageView.setOnTouchListener(new OnSwipeTouchListener(MainActivity.this) {
                 public void onSwipeTop() {
@@ -53,7 +45,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Toast.makeText(MainActivity.this, "bottom", Toast.LENGTH_SHORT).show();
                 }
             });}
-
         searchButton.setOnClickListener(this); // calling onClick() method
         profileButton.setOnClickListener(this);
         itemsButton.setOnClickListener(this);

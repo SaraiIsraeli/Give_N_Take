@@ -1,18 +1,18 @@
 package com.example.saraiisraeli.give_n_take.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.example.saraiisraeli.give_n_take.R;
-import com.example.saraiisraeli.give_n_take.models.AppData;
 import com.example.saraiisraeli.give_n_take.models.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -27,7 +27,7 @@ public class EditProfile extends AppCompatActivity {
     String userId;
     EditText m_name;
     EditText m_phoneNumber;
-    Button m_start, m_back;
+    Button m_start, m_back, disconnect;
     Intent myIntnet;
     private FirebaseAuth firebaseAuth;
     private FirebaseDatabase firebaseDatabase;
@@ -40,10 +40,6 @@ public class EditProfile extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
-
-
-
-
         Log.d(TAG, "entered edit profile" );
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
@@ -60,7 +56,7 @@ public class EditProfile extends AppCompatActivity {
         m_phoneNumber = (EditText) findViewById(R.id.phone);
         m_start = (Button) findViewById(R.id.btnSave);
         m_back = (Button)findViewById(R.id.btnBack);
-
+        disconnect = findViewById(R.id.disconnect);
         mDatabaseUser_name = FirebaseDatabase.getInstance().getReference().child("users").child(userId).child("name");
         mDatabaseUser_phone = FirebaseDatabase.getInstance().getReference().child("users").child(userId).child("phoneNumber");
 
@@ -90,8 +86,6 @@ public class EditProfile extends AppCompatActivity {
             }
 
         });
-
-
         m_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,7 +111,14 @@ public class EditProfile extends AppCompatActivity {
             }
         });
 
+        disconnect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                signOut();
+            }
+        });
     }
+
 
     private boolean validateFields() {
         boolean isValid = true;
@@ -157,6 +158,25 @@ public class EditProfile extends AppCompatActivity {
         }
         return true;
     }
-
-
+    private void signOut() {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setMessage(R.string.logout);
+        alert.setCancelable(false);
+        alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                firebaseAuth.signOut();
+                myIntnet = new Intent(EditProfile.this ,LoginActivity.class);
+                startActivity(myIntnet);
+                finish();
+            }
+        });
+        alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        alert.show();
+    }
 }

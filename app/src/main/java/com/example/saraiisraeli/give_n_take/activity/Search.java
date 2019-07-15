@@ -2,48 +2,31 @@ package com.example.saraiisraeli.give_n_take.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-//import android.widget.Button;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.saraiisraeli.give_n_take.R;
 import com.example.saraiisraeli.give_n_take.models.AppData;
-import com.example.saraiisraeli.give_n_take.models.User;
 import com.example.saraiisraeli.give_n_take.models.UserSettings;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.google.android.material.snackbar.Snackbar;
 
-import java.util.HashMap;
 import java.util.Map;
 
-import static android.support.design.widget.Snackbar.LENGTH_LONG;
-import static android.support.design.widget.Snackbar.LENGTH_SHORT;
-import static java.lang.Integer.valueOf;
-
-
-//TODO:
-// 1.add alert after save ,
-// 2. Save state of user ,
-// 3. add logs
+import static android.widget.Toast.LENGTH_LONG;
 
 public class Search extends AppCompatActivity implements View.OnClickListener
 {
     private static final String TAG = "";
     Map<String, Object> SettingsValues;
     AppData mAppData = new AppData();
-    //User user = new User();
-    //UserSettings us = new UserSettings()
+
     String userToken = (mAppData.getCurrentUser().getUid());
     private String dis = " KM";
     private String afterSaveMsg = "Save Succeed ";
@@ -54,6 +37,7 @@ public class Search extends AppCompatActivity implements View.OnClickListener
     private Snackbar saveMsg;
     private View currView;
 
+@SuppressLint("WrongConstant")
 @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -63,18 +47,15 @@ public class Search extends AppCompatActivity implements View.OnClickListener
         sBar = findViewById(R.id.seekBar);
         tView = findViewById(R.id.SliderValue);
 
-        Back = findViewById(R.id.Back);
         SaveSettings_btn = findViewById(R.id.SaveSettings_btn);
 
         SaveSettings_btn.setOnClickListener(this);
-        Back.setOnClickListener(this);
 
         give_Checkbox = findViewById(R.id.Role_Give_checkbox);
         get_Checkbox = findViewById(R.id.Role_Get_checkbox);
 
         currView = findViewById(R.id.SearchSettingsLayout);
 
-        saveMsg = Snackbar.make(currView, afterSaveMsg, LENGTH_LONG);
 
         sBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener()
         {
@@ -94,6 +75,7 @@ public class Search extends AppCompatActivity implements View.OnClickListener
         });
         mAppData.getDistanceSettings(userToken,this);
     }
+    @SuppressLint("WrongConstant")
     @Override
     public void onClick(View view)
     {
@@ -105,6 +87,7 @@ public class Search extends AppCompatActivity implements View.OnClickListener
         if (view == SaveSettings_btn)
         {
             SaveSettingsToDB();
+            Snackbar.make(currView, afterSaveMsg, LENGTH_LONG).setDuration(30000).show();
         }
     }
 
@@ -118,7 +101,6 @@ public class Search extends AppCompatActivity implements View.OnClickListener
 
     private void SaveSettingsToDB()
     {
-        Object obj = null;
         Log.d(TAG, "Start Method: SaveSettingsToDB");
         //validate Distance field contains a valid value
         //save the settings to DB
@@ -224,21 +206,21 @@ public class Search extends AppCompatActivity implements View.OnClickListener
         String role = settingsValues.get("Role").toString();
         switch (role){
             case "0":
-                {
-                   get_Checkbox.setChecked(true);
-                   break;
-                }
+            {
+                get_Checkbox.setChecked(true);
+                break;
+            }
             case "1":
-                {
-                   give_Checkbox.setChecked(true);
-                   break;
-                }
+            {
+                give_Checkbox.setChecked(true);
+                break;
+            }
             case "2":
-                {
-                    get_Checkbox.setChecked(true);
-                    give_Checkbox.setChecked(true);
-                    break;
-                }
+            {
+                get_Checkbox.setChecked(true);
+                give_Checkbox.setChecked(true);
+                break;
+            }
             default: break;
         }
 
