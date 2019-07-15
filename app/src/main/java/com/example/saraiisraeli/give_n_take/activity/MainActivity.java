@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.itemsButton:
                 Log.d(TAG, "items button pressed" );
-                myIntnet = new Intent(MainActivity.this ,UploadPhoto.class);
+                myIntnet = new Intent(MainActivity.this ,Items.class);
                 startActivity(myIntnet);
                 finish();
                 break;

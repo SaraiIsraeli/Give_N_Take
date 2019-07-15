@@ -63,7 +63,16 @@
     <string name="status_link_found">Link received, enter email to sign in.</string>
     <string name="id_fmt">User ID: %s</string>
     <string name="email_fmt">Email: %s</string>
-    <string name="upload_photo_header">בחר תמונה שברצונך להעלות</string>
+    <string name="upload_photo_header">בחר תמונה שברצונך להוסיף למוצר</string>
     <string name="choose_photo">בחירת תמונה</string>
-    <string name="upload_photo">העלאת תמונה</string>
+    <string name="upload_photo">העלאת מוצר</string>
+    <string name="without_photo">העלאה מוצר ללא תמונה -></string>
+    <string name="items_history">היסטוריית מוצרים</string>
+    <string name="upload_item">העלאת מוצר חדש:</string>
+    <string name="item_name">שם המוצר</string>
+    <string name="item_desc">תיאור המוצר</string>
+    <string name="choose_location">מיקום המוצר</string>
+    <string name="current_location">בחר מיקום נוכחי</string>
+    <string name="add_photo">הוספת תמונה</string>
+
 </resources>
