@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 
 import com.example.saraiisraeli.give_n_take.R;
@@ -30,6 +31,8 @@ public class MyProfileActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener firebaseAuthListner;
     private DatabaseReference dbRef;
     String m_nameStr, m_phoneNumberStr;
+    private CheckBox give_Checkbox,get_Checkbox;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,16 +53,19 @@ public class MyProfileActivity extends AppCompatActivity {
         m_name = (EditText) findViewById(R.id.Name);
         m_phoneNumber = (EditText) findViewById(R.id.phoneNumber);
         m_start = (Button) findViewById(R.id.submit_Profile);
+        give_Checkbox = findViewById(R.id.Role_Give_checkbox);
+        get_Checkbox = findViewById(R.id.Role_Get_checkbox);
 
         m_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (validateFields()) {
                     Log.d(TAG, "form is filled successfuly" );
-                    User user = new User(m_nameStr, m_phoneNumberStr);
+                    String role = GetRoleValue();
+                    User user = new User(m_nameStr, m_phoneNumberStr,role);
                     dbRef.child("users").child(userId).setValue(user);
                     Log.d(TAG, "update user in Firebase - " + "user name: " +  user.getName()+
-                            " user phone number: "  + user.getPhoneNumber());
+                            " user phone number: "  + user.getPhoneNumber() + "User Role "+ user.getRole());
                     myIntnet = new Intent(MyProfileActivity.this ,Search.class);
                     startActivity(myIntnet);
                     finish();
@@ -68,6 +74,45 @@ public class MyProfileActivity extends AppCompatActivity {
         });
 
     }
+
+    private boolean ValidateRoleField()
+    {
+        Log.d(TAG, "Start Method: ValidateRoleField");
+        boolean checked = true;
+        if (!(get_Checkbox.isChecked()) && (!give_Checkbox.isChecked())) // both not checked
+        {
+            m_start.setError("Must choose at least one");
+            checked = false;
+        }
+        Log.d(TAG, "End Method: ValidateRoleField");
+        return checked;
+
+    }
+    private String GetRoleValue()
+    {
+        Log.d(TAG, "Start Method: GetRoleValue");
+        String role = "0"; // by defualt - Buyer
+        boolean RoleCheck = ValidateRoleField();
+        if (RoleCheck)
+        {
+            if (get_Checkbox.isChecked() && give_Checkbox.isChecked())
+            {// User is Seller and Buyer
+                role = "2";
+            }
+            else if (!(get_Checkbox.isChecked()) && give_Checkbox.isChecked())
+            {//User is Seller only
+                role = "1";
+            }
+            else
+            {//User is Buyer
+                role = "0";
+            }
+        }
+        Log.d(TAG, "End Method: GetRoleValue");
+        return role;
+    }
+
+
 
     private boolean validateFields() {
         boolean isValid = true;
@@ -95,7 +140,12 @@ public class MyProfileActivity extends AppCompatActivity {
         } else {
             m_phoneNumber.setError(null);
         }
-
+        boolean isRoleValid = ValidateRoleField();
+        if (!isRoleValid)
+        {
+            isValid = false;
+            Log.d(TAG, "Must Choose At Least 1 Role");
+        }
         return  isValid;
     }
     public boolean isAlpha(String name) {

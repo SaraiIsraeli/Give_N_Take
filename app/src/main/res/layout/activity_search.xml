@@ -68,49 +68,6 @@
             android:visibility="visible" />
 
         <TextView
-            android:id="@+id/Role"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/IntrestingIn"
-            android:textColor="@color/colorSplashtext"
-            android:textSize="25sp"
-            android:textStyle="bold"
-            app:fontFamily="@font/comicbold"/>
-
-
-        <com.google.android.material.checkbox.MaterialCheckBox
-            android:id="@+id/Role_Get_checkbox"
-            style="checkboxStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="95dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"
-            android:buttonTint="@color/colorAccent"
-            android:saveEnabled="true"
-            android:text="@string/ProdSearch"
-            android:textColor="@color/colorAccent"
-            android:textStyle="bold"
-            app:fontFamily="@font/comicbold"
-            android:textSize="20dp"/>
-
-        <com.google.android.material.checkbox.MaterialCheckBox
-            android:id="@+id/Role_Give_checkbox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="95dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:buttonTint="@color/colorAccent"
-            android:saveEnabled="true"
-            android:text="@string/ProdGive"
-            android:textColor="@color/colorAccent"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            app:fontFamily="@font/comicbold"/>
-
-        <TextView
             android:id="@+id/textView4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

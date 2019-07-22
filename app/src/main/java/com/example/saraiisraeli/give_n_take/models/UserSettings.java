@@ -10,15 +10,15 @@ public class UserSettings
     private static final String TAG = "";
     private String distance;
     private String userToken;
-    private String  role; // 1 = seller , 0 = buyer , 2 = both
+    private String prodQuery;
 
     public UserSettings() {}
 
-    public UserSettings(String i_userToken,String i_distance, String i_Role)
+    public UserSettings(String i_userToken,String i_distance, String i_prodQuery)
     {
         this.distance = i_distance;
         this.userToken = i_userToken;
-        this.role = i_Role;
+        this.prodQuery = i_prodQuery;
     }
 
     public Map<String,Object> toMap()
@@ -27,7 +27,7 @@ public class UserSettings
         HashMap<String, Object> result = new HashMap<>();
         result.put("userToken",userToken);
         result.put("distance",distance);
-        result.put("Role",role);
+        result.put("prodQuery",prodQuery);
 
         Log.d(TAG, "End Method: toMap");
         return result;
@@ -50,11 +50,11 @@ public class UserSettings
         this.userToken = userToken;
     }
 
-    public String getRole() {
-        return role;
+    public String getProdQuery() {
+        return prodQuery;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setProdQuery(String prodQuery) {
+        this.prodQuery = prodQuery;
     }
 }

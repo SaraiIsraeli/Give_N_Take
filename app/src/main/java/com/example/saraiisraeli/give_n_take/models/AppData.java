@@ -33,11 +33,12 @@ public class AppData {
         Log.d(TAG, "Start Method: SaveDistanceSettings");
         String userToken = (String) SettingsValues.get("userToken");
         String distance = SettingsValues.get("distance").toString();
-        String role = SettingsValues.get("Role").toString();
-        if ((!userToken.isEmpty()) && (Integer.valueOf(distance) > 0) && (Integer.valueOf(role) <= 2)) {
+        String productName = SettingsValues.get("prodQuery").toString();
+        if ((!userToken.isEmpty()) && (Integer.valueOf(distance) > 0) ) {
             try {
                 mDatabase.child("userSettings").child(userToken).child("distance").setValue(distance);
-                mDatabase.child("userSettings").child(userToken).child("Role").setValue(role);
+                if(!productName.isEmpty())
+                mDatabase.child("userSettings").child(userToken).child("prodQuery").setValue(productName);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -59,8 +60,8 @@ public class AppData {
                     Log.i(TAG, "dataSnapshot:" + dataSnapshot.getValue());
                     if (settings != null) {
                         settingsValues.put("distance", settings.get("distance").toString());
-                        settingsValues.put("Role", settings.get("Role").toString());
-                        Log.i(TAG, "settings values appdata: " + settingsValues.get("Role").toString() + " ," + settingsValues.get("distance").toString());
+                        settingsValues.put("prodQuery", settings.get("prodQuery").toString());
+                        Log.i(TAG, "settings values appdata: " + settingsValues.get("prodQuery").toString() + " ," + settingsValues.get("distance").toString());
                         mSearch.setDataFromDB(settingsValues);
                     } else {
                         Log.i(TAG, "settings is null! ");

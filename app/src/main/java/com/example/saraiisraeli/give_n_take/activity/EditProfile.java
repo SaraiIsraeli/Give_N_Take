@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 
 import com.example.saraiisraeli.give_n_take.R;
@@ -29,6 +30,7 @@ public class EditProfile extends AppCompatActivity {
     EditText m_phoneNumber;
     Button m_start, m_back, disconnect;
     Intent myIntnet;
+    private CheckBox give_Checkbox,get_Checkbox;
     private FirebaseAuth firebaseAuth;
     private FirebaseDatabase firebaseDatabase;
     private FirebaseAuth.AuthStateListener firebaseAuthListner;
@@ -56,6 +58,8 @@ public class EditProfile extends AppCompatActivity {
         m_phoneNumber = (EditText) findViewById(R.id.phone);
         m_start = (Button) findViewById(R.id.btnSave);
         m_back = (Button)findViewById(R.id.btnBack);
+        give_Checkbox = findViewById(R.id.Role_Give_checkbox_Edit);
+        get_Checkbox = findViewById(R.id.Role_Get_checkbox_Edit);
         disconnect = findViewById(R.id.disconnect);
         mDatabaseUser_name = FirebaseDatabase.getInstance().getReference().child("users").child(userId).child("name");
         mDatabaseUser_phone = FirebaseDatabase.getInstance().getReference().child("users").child(userId).child("phoneNumber");
@@ -85,16 +89,18 @@ public class EditProfile extends AppCompatActivity {
 
             }
 
+            
         });
         m_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (validateFields()) {
                     Log.d(TAG, "form is filled successfuly" );
-                    User user = new User(m_nameStr, m_phoneNumberStr);
+                    String role = GetRoleValue();
+                    User user = new User(m_nameStr, m_phoneNumberStr,role);
                     dbRef.child("users").child(userId).setValue(user);
                     Log.d(TAG, "update user in Firebase - " + "user name: " +  user.getName()+
-                            " user phone number: "  + user.getPhoneNumber());
+                            " user phone number: "  + user.getPhoneNumber() +"User Role "+ user.getRole());
                     myIntnet = new Intent(EditProfile.this ,MainActivity.class);
                     startActivity(myIntnet);
                     finish();
@@ -119,6 +125,42 @@ public class EditProfile extends AppCompatActivity {
         });
     }
 
+    private boolean ValidateRoleField()
+    {
+        Log.d(TAG, "Start Method: ValidateRoleField");
+        boolean checked = true;
+        if (!(get_Checkbox.isChecked()) && (!give_Checkbox.isChecked())) // both not checked
+        {
+            m_start.setError("Must choose at least one");
+            checked = false;
+        }
+        Log.d(TAG, "End Method: ValidateRoleField");
+        return checked;
+
+    }
+    private String GetRoleValue()
+    {
+        Log.d(TAG, "Start Method: GetRoleValue");
+        String role = "0"; // by defualt - Buyer
+        boolean RoleCheck = ValidateRoleField();
+        if (RoleCheck)
+        {
+            if (get_Checkbox.isChecked() && give_Checkbox.isChecked())
+            {// User is Seller and Buyer
+                role = "2";
+            }
+            else if (!(get_Checkbox.isChecked()) && give_Checkbox.isChecked())
+            {//User is Seller only
+                role = "1";
+            }
+            else
+            {//User is Buyer
+                role = "0";
+            }
+        }
+        Log.d(TAG, "End Method: GetRoleValue");
+        return role;
+    }
 
     private boolean validateFields() {
         boolean isValid = true;
@@ -146,7 +188,12 @@ public class EditProfile extends AppCompatActivity {
         } else {
             m_phoneNumber.setError(null);
         }
-
+        boolean isRoleValid = ValidateRoleField();
+        if (!isRoleValid)
+        {
+            isValid = false;
+            Log.d(TAG, "Must Choose At Least 1 Role");
+        }
         return  isValid;
     }
     public boolean isAlpha(String name) {
