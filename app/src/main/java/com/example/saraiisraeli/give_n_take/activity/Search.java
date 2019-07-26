@@ -7,10 +7,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import com.example.saraiisraeli.give_n_take.R;
 import com.example.saraiisraeli.give_n_take.models.AppData;
@@ -30,11 +32,11 @@ public class Search extends AppCompatActivity implements View.OnClickListener
     String userToken = (mAppData.getCurrentUser().getUid());
     private String dis = " KM";
     private String afterSaveMsg = "Save Succeed ";
-    private Button Back, SaveSettings_btn;
+    private Button SaveSettings_btn;
     private SeekBar sBar;
     private TextView tView;
-    private CheckBox give_Checkbox,get_Checkbox;
     private Snackbar saveMsg;
+    private EditText ProductNameSearchField;
     private View currView;
 
 @SuppressLint("WrongConstant")
@@ -51,11 +53,10 @@ public class Search extends AppCompatActivity implements View.OnClickListener
 
         SaveSettings_btn.setOnClickListener(this);
 
-        give_Checkbox = findViewById(R.id.Role_Give_checkbox);
-        get_Checkbox = findViewById(R.id.Role_Get_checkbox);
 
         currView = findViewById(R.id.SearchSettingsLayout);
 
+        ProductNameSearchField = findViewById(R.id.ProductSearch);
 
         sBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener()
         {
@@ -80,17 +81,12 @@ public class Search extends AppCompatActivity implements View.OnClickListener
     public void onClick(View view)
     {
         Log.d(TAG, "Start Method: onClick");
-        if (view == Back)
-        {
-            ReturnToMain();
-        }
         if (view == SaveSettings_btn)
         {
             SaveSettingsToDB();
             Snackbar.make(currView, afterSaveMsg, LENGTH_LONG).setDuration(30000).show();
         }
     }
-
     private void ReturnToMain()
     {
         Log.d(TAG, "Start Method: ReturnToMain");
@@ -99,21 +95,29 @@ public class Search extends AppCompatActivity implements View.OnClickListener
         finish();
     }
 
+    private boolean IsTextFieldIsEmpty(EditText etText) {
+        if (etText.getText().toString().trim().length() > 0)
+            return false;
+
+        return true;
+    }
+
+
     private void SaveSettingsToDB()
     {
         Log.d(TAG, "Start Method: SaveSettingsToDB");
         //validate Distance field contains a valid value
         //save the settings to DB
-        boolean isRoleValid = ValidateRoleField();
         boolean isDistanceValid = ValidateDistanceField();
-        if(isDistanceValid && isRoleValid)
+        boolean isSearchText  = IsTextFieldIsEmpty(ProductNameSearchField);
+        if(isDistanceValid && !isSearchText)
         {
             try
             {
                 userToken = (mAppData.getCurrentUser().getUid());
                 String dis = GetDisValue();
-                String role = GetRoleValue();
-                UserSettings us = new UserSettings(userToken,dis,role);
+                String ProdSearch = ProductNameSearchField.getText().toString();
+                UserSettings us = new UserSettings(userToken,dis,ProdSearch);
                 SettingsValues = us.toMap();
                 if (!SettingsValues.isEmpty())
                 {
@@ -133,42 +137,7 @@ public class Search extends AppCompatActivity implements View.OnClickListener
         ReturnToMain();
     }
 
-    private boolean ValidateRoleField()
-    {
-        Log.d(TAG, "Start Method: ValidateRoleField");
-        boolean checked = true;
-        if (!(get_Checkbox.isChecked()) && (!give_Checkbox.isChecked())) // both not checked
-        {
-            SaveSettings_btn.setError("Must choose at least one");
-            checked = false;
-        }
-        Log.d(TAG, "End Method: ValidateRoleField");
-        return checked;
 
-    }
-    private String GetRoleValue()
-    {
-        Log.d(TAG, "Start Method: GetRoleValue");
-        String role = "0"; // by defualt - Buyer
-        boolean RoleCheck = ValidateRoleField();
-        if (RoleCheck)
-        {
-            if (get_Checkbox.isChecked() && give_Checkbox.isChecked())
-            {// User is Seller and Buyer
-                role = "2";
-            }
-            else if (!(get_Checkbox.isChecked()) && give_Checkbox.isChecked())
-            {//User is Seller only
-                role = "1";
-            }
-            else
-            {//User is Buyer
-                role = "0";
-            }
-        }
-        Log.d(TAG, "End Method: GetRoleValue");
-        return role;
-    }
     private String GetDisValue()
     {
         Log.d(TAG, "Start Method: GetDisValue");
@@ -198,34 +167,15 @@ public class Search extends AppCompatActivity implements View.OnClickListener
         return isValid;
     }
 
-
     public void setDataFromDB(Map<String, Object> settingsValues)
     {
-        Log.i (TAG,"setting values:" + settingsValues.get("Role") + settingsValues.get("distance"));
+        Log.i (TAG,"setting values:" + settingsValues.get("prodQuery") + settingsValues.get("distance"));
         String distance = settingsValues.get("distance").toString();
-        String role = settingsValues.get("Role").toString();
-        switch (role){
-            case "0":
-            {
-                get_Checkbox.setChecked(true);
-                break;
-            }
-            case "1":
-            {
-                give_Checkbox.setChecked(true);
-                break;
-            }
-            case "2":
-            {
-                get_Checkbox.setChecked(true);
-                give_Checkbox.setChecked(true);
-                break;
-            }
-            default: break;
-        }
+        String productNameSearch = settingsValues.get("prodQuery").toString();
 
         sBar.setProgress(Integer.valueOf(distance));
         tView.setText(distance);
+        ProductNameSearchField.setText(productNameSearch);
     }
 }
 

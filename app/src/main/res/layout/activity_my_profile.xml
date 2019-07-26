@@ -1,82 +1,166 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorSplashbg">
+    android:background="@color/colorPrimary"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:paddingTop="20dp">
 
     <TextView
         android:id="@+id/my_profile_headline"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="36dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="0dp"
         android:includeFontPadding="true"
+        android:paddingBottom="20dp"
         android:text="פרופיל אישי"
         android:textAlignment="center"
-        android:textColor="@color/colorSplashtext"
+        android:textColor="@color/White"
         android:textSize="68sp"
         android:textStyle="bold"
-        app:fontFamily="@font/comicbold"
-        android:layout_alignParentLeft="true" />
+        app:fontFamily="@font/comicbold" />
 
     <TextView
-        android:id="@+id/text_splash"
+        android:id="@+id/txtview1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="71dp"
-        android:layout_weight="1"
-        android:includeFontPadding="true"
-        android:padding="5dp"
-        android:text="@string/splash_screen"
-        android:textAlignment="center"
+        android:text="פרטים אישיים:"
         android:textColor="@color/colorSplashtext"
-        android:textSize="30sp"
+        android:textSize="25sp"
         android:textStyle="bold"
-        app:fontFamily="@font/yehuda"
-        android:layout_alignParentLeft="true" />
-
-
-    <EditText
-        android:id="@+id/phoneNumber"
+        app:fontFamily="@font/comicbold"/>
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/LoginTextInputLayoutStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="277dp"
-        android:ems="10"
-        android:hint="טלפון ליצירת קישור"
-        android:inputType="phone"
-        android:textAlignment="center" />
+        android:textColorHint="@color/White"
+        app:backgroundTint="@color/buttonbg"
+        app:boxBackgroundMode="outline"
+        android:textAlignment="center">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/phoneNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:hint="טלפון ליצירת קישור"
+            android:textAppearance="?android:textAppearanceLarge"
+            android:inputType="phone"
+            android:ems="10"
+            android:textColor="@color/White"
+            android:textSize="22dp"
+            app:fontFamily="@font/comicbold" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
-        android:id="@+id/Name"
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/LoginTextInputLayoutStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="196dp"
         android:ems="10"
-        android:hint="שם"
-        android:inputType="textPersonName"
-        android:textAlignment="center" />
+        android:textColorHint="@color/White"
+        app:backgroundTint="@color/buttonbg"
+        app:boxBackgroundMode="outline">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/Name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="15dp"
+            android:textAppearance="?android:textAppearanceLarge"
+            android:ems="10"
+            android:hint="שם"
+            android:inputType="textPersonName"
+            android:textColor="@color/White"
+            android:textSize="22dp"
+            app:fontFamily="@font/comicbold" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
-        android:id="@+id/submit_Profile"
+    <TextView
+        android:id="@+id/Role"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="0dp"
-        android:layout_marginRight="0dp"
-        android:layout_marginBottom="326dp"
-        android:background="@color/myprofilebutton"
-        android:text="@string/start" />
+        android:text="@string/IntrestingIn"
+        android:textColor="@color/colorSplashtext"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:fontFamily="@font/comicbold"/>
 
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/Role_Get_checkbox"
+        style="checkboxStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="95dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:buttonTint="@color/colorAccent"
+        android:saveEnabled="true"
+        android:text="@string/ProdSearch"
+        android:textColor="@color/colorAccent"
+        android:textStyle="bold"
+        app:fontFamily="@font/comicbold"
+        android:textSize="20dp"/>
 
-</RelativeLayout>
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/Role_Give_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="95dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="7dp"
+        android:buttonTint="@color/colorAccent"
+        android:saveEnabled="true"
+        android:text="@string/ProdGive"
+        android:textColor="@color/colorAccent"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        app:fontFamily="@font/comicbold"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/submit_Profile"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="24dp"
+        android:text="@string/start"
+        android:textAppearance="?android:textAppearanceLarge"
+        android:textColor="@color/White"
+        android:textStyle="bold"
+        app:backgroundTint="@color/buttonsColor"
+        app:fontFamily="@font/comicbold"/>
+
+        <TextView
+            android:id="@+id/text_splash"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="71dp"
+            android:layout_weight="1"
+            android:includeFontPadding="true"
+            android:padding="5dp"
+            android:text="@string/splash_screen"
+            android:textAlignment="center"
+            android:textColor="@color/colorSplashtext"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:fontFamily="@font/yehuda"
+            android:layout_alignParentLeft="true" />
+    </LinearLayout>
+</LinearLayout>
