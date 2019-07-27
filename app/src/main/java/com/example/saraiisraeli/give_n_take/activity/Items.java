@@ -65,7 +65,7 @@ public class Items extends AppCompatActivity implements View.OnClickListener{
     StorageReference storageReference;
 
     private String Document_img1 = "";
-    String userId,nameStr,descStr,locationStr;
+    String userId;
     EditText m_itemName;
     EditText m_itemDesc;
     EditText m_location;
@@ -79,7 +79,7 @@ public class Items extends AppCompatActivity implements View.OnClickListener{
     private FirebaseAuth.AuthStateListener firebaseAuthListner;
     private DatabaseReference dbRef;
     String m_itemNameStr, m_itemDecStr, m_locationStr;
-    Boolean m_ischecked;
+    Boolean m_ischecked = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -112,6 +112,7 @@ public class Items extends AppCompatActivity implements View.OnClickListener{
         IDProf.setOnClickListener(this);
         Choose_Btn.setOnClickListener(this);
         Upload_Btn.setOnClickListener(this);
+        m_currentLocation.setOnClickListener(this);
         m_currentLocation.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
@@ -120,12 +121,10 @@ public class Items extends AppCompatActivity implements View.OnClickListener{
                     m_location.setInputType(InputType.TYPE_NULL);
                     m_location.setFocusableInTouchMode(false);
                     m_location.setVisibility(View.INVISIBLE);
-                    m_ischecked = isChecked;
                 } else {
                     m_location.setEnabled(false);
                     m_location.setFocusableInTouchMode(true);
                     m_location.setVisibility(View.VISIBLE);
-                    m_ischecked = isChecked;
                 }
             }
         });
@@ -136,9 +135,13 @@ public class Items extends AppCompatActivity implements View.OnClickListener{
         Log.d(TAG,"get item details");
         m_itemDecStr = m_itemDesc.getText().toString();
         m_itemNameStr = m_itemName.getText().toString();
-        m_locationStr = m_location.getText().toString();
-
+        if (m_ischecked == true){
+            m_locationStr = getCurrentLocation();
         }
+        else{
+            m_locationStr = m_location.getText().toString();
+        }
+    }
 
     private String getCurrentLocation()
     {
@@ -181,7 +184,21 @@ public class Items extends AppCompatActivity implements View.OnClickListener{
                 selectImage();
                 break;
             }
+            case R.id.LocationRB:{
+                setLocationBoolean();
+                break;
+            }
 
+        }
+    }
+
+    private void setLocationBoolean() {
+        if(m_ischecked == false)
+        {
+            m_ischecked = true;
+        }
+        else{
+            m_ischecked = false;
         }
     }
 
