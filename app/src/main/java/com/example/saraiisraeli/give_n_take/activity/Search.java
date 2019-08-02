@@ -20,6 +20,7 @@ import com.example.saraiisraeli.give_n_take.models.UserSettings;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Map;
+import java.util.Objects;
 
 import static android.widget.Toast.LENGTH_LONG;
 
@@ -95,11 +96,9 @@ public class Search extends AppCompatActivity implements View.OnClickListener
         finish();
     }
 
-    private boolean IsTextFieldIsEmpty(EditText etText) {
-        if (etText.getText().toString().trim().length() > 0)
-            return false;
-
-        return true;
+    private boolean IsTextFieldIsEmpty(EditText etText)
+    {
+        return (etText.getText().toString().trim().length() > 0);
     }
 
 
@@ -110,23 +109,25 @@ public class Search extends AppCompatActivity implements View.OnClickListener
         //save the settings to DB
         boolean isDistanceValid = ValidateDistanceField();
         boolean isSearchText  = IsTextFieldIsEmpty(ProductNameSearchField);
-        if(isDistanceValid && !isSearchText)
+        if(isDistanceValid)
         {
             try
             {
-                userToken = (mAppData.getCurrentUser().getUid());
-                String dis = GetDisValue();
-                String ProdSearch = ProductNameSearchField.getText().toString();
-                UserSettings us = new UserSettings(userToken,dis,ProdSearch);
-                SettingsValues = us.toMap();
-                if (!SettingsValues.isEmpty())
-                {
-                    mAppData.setDistanceSettings(SettingsValues);
-                    saveMsg.show();
-                    Log.d(TAG, "End Method: SaveSettingsToDB");
 
-                    mAppData.setDistanceSettings(SettingsValues);
-                }
+                    userToken = (mAppData.getCurrentUser().getUid());
+                    String dis = GetDisValue();
+                    String ProdSearch = ProductNameSearchField.getText().toString();
+                    UserSettings us = new UserSettings(userToken,dis,ProdSearch);
+                    SettingsValues = us.toMap();
+                    if (!SettingsValues.isEmpty())
+                    {
+                        mAppData.setDistanceSettings(SettingsValues);
+                        saveMsg.show();
+                        Log.d(TAG, "End Method: SaveSettingsToDB");
+
+                        mAppData.setDistanceSettings(SettingsValues);
+                    }
+
 
             }
             catch (Exception ex)
@@ -134,6 +135,7 @@ public class Search extends AppCompatActivity implements View.OnClickListener
                 ex.printStackTrace();
             }
         }
+
         ReturnToMain();
     }
 
@@ -170,12 +172,17 @@ public class Search extends AppCompatActivity implements View.OnClickListener
     public void setDataFromDB(Map<String, Object> settingsValues)
     {
         Log.i (TAG,"setting values:" + settingsValues.get("prodQuery") + settingsValues.get("distance"));
-        String distance = settingsValues.get("distance").toString();
-        String productNameSearch = settingsValues.get("prodQuery").toString();
-
-        sBar.setProgress(Integer.valueOf(distance));
-        tView.setText(distance);
-        ProductNameSearchField.setText(productNameSearch);
+        try {
+            String distance = Objects.requireNonNull(settingsValues.get("distance")).toString();
+            String productNameSearch = Objects.requireNonNull(settingsValues.get("prodQuery")).toString();
+            ProductNameSearchField.setText(productNameSearch);
+            sBar.setProgress(Integer.valueOf(distance));
+            tView.setText(distance);
+        }
+        catch(Exception ex )
+        {
+            ex.printStackTrace();
+        }
     }
 }
 

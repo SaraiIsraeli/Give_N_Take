@@ -14,6 +14,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class AppData {
     private DatabaseReference mDatabase;
@@ -58,10 +59,19 @@ public class AppData {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     Map<String, Object> settings = (Map<String, Object>) dataSnapshot.getValue();
                     Log.i(TAG, "dataSnapshot:" + dataSnapshot.getValue());
-                    if (settings != null) {
+                    if (settings != null)
+                    {
                         settingsValues.put("distance", settings.get("distance").toString());
-                        settingsValues.put("prodQuery", settings.get("prodQuery").toString());
-                        Log.i(TAG, "settings values appdata: " + settingsValues.get("prodQuery").toString() + " ," + settingsValues.get("distance").toString());
+                        if(settings.get("prodQuery") == null)
+                        {
+                            settingsValues.put("prodQuery", "");
+                        }
+                        else
+                        {
+                            settingsValues.put("prodQuery", Objects.requireNonNull(settings.get("prodQuery")).toString());
+                        }
+
+                        //Log.i(TAG, "settings values appdata: " + settingsValues.get("prodQuery").toString() + " ," + settingsValues.get("distance").toString());
                         mSearch.setDataFromDB(settingsValues);
                     } else {
                         Log.i(TAG, "settings is null! ");
