@@ -1,139 +1,181 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="15dp"
-    android:orientation="vertical"
-    android:background="@color/colorSplashbg">
+    android:background="@color/colorPrimary"
+    android:orientation="vertical">
 
-    <Button
-        android:id="@+id/HistoryBtn"
-        android:layout_width="120dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="120dp"
-        android:background="@color/buttonsColor"
-        android:text="@string/items_history"
-        android:textAppearance="?android:textAppearanceMedium"
-        android:textColor="@color/colorSplashtext"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:fontFamily="@font/yehuda" />
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingLeft="24dp"
+        android:paddingTop="20dp"
+        android:paddingRight="24dp">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="0dp"
+        android:includeFontPadding="true"
         android:text="@string/upload_item"
-        android:textColor="@color/colorSplashtext"
-        android:textSize="36sp"
-        android:textStyle="bold"
         android:textAlignment="center"
-        app:fontFamily="@font/yehuda" />
-
-    <EditText
-    android:id="@+id/ItemName"
-    android:layout_width="180dp"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    android:layout_marginTop="20dp"
-    android:background="@color/buttonsColor"
-    android:hint="@string/item_name"
-    android:textAppearance="?android:textAppearanceMedium"
-    android:textColor="@color/colorSplashtext"
-    android:textSize="20sp"
-    android:textStyle="bold"
-    app:fontFamily="@font/yehuda"
-        android:textAlignment="center"
-        />
-
-    <EditText
-        android:id="@+id/ItemDesc"
-        android:layout_gravity="center"
-        android:layout_width="180dp"
-        android:layout_height="wrap_content"
-       android:layout_marginTop="20dp"
-        android:background="@color/buttonsColor"
-        android:hint="@string/item_desc"
-        android:textAppearance="?android:textAppearanceMedium"
-        android:textColor="@color/colorSplashtext"
-        android:textSize="20sp"
+        android:textColor="@color/White"
+        android:textSize="40dp"
         android:textStyle="bold"
-        app:fontFamily="@font/yehuda"
-        android:textAlignment="center"
-        />
+        app:fontFamily="@font/comicbold" />
 
-    <EditText
-        android:id="@+id/LocationET"
-        android:layout_width="180dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:background="@color/buttonsColor"
-        android:hint="@string/choose_location"
-        android:textAppearance="?android:textAppearanceMedium"
-        android:textColor="@color/colorSplashtext"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:fontFamily="@font/yehuda"
-        android:textAlignment="center"
-        />
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/LoginTextInputLayoutStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColorHint="@color/White"
+            app:backgroundTint="@color/buttonbg"
+            app:hintTextColor="@color/colorAccent"
+            app:boxBackgroundMode="outline">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/ItemName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:hint="@string/item_name"
+                android:layout_gravity="center"
+                android:textAppearance="?android:textAppearanceLarge"
+                android:maxLines="1"
+                android:textColor="@color/White"
+                android:textSize="22dp"
+                app:fontFamily="@font/comicbold" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/LoginTextInputLayoutStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColorHint="@color/White"
+            app:backgroundTint="@color/buttonbg"
+            app:hintTextColor="@color/colorAccent"
+            app:boxBackgroundMode="outline">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/ItemDesc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:hint="@string/item_desc"
+                android:textAppearance="?android:textAppearanceLarge"
+                android:textColor="@color/White"
+                android:maxLines="1"
+                android:textSize="22dp"
+                android:textStyle="bold"
+                app:fontFamily="@font/comicbold" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/LoginTextInputLayoutStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColorHint="@color/colorAccent"
+            app:hintAnimationEnabled="true"
+            app:backgroundTint="@color/buttonbg"
+            app:boxBackgroundMode="outline"
+            app:hintTextColor="@color/colorAccent"
+            app:hintEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/LocationET"
+                style="@style/AppThemeThree"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:hint="@string/choose_location"
+                android:textAppearance="?android:textAppearanceLarge"
+                android:maxLines="1"
+                android:inputType="text"
+                android:textColor="@color/White"
+                android:textSize="22dp"
+                app:fontFamily="@font/comicbold" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/LocationRB"
+            style="checkboxStyle"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@color/colorPrimary"
+            android:text="@string/current_location"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:textColor="@color/colorAccent"
+            android:textSize="18sp"
+            android:saveEnabled="true"
+            android:textStyle="bold"
+            android:buttonTint="@color/White"
+            app:fontFamily="@font/comicbold"/>
 
 
-    <CheckBox
-        android:id="@+id/LocationRB"
-        android:layout_width="180dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="15dp"
-        android:background="@color/buttonsColor"
-        android:text="@string/current_location"
-        android:textAppearance="?android:textAppearanceMedium"
-        android:textColor="@color/colorSplashtext"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:fontFamily="@font/yehuda"
-        android:textAlignment="center"
-        />
 
-    <Button
-        android:id="@+id/ChooseBtn"
-        android:layout_width="180dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:text="@string/choose_photo"
-        android:textStyle="bold"
-        android:textSize="20sp"
-        android:textColor="@color/colorSplashtext"
-        android:textAppearance="?android:textAppearanceMedium"
-        android:layout_gravity="center"
-        app:fontFamily="@font/yehuda"
-        android:background="@color/buttonsColor"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/ChooseBtn"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
+            android:text="@string/choose_photo"
+            android:textAppearance="?android:textAppearanceLarge"
+            android:textColor="@color/White"
+            android:textStyle="bold"
+            app:backgroundTint="@color/buttonsColor"
+            app:fontFamily="@font/comicbold"/>
 
 
-    <ImageView
-        android:id="@+id/IdProf"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:src="@drawable/frame"
-        android:layout_gravity="center"
-        android:layout_marginTop="5dp"/>
+        <ImageView
+            android:id="@+id/IdProf"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:src="@drawable/frame"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"/>
 
-    <Button
-        android:id="@+id/UploadBtn"
-        android:layout_width="180dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:text="@string/upload_photo"
-        android:textStyle="bold"
-        android:textSize="20sp"
-        android:textColor="@color/colorSplashtext"
-        android:textAppearance="?android:textAppearanceMedium"
-        android:layout_gravity="center"
-        app:fontFamily="@font/yehuda"
-        android:background="@color/buttonsColor"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/UploadBtn"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="@string/upload_photo"
+            android:textAppearance="?android:textAppearanceLarge"
+            android:textColor="@color/White"
+            android:textStyle="bold"
+            app:backgroundTint="@color/buttonsColor"
+            app:fontFamily="@font/comicbold"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/HistoryBtn"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/buttonsColor"
+            app:backgroundTint="@color/buttonsColor"
+            android:paddingTop="5dp"
+            android:text="@string/items_history"
+            android:textAppearance="?android:textAppearanceLarge"
+            android:textColor="@color/White"
+            app:fontFamily="@font/comicbold" />
+
+    </LinearLayout>
 
 </LinearLayout>
