@@ -95,6 +95,23 @@ public class AppData {
         }
         return null;
     }
+
+    public void SavetNewItem(Map<String, Object> ItemValues, String i_userToken) {
+        Log.d(TAG, "Start Method: SaveNewItem");
+        String itemName = (String) ItemValues.get("itemName");
+        String userToken = i_userToken;
+        String itemLocation = ItemValues.get("itemLocation").toString();
+        String itemDescription = ItemValues.get("itemDescription").toString();
+            try {
+                mDatabase.child("items").child(userToken).child("itemName").setValue(itemName);
+                mDatabase.child("items").child(userToken).child("itemLocation").setValue(itemLocation);
+                mDatabase.child("items").child(userToken).child("itemDescription").setValue(itemDescription);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+
+        Log.d(TAG, "End Method: SaveNewItem");
+    }
 /*
     public String getCurrentUserName(final String userToken) {
         //final Map<String, Object> usersValues = new HashMap<>();

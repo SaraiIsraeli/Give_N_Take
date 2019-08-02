@@ -26,8 +26,11 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.saraiisraeli.give_n_take.R;
+import com.example.saraiisraeli.give_n_take.models.AppData;
+import com.example.saraiisraeli.give_n_take.models.Item;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -43,6 +46,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Map;
 import java.util.UUID;
 
 public class Items extends AppCompatActivity implements View.OnClickListener{
@@ -50,6 +54,10 @@ public class Items extends AppCompatActivity implements View.OnClickListener{
     private static final String TAG = "Items";
 
     public static final String KEY_User_Document1 = "doc1";
+    Map<String, Object> itemValues;
+    AppData mAppData = new AppData();
+    private String afterSaveMsg = "Save Succeed ";
+    private Snackbar saveMsg;
     ImageView IDProf;
     Uri selectedImage;
     Button Upload_Btn, Choose_Btn;
@@ -57,7 +65,7 @@ public class Items extends AppCompatActivity implements View.OnClickListener{
     StorageReference storageReference;
 
     private String Document_img1 = "";
-    String userId,nameStr,descStr,locationStr;
+    String userId;
     EditText m_itemName;
     EditText m_itemDesc;
     EditText m_location;
@@ -71,7 +79,7 @@ public class Items extends AppCompatActivity implements View.OnClickListener{
     private FirebaseAuth.AuthStateListener firebaseAuthListner;
     private DatabaseReference dbRef;
     String m_itemNameStr, m_itemDecStr, m_locationStr;
-    Boolean m_ischecked;
+    Boolean m_ischecked = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -101,24 +109,10 @@ public class Items extends AppCompatActivity implements View.OnClickListener{
         m_itemName = (EditText)findViewById(R.id.ItemName);
         m_itemDesc = (EditText)findViewById(R.id.ItemDesc);
         m_historyItemsBtn.setOnClickListener(this);
-        IDProf.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectImage();
-            }
-        });
-        Choose_Btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectImage();
-            }
-        });
-        Upload_Btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                uploadImage();
-            }
-        });
+        IDProf.setOnClickListener(this);
+        Choose_Btn.setOnClickListener(this);
+        Upload_Btn.setOnClickListener(this);
+        m_currentLocation.setOnClickListener(this);
         m_currentLocation.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
@@ -127,33 +121,25 @@ public class Items extends AppCompatActivity implements View.OnClickListener{
                     m_location.setInputType(InputType.TYPE_NULL);
                     m_location.setFocusableInTouchMode(false);
                     m_location.setVisibility(View.INVISIBLE);
-                    m_ischecked = isChecked;
                 } else {
                     m_location.setEnabled(false);
                     m_location.setFocusableInTouchMode(true);
                     m_location.setVisibility(View.VISIBLE);
-                    m_ischecked = isChecked;
                 }
             }
         });
-        events();
 }
-
-    private void events()
-    {
-        getItemDetails();
-    }
 
     private void getItemDetails()
     {
+        Log.d(TAG,"get item details");
         m_itemDecStr = m_itemDesc.getText().toString();
         m_itemNameStr = m_itemName.getText().toString();
-        if (m_ischecked!=null) {
-            if (m_ischecked == true) {
-                m_locationStr = getCurrentLocation();
-            } else {
-                m_locationStr = m_location.getText().toString();
-            }
+        if (m_ischecked == true){
+            m_locationStr = getCurrentLocation();
+        }
+        else{
+            m_locationStr = m_location.getText().toString();
         }
     }
 
@@ -174,6 +160,73 @@ public class Items extends AppCompatActivity implements View.OnClickListener{
                 startActivity(myIntnet);
                 finish();
                 break;
+            }
+            case R.id.UploadBtn:{
+                Log.d(TAG, "Uploading image");
+                uploadImage();
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                getItemDetails();
+                saveItemToDB();
+                uploadItem();
+                break;
+            }
+            case R.id.ChooseBtn:{
+                Log.d(TAG,"Select image");
+                selectImage();
+                break;
+            }
+            case R.id.IdProf:{
+                Log.d(TAG,"Select image -IDProf");
+                selectImage();
+                break;
+            }
+            case R.id.LocationRB:{
+                setLocationBoolean();
+                break;
+            }
+
+        }
+    }
+
+    private void setLocationBoolean() {
+        if(m_ischecked == false)
+        {
+            m_ischecked = true;
+        }
+        else{
+            m_ischecked = false;
+        }
+    }
+
+    private void saveItemToDB()
+    {
+        Log.d(TAG, "Start Method: saveItemToDB");
+        //validate Distance field contains a valid value
+        //save the settings to DB
+        boolean itemName = true;
+        boolean itemDesc  = true;
+        boolean itemLocation = true;
+        if(itemName && itemDesc && itemLocation)
+        {
+            try
+            {
+                Item item = new Item(m_itemNameStr,m_itemDecStr,m_locationStr);
+                itemValues = item.ItemToMap();
+                if (!itemValues.isEmpty())
+                {
+                    mAppData.SavetNewItem(itemValues,userId);
+                    saveMsg.show();
+                    Log.d(TAG, "End Method: saveItemToDB");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                ex.printStackTrace();
             }
         }
     }
