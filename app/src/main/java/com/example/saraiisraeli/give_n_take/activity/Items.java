@@ -1,16 +1,23 @@
 package com.example.saraiisraeli.give_n_take.activity;
 
+import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.text.InputType;
+import android.provider.Settings;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -24,10 +31,16 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.example.saraiisraeli.give_n_take.R;
 import com.example.saraiisraeli.give_n_take.models.AppData;
 import com.example.saraiisraeli.give_n_take.models.Item;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
@@ -46,16 +59,33 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 
-public class Items extends AppCompatActivity implements View.OnClickListener{
+    public class Items extends AppCompatActivity implements View.OnClickListener,
+            GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener{
 
+
+    /// location
+    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
+    private GoogleApiClient mGoogleApiClient;
+    private Location mLocation;
+    private LocationManager mLocationManager;
+
+    private LocationRequest mLocationRequest;
+    private com.google.android.gms.location.LocationListener listener;
+    private long UPDATE_INTERVAL = 2 * 1000;
+    private long FASTEST_INTERVAL = 1000;
+    private LocationManager locationManager;
+    //---------------------------------------------//
     private static final String TAG = "Items";
-
     public static final String KEY_User_Document1 = "doc1";
     Map<String, Object> itemValues;
     AppData mAppData = new AppData();
+    String userToken = (mAppData.getCurrentUser().getUid());
     private String afterSaveMsg = "Save Succeed ";
     private Snackbar saveMsg;
     ImageView IDProf;
@@ -63,7 +93,6 @@ public class Items extends AppCompatActivity implements View.OnClickListener{
     Button Upload_Btn, Choose_Btn;
     FirebaseStorage storage;
     StorageReference storageReference;
-
     private String Document_img1 = "";
     String userId;
     EditText m_itemName;
@@ -79,7 +108,7 @@ public class Items extends AppCompatActivity implements View.OnClickListener{
     private FirebaseAuth.AuthStateListener firebaseAuthListner;
     private DatabaseReference dbRef;
     String m_itemNameStr, m_itemDecStr, m_locationStr;
-    Boolean m_ischecked = false;
+    Boolean isCurrentLocationChecked = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -117,17 +146,26 @@ public class Items extends AppCompatActivity implements View.OnClickListener{
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if (isChecked) {
-                    m_location.setEnabled(true);
-                    m_location.setInputType(InputType.TYPE_NULL);
-                    m_location.setFocusableInTouchMode(false);
-                    m_location.setVisibility(View.INVISIBLE);
+                      m_location.setEnabled(false);
+                    isCurrentLocationChecked = true;
+                 //   m_location.setInputType(InputType.TYPE_NULL);
+                   // m_location.setFocusableInTouchMode(false);
                 } else {
-                    m_location.setEnabled(false);
+                    isCurrentLocationChecked = false;
+                    m_location.setText("");
+                    m_location.setEnabled(true);
                     m_location.setFocusableInTouchMode(true);
-                    m_location.setVisibility(View.VISIBLE);
                 }
             }
         });
+        // location
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
+
+        mLocationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 }
 
     private void getItemDetails()
@@ -135,19 +173,18 @@ public class Items extends AppCompatActivity implements View.OnClickListener{
         Log.d(TAG,"get item details");
         m_itemDecStr = m_itemDesc.getText().toString();
         m_itemNameStr = m_itemName.getText().toString();
-        if (m_ischecked == true){
-            m_locationStr = getCurrentLocation();
+        if (isCurrentLocationChecked == true){
+            getCurrentLocation();
         }
         else{
             m_locationStr = m_location.getText().toString();
         }
     }
 
-    private String getCurrentLocation()
+    private void getCurrentLocation()
     {
-      String location = "";
-
-      return location;
+        checkLocation(); //check whether location service is enable or not in your  phone
+        //startLocationUpdates();
     }
 // test 
     @Override
@@ -185,7 +222,7 @@ public class Items extends AppCompatActivity implements View.OnClickListener{
                 break;
             }
             case R.id.LocationRB:{
-                setLocationBoolean();
+                //  setLocationBoolean();
                 break;
             }
 
@@ -193,12 +230,12 @@ public class Items extends AppCompatActivity implements View.OnClickListener{
     }
 
     private void setLocationBoolean() {
-        if(m_ischecked == false)
+        if(isCurrentLocationChecked == false)
         {
-            m_ischecked = true;
+            isCurrentLocationChecked = true;
         }
         else{
-            m_ischecked = false;
+            isCurrentLocationChecked = false;
         }
     }
 
@@ -214,7 +251,7 @@ public class Items extends AppCompatActivity implements View.OnClickListener{
         {
             try
             {
-                Item item = new Item(m_itemNameStr,m_itemDecStr,m_locationStr);
+                Item item = new Item(m_itemNameStr,m_locationStr,m_itemDecStr);
                 itemValues = item.ItemToMap();
                 if (!itemValues.isEmpty())
                 {
@@ -383,4 +420,163 @@ public class Items extends AppCompatActivity implements View.OnClickListener{
                         });
             }
         }
+
+        /// location
+        @Override
+        public void onConnected(Bundle bundle) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                //      return;
+            }
+
+            startLocationUpdates();
+
+            mLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+
+            if (mLocation == null) {
+                startLocationUpdates();
+            }
+            if (mLocation != null) {
+                //mLatitudeTextView.setText(String.valueOf(mLocation.getLatitude()));
+              //  mLongitudeTextView.setText(String.valueOf(mLocation.getLongitude()));
+            } else {
+                Toast.makeText(this, "Location not Detected", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        @Override
+        public void onConnectionSuspended(int i) {
+            Log.i(TAG, "Connection Suspended");
+            mGoogleApiClient.connect();
+        }
+
+        @Override
+        public void onConnectionFailed(ConnectionResult connectionResult) {
+            Log.i(TAG, "Connection failed. Error: " + connectionResult.getErrorCode());
+        }
+
+        @Override
+        protected void onStart() {
+            super.onStart();
+            if (mGoogleApiClient != null) {
+                mGoogleApiClient.connect();
+            }
+        }
+
+        @Override
+        protected void onStop() {
+            super.onStop();
+            if (mGoogleApiClient.isConnected()) {
+                mGoogleApiClient.disconnect();
+            }
+        }
+
+        protected void startLocationUpdates() {
+            // Create the location request
+            mLocationRequest = LocationRequest.create()
+                    .setPriority(LocationRequest.PRIORITY_LOW_POWER)
+                    .setInterval(UPDATE_INTERVAL)
+                    .setFastestInterval(FASTEST_INTERVAL);
+            // Request location updates
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        MY_PERMISSIONS_REQUEST_LOCATION);
+            }
+            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient,mLocationRequest, this);
+            Log.d("reque", "--->>>>");
+        }
+
+        @Override
+        public void onLocationChanged(Location location) {
+            Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+            String errorMessage = "";
+            List<Address> addresses = null;
+
+            try {
+                addresses = geocoder.getFromLocation(
+                        location.getLatitude(),
+                        location.getLongitude(),
+                        // In this sample, get just a single address.
+                        1);
+                Address address = addresses.get(0);
+                ArrayList<String> addressFragments = new ArrayList<String>();
+                // Fetch the address lines usng getAddressLine,
+                // join them, and send them to the thread.
+                for(int i = 0; i <= address.getMaxAddressLineIndex(); i++) {
+                    addressFragments.add(address.getAddressLine(i));
+                }
+                if (isCurrentLocationChecked) {
+                    m_locationStr = addressFragments.get(0);
+                   m_location.setText(m_locationStr);
+               //     float [] result = new float[1];
+                //    List<Address> inputAddressFragments;
+                 //   inputAddressFragments = geocoder.getFromLocationName(item.getItemName(),2);
+                  //  Location.distanceBetween(address.getLatitude(),address.getLongitude(),
+                   //         inputAddressFragments.get(0).getLatitude(),inputAddressFragments.get(0).getLongitude(),result);
+                    //Log.i(TAG,"Found address , distance = "  +  result[0]/1000);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            String msg = "Updated Location: " +
+                    Double.toString(location.getLatitude()) + "," +
+                    Double.toString(location.getLongitude());
+            // You can now create a LatLng Object for use with maps
+            LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+        }
+        public void getItem (Map<String, Object> itemValues){
+        Item item = new Item();
+        item.setItemLocation(itemValues.get("itemLocation").toString());
+        item.setItemName(itemValues.get("itemName").toString());
+        item.setItemMoreInfo(itemValues.get("itemDescription").toString());
+        }
+
+        private boolean checkLocation() {
+            if (!isLocationEnabled())
+                showAlert();
+            return isLocationEnabled();
+        }
+
+        private void showAlert() {
+            final AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+            dialog.setTitle("Enable Location")
+                    .setMessage("Your Locations Settings is set to 'Off'.\nPlease Enable Location to " +
+                            "use this app")
+                    .setPositiveButton("Location Settings", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+
+                            Intent myIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                            startActivity(myIntent);
+                        }
+                    })
+                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+
+                        }
+                    });
+            dialog.show();
+        }
+
+        private boolean isLocationEnabled() {
+            locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
+                    locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        }
+
     }

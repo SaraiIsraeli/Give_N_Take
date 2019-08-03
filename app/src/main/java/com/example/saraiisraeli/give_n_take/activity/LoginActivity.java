@@ -115,6 +115,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         {
             myIntnet = new Intent(LoginActivity.this ,MainActivity.class);
             startActivity(myIntnet);
+
             finish();
         }
         else

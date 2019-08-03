@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.saraiisraeli.give_n_take">
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+
 
     <application
         android:allowBackup="true"
@@ -9,7 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+        <service
+            android:name=".activity.FetchAddressIntentService"
+            android:exported="false"/>
         <activity android:name=".activity.HistoryItems"></activity>
 
         <activity
@@ -56,6 +61,15 @@
             android:name=".activity.Search"
             android:label="@string/SearchSettings"
             android:parentActivityName=".activity.MainActivity" />
+        <activity
+            android:name=".activity.GetLocation"
+            android:label="מקום"
+            android:parentActivityName=".activity.MainActivity" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyC3bM-IxqJgU0LYgH3rNUGia43hc1d21ZE"/>
+
     </application>
 
 </manifest>

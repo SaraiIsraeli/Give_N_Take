@@ -3,6 +3,8 @@ package com.example.saraiisraeli.give_n_take.models;
 
 import android.util.Log;
 
+import com.example.saraiisraeli.give_n_take.activity.Items;
+import com.example.saraiisraeli.give_n_take.activity.MainActivity;
 import com.example.saraiisraeli.give_n_take.activity.Search;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -12,7 +14,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -112,6 +116,105 @@ public class AppData {
 
         Log.d(TAG, "End Method: SaveNewItem");
     }
+
+    public void getAllItems(List <Map<String, Object>> itemsValues, MainActivity mainActivity,String distance) {
+        DatabaseReference itemsRef = FirebaseDatabase.getInstance().getReference().child("items");
+        if (itemsRef == null) {
+            Log.i(TAG, "no items found");
+        } else {
+            Log.i(TAG, "items found");
+
+            itemsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    Map<String, Object> items = (Map<String, Object>) dataSnapshot.getValue();
+                    Log.i(TAG, "dataSnapshot:" + dataSnapshot.getValue());
+                    if (items != null)
+                    {
+                        for (DataSnapshot dataSnapshotItem : dataSnapshot.getChildren()){
+                            items = (Map<String, Object>) dataSnapshotItem.getValue();
+                            itemsValues.add(items);
+                        }
+                        try {
+                            mainActivity.checkItemsToShow(itemsValues,distance);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        Log.i(TAG, "items is null! ");
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                }
+
+            });
+        }
+    }
+
+
+
+    public void getUserItems(final String userToken, Items mItems) {
+        Map<String, Object> itemValues = new HashMap<>();
+        DatabaseReference itemsRef = FirebaseDatabase.getInstance().getReference().child("items").child(userToken);
+        if (itemsRef == null) {
+            Log.i(TAG, "no items for:" + userToken);
+        } else {
+            Log.i(TAG, "user items for:" + userToken);
+
+            itemsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    Map<String, Object> items = (Map<String, Object>) dataSnapshot.getValue();
+                    Log.i(TAG, "dataSnapshot:" + dataSnapshot.getValue());
+                    if (items != null)
+                    {
+                        itemValues.put("itemName",items.get("itemName").toString());
+                        itemValues.put("itemDescription",items.get("itemDescription").toString());
+                        itemValues.put("itemLocation",items.get("itemLocation").toString());
+                        mItems.getItem(itemValues);
+                    } else {
+                        Log.i(TAG, "items is null! ");
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                }
+
+            });
+        }
+    }
+
+    public void getUserDistance(String userToken, MainActivity mainActivity) {
+        final Map<String, Object> settingsValues = new HashMap<>();
+        DatabaseReference settingsRef = FirebaseDatabase.getInstance().getReference().child("userSettings").child(userToken);
+        if (settingsRef == null) {
+            Log.i(TAG, "no settings for:" + userToken);
+        } else {
+            Log.i(TAG, "user settings for:" + userToken);
+            settingsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    Map<String, Object> settings = (Map<String, Object>) dataSnapshot.getValue();
+                    Log.i(TAG, "dataSnapshot:" + dataSnapshot.getValue());
+                    if (settings != null) {
+                        settingsValues.put("distance", settings.get("distance").toString());
+                        mainActivity.getDistance(settingsValues.get("distance").toString());
+                    } else {
+                        Log.i(TAG, "settings is null! ");
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                }
+
+            });
+        }
+    }
+
 /*
     public String getCurrentUserName(final String userToken) {
         //final Map<String, Object> usersValues = new HashMap<>();
