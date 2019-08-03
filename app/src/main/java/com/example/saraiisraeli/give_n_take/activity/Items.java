@@ -30,6 +30,7 @@ import com.example.saraiisraeli.give_n_take.models.AppData;
 import com.example.saraiisraeli.give_n_take.models.Item;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -65,6 +66,7 @@ public class Items extends AppCompatActivity implements View.OnClickListener{
     StorageReference storageReference;
 
     private String Document_img1 = "";
+    Uri downloadURL;
     String userId;
     EditText m_itemName;
     EditText m_itemDesc;
@@ -170,7 +172,6 @@ public class Items extends AppCompatActivity implements View.OnClickListener{
                     e.printStackTrace();
                 }
                 getItemDetails();
-                saveItemToDB();
                 uploadItem();
                 break;
             }
@@ -202,7 +203,7 @@ public class Items extends AppCompatActivity implements View.OnClickListener{
         }
     }
 
-    private void saveItemToDB()
+    private void saveItemToDB(Uri uri)
     {
         Log.d(TAG, "Start Method: saveItemToDB");
         //validate Distance field contains a valid value
@@ -210,14 +211,16 @@ public class Items extends AppCompatActivity implements View.OnClickListener{
         boolean itemName = true;
         boolean itemDesc  = true;
         boolean itemLocation = true;
+        downloadURL = uri;
         if(itemName && itemDesc && itemLocation)
         {
             try
             {
-                Item item = new Item(m_itemNameStr,m_itemDecStr,m_locationStr);
+                Item item = new Item(m_itemNameStr,m_locationStr,m_itemDecStr,downloadURL);
                 itemValues = item.ItemToMap();
                 if (!itemValues.isEmpty())
                 {
+                    //mAppData.setMaxID(userId);
                     mAppData.SavetNewItem(itemValues,userId);
                     saveMsg.show();
                     Log.d(TAG, "End Method: saveItemToDB");
@@ -364,6 +367,13 @@ public class Items extends AppCompatActivity implements View.OnClickListener{
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                                 progressDialog.dismiss();
                                 Toast.makeText(Items.this, "Uploaded", Toast.LENGTH_SHORT).show();
+                                ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
+                                        saveItemToDB(uri);
+                                        Log.d(TAG,"downloadURL"+downloadURL);
+                                    }
+                                });
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
