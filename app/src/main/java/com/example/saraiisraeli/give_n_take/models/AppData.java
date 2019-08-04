@@ -1,7 +1,8 @@
 package com.example.saraiisraeli.give_n_take.models;
 
-
 import android.util.Log;
+
+import androidx.annotation.NonNull;
 
 import com.example.saraiisraeli.give_n_take.activity.Items;
 import com.example.saraiisraeli.give_n_take.activity.MainActivity;
@@ -15,6 +16,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +24,9 @@ import java.util.Objects;
 
 public class AppData {
     private DatabaseReference mDatabase;
+    private DatabaseReference itemsRef;
     private FirebaseUser mAuth;
+    private int maxID;
     private static final String TAG = "appData";
     private String Username = null;
 
@@ -39,11 +43,11 @@ public class AppData {
         String userToken = (String) SettingsValues.get("userToken");
         String distance = SettingsValues.get("distance").toString();
         String productName = SettingsValues.get("prodQuery").toString();
-        if ((!userToken.isEmpty()) && (Integer.valueOf(distance) > 0) ) {
+        if ((!userToken.isEmpty()) && (Integer.valueOf(distance) > 0)) {
             try {
                 mDatabase.child("userSettings").child(userToken).child("distance").setValue(distance);
-                if(!productName.isEmpty())
-                mDatabase.child("userSettings").child(userToken).child("prodQuery").setValue(productName);
+                if (!productName.isEmpty())
+                    mDatabase.child("userSettings").child(userToken).child("prodQuery").setValue(productName);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -63,15 +67,11 @@ public class AppData {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     Map<String, Object> settings = (Map<String, Object>) dataSnapshot.getValue();
                     Log.i(TAG, "dataSnapshot:" + dataSnapshot.getValue());
-                    if (settings != null)
-                    {
+                    if (settings != null) {
                         settingsValues.put("distance", settings.get("distance").toString());
-                        if(settings.get("prodQuery") == null)
-                        {
+                        if (settings.get("prodQuery") == null) {
                             settingsValues.put("prodQuery", "");
-                        }
-                        else
-                        {
+                        } else {
                             settingsValues.put("prodQuery", Objects.requireNonNull(settings.get("prodQuery")).toString());
                         }
 
@@ -106,18 +106,73 @@ public class AppData {
         String userToken = i_userToken;
         String itemLocation = ItemValues.get("itemLocation").toString();
         String itemDescription = ItemValues.get("itemDescription").toString();
-            try {
-                mDatabase.child("items").child(userToken).child("itemName").setValue(itemName);
-                mDatabase.child("items").child(userToken).child("itemLocation").setValue(itemLocation);
-                mDatabase.child("items").child(userToken).child("itemDescription").setValue(itemDescription);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
+        String photoURL = ItemValues.get("photoURL").toString();
+
+        try {
+            mDatabase.child("items").child(userToken).child("itemName").setValue(itemName);
+            mDatabase.child("items").child(userToken).child("itemLocation").setValue(itemLocation);
+            mDatabase.child("items").child(userToken).child("itemDescription").setValue(itemDescription);
+            mDatabase.child("items").child(userToken).child("photoURL").setValue(String.valueOf(photoURL));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
 
         Log.d(TAG, "End Method: SaveNewItem");
+}
+
+    public int setMaxID(String userToken) throws InterruptedException {
+        itemsRef = FirebaseDatabase.getInstance().getReference().child("items");
+        maxID = 0;
+        itemsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot != null) {
+                    Log.d(TAG,"insert ondatachange");
+                    try {
+                        Thread.sleep(10000);
+
+                        maxID = collectAllTokens((Map<String, Object>) dataSnapshot.getValue());
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    Log.d(TAG,"Finished onDataChange");
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+
+        });
+        return maxID;
     }
 
-    public void getAllItems(List <Map<String, Object>> itemsValues, MainActivity mainActivity,String distance) {
+    private int collectAllTokens(Map<String,Object> tokens)
+    {
+        Log.d(TAG,"Insert get all tokens");
+        ArrayList<String> tokensList = new ArrayList<>();
+        for(Map.Entry<String,Object> entry : tokens.entrySet())
+        {
+            tokensList.add(entry.getKey());
+        }
+
+        for (int counter = 0; counter < tokensList.size(); counter++) {
+            String currToken = tokensList.get(counter);
+            String[] lastIdAray = currToken.split("id");
+            if (lastIdAray != null) {
+                for (String str : lastIdAray) {
+
+                    int currid = Integer.valueOf(str);
+
+                    if (currid > maxID) {
+                        maxID = currid;
+                    }
+                }
+            }
+        }
+        return maxID;
+    }
+
+    public void getAllItems(List<Map<String, Object>> itemsValues, MainActivity mainActivity, String distance) {
         DatabaseReference itemsRef = FirebaseDatabase.getInstance().getReference().child("items");
         if (itemsRef == null) {
             Log.i(TAG, "no items found");

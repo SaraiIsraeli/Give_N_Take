@@ -38,7 +38,6 @@
             android:textColorHint="@color/White"
             app:backgroundTint="@color/buttonbg"
             app:boxBackgroundMode="outline"
-            app:hintTextColor="@color/colorAccent"
             android:drawableLeft="@mipmap/account">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -66,7 +65,6 @@
             android:textColorHint="@color/White"
             app:backgroundTint="@color/buttonbg"
             app:boxBackgroundMode="outline"
-            app:hintTextColor="@color/colorAccent"
             android:drawableRight="@mipmap/lock">
 
             <com.google.android.material.textfield.TextInputEditText

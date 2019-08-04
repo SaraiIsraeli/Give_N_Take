@@ -68,11 +68,11 @@
     <string name="upload_photo">העלאת מוצר</string>
     <string name="without_photo">העלאה מוצר ללא תמונה -></string>
     <string name="items_history">היסטוריית מוצרים</string>
-    <string name="upload_item">העלאת מוצר חדש</string>
+    <string name="upload_item">העלאת מוצר חדש:</string>
     <string name="item_name">שם המוצר</string>
     <string name="item_desc">תיאור המוצר</string>
     <string name="choose_location">מיקום המוצר</string>
-    <string name="current_location">השתמש במיקום נוכחי</string>
+    <string name="current_location">בחר מיקום נוכחי</string>
     <string name="add_photo">הוספת תמונה</string>
 
 </resources>

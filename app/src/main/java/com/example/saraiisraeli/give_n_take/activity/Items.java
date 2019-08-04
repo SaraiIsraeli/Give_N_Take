@@ -95,6 +95,7 @@ import java.util.UUID;
     StorageReference storageReference;
     private String Document_img1 = "";
     String userId;
+    Uri downloadURL;
     EditText m_itemName;
     EditText m_itemDesc;
     EditText m_location;
@@ -199,16 +200,14 @@ import java.util.UUID;
                 break;
             }
             case R.id.UploadBtn:{
-                Log.d(TAG, "Uploading image");
-                uploadImage();
+                Toast.makeText(Items.this, "תודה על תרומתך! אנא המתן בזמן שהמוצר מתעדכן בשרת..", Toast.LENGTH_SHORT).show();
                 try {
-                    Thread.sleep(5000);
+                    Thread.sleep(3000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                getItemDetails();
-                saveItemToDB();
-                uploadItem();
+                Log.d(TAG, "Uploading image");
+                uploadImage();
                 break;
             }
             case R.id.ChooseBtn:{
@@ -239,7 +238,7 @@ import java.util.UUID;
         }
     }
 
-    private void saveItemToDB()
+    private void saveItemToDB(Uri uri)
     {
         Log.d(TAG, "Start Method: saveItemToDB");
         //validate Distance field contains a valid value
@@ -247,16 +246,18 @@ import java.util.UUID;
         boolean itemName = true;
         boolean itemDesc  = true;
         boolean itemLocation = true;
+        downloadURL = uri;
+
         if(itemName && itemDesc && itemLocation)
         {
             try
             {
-                Item item = new Item(m_itemNameStr,m_locationStr,m_itemDecStr);
+                Item item = new Item(m_itemNameStr,m_locationStr,m_itemDecStr,downloadURL);
                 itemValues = item.ItemToMap();
                 if (!itemValues.isEmpty())
                 {
                     mAppData.SavetNewItem(itemValues,userId);
-                    saveMsg.show();
+                    //saveMsg.show();
                     Log.d(TAG, "End Method: saveItemToDB");
                 }
 
@@ -269,6 +270,7 @@ import java.util.UUID;
     }
 
     private void uploadItem() {
+        getItemDetails();
         myIntnet = new Intent(Items.this, MainActivity.class);
         startActivity(myIntnet);
         finish();
@@ -388,19 +390,25 @@ import java.util.UUID;
         }
 
         private void uploadImage() {
-
             if(selectedImage != null)
             {
                 final ProgressDialog progressDialog = new ProgressDialog(this);
                 progressDialog.setTitle("Uploading...");
-                progressDialog.show();
+               // progressDialog.show();
                 StorageReference ref = storageReference.child("images"+ UUID.randomUUID().toString());
                 ref.putFile(selectedImage)
                         .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                progressDialog.dismiss();
-                                Toast.makeText(Items.this, "Uploaded", Toast.LENGTH_SHORT).show();
+                               // progressDialog.dismiss();
+                                Toast.makeText(Items.this, "המוצר שלך עודכן בהצלחה!", Toast.LENGTH_SHORT).show();
+                                ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
+                                        saveItemToDB(uri);
+                                        Log.d(TAG,"downloadURL"+downloadURL);
+                                    }
+                                });
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
@@ -418,6 +426,13 @@ import java.util.UUID;
                                 progressDialog.setMessage("Uploaded "+(int)progress+"%");
                             }
                         });
+                 try {
+                    Thread.sleep(20000);
+                } catch (InterruptedException e) {
+                   e.printStackTrace();
+                 }
+                Log.d(TAG, "Uploading item");
+                uploadItem();
             }
         }
 
