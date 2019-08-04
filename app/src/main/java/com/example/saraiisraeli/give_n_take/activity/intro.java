@@ -15,6 +15,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.example.saraiisraeli.give_n_take.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class intro extends AppCompatActivity {
 
@@ -26,12 +28,28 @@ public class intro extends AppCompatActivity {
     ViewPager vp;
     MyViewPagerAdapter myvpAdapter;
     private static final String TAG = "intro";
+    private FirebaseUser user;
+    private Intent myIntnet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.intro);
         Log.d(TAG, "entered intro" );
+
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        //Presist Login:
+        if (user != null) {
+            // User is signed in
+            myIntnet = new Intent(intro.this ,MainActivity.class);
+            startActivity(myIntnet);
+            finish();
+        } else {
+            // User is signed out
+            Log.d(TAG, "User not found - will show Intro");
+        }
+
+
         vp = (ViewPager) findViewById(R.id.view_pager);
         Layout_bars = (LinearLayout) findViewById(R.id.layoutBars);
         Skip = (Button) findViewById(R.id.skip);

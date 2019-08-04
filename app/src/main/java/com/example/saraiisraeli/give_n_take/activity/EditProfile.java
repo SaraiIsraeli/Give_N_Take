@@ -124,6 +124,20 @@ public class EditProfile extends AppCompatActivity {
             }
         });
     }
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+        ReturnToMain();
+    }
+
+    private void ReturnToMain()
+    {
+        Log.d(TAG, "Start Method: ReturnToMain");
+        Intent myIntent = new Intent(EditProfile.this, MainActivity.class);
+        startActivity(myIntent);
+        finish();
+    }
 
     private boolean ValidateRoleField()
     {

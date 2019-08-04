@@ -54,6 +54,12 @@ public class SignUpActivity extends LoginActivity implements View.OnClickListene
             }
         }
     }
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+        returnToLogin();
+    }
 
     private void returnToLogin()
     {

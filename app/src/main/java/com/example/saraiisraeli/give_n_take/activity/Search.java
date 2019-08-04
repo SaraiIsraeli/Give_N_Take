@@ -86,6 +86,14 @@ public class Search extends AppCompatActivity implements View.OnClickListener
             Snackbar.make(currView, afterSaveMsg, LENGTH_LONG).setDuration(30000).show();
         }
     }
+
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+        ReturnToMain();
+    }
+
     private void ReturnToMain()
     {
         Log.d(TAG, "Start Method: ReturnToMain");
@@ -93,7 +101,6 @@ public class Search extends AppCompatActivity implements View.OnClickListener
         startActivity(myIntent);
         finish();
     }
-
     private boolean IsTextFieldIsEmpty(EditText etText)
     {
         return (etText.getText().toString().trim().length() > 0);

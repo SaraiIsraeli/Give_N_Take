@@ -168,6 +168,22 @@ import java.util.UUID;
         mLocationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 }
 
+
+        @Override
+        public void onPause()
+        {
+            super.onPause();
+            ReturnToMain();
+        }
+
+        private void ReturnToMain()
+        {
+            Log.d(TAG, "Start Method: ReturnToMain");
+            Intent myIntent = new Intent(Items.this, MainActivity.class);
+            startActivity(myIntent);
+            finish();
+        }
+
     private void getItemDetails()
     {
         Log.d(TAG,"get item details");
