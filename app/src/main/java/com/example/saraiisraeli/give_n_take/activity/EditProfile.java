@@ -36,7 +36,6 @@ public class EditProfile extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener firebaseAuthListner;
     private DatabaseReference dbRef;
     String m_nameStr, m_phoneNumberStr;
-    private DatabaseReference mDatabaseUser_name,mDatabaseUser_phone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,8 +60,9 @@ public class EditProfile extends AppCompatActivity {
         give_Checkbox = findViewById(R.id.Role_Give_checkbox_Edit);
         get_Checkbox = findViewById(R.id.Role_Get_checkbox_Edit);
         disconnect = findViewById(R.id.disconnect);
-        mDatabaseUser_name = FirebaseDatabase.getInstance().getReference().child("users").child(userId).child("name");
-        mDatabaseUser_phone = FirebaseDatabase.getInstance().getReference().child("users").child(userId).child("phoneNumber");
+        DatabaseReference mDatabaseUser_name = FirebaseDatabase.getInstance().getReference().child("users").child(userId).child("name");
+        DatabaseReference mDatabaseUser_phone = FirebaseDatabase.getInstance().getReference().child("users").child(userId).child("phoneNumber");
+        DatabaseReference mDatabaseUser_Role = FirebaseDatabase.getInstance().getReference().child("users").child(userId).child("role");
 
         mDatabaseUser_name.addValueEventListener(new ValueEventListener() {
             @Override
@@ -88,8 +88,31 @@ public class EditProfile extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
 
             }
+        });
+        mDatabaseUser_Role.addValueEventListener(new ValueEventListener()
+        {
+            String role="";
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                role = dataSnapshot.getValue().toString();
+                if (role.equals("2"))
+                {
+                    get_Checkbox.setChecked(true);
+                    give_Checkbox.setChecked(true);
+                }
+                else if (role.equals("1"))
+                {
+                    give_Checkbox.setChecked(true);
+                }
+                else
+                {
+                    get_Checkbox.setChecked(true);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-
+            }
         });
         m_start.setOnClickListener(new View.OnClickListener() {
             @Override
