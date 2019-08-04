@@ -6,13 +6,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 
 import com.example.saraiisraeli.give_n_take.R;
 import com.example.saraiisraeli.give_n_take.models.AppData;
@@ -87,6 +85,14 @@ public class Search extends AppCompatActivity implements View.OnClickListener
             Snackbar.make(currView, afterSaveMsg, LENGTH_LONG).setDuration(30000).show();
         }
     }
+
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+        ReturnToMain();
+    }
+
     private void ReturnToMain()
     {
         Log.d(TAG, "Start Method: ReturnToMain");

@@ -162,6 +162,20 @@ public class EditProfile extends AppCompatActivity {
         Log.d(TAG, "End Method: GetRoleValue");
         return role;
     }
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+        ReturnToMain();
+    }
+
+    private void ReturnToMain()
+    {
+        Log.d(TAG, "Start Method: ReturnToMain");
+        Intent myIntent = new Intent(EditProfile.this, MainActivity.class);
+        startActivity(myIntent);
+        finish();
+    }
 
     private boolean validateFields() {
         boolean isValid = true;
