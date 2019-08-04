@@ -184,6 +184,22 @@ import java.util.UUID;
         }
 
 
+
+        /*@Override
+        public void onResume()
+        {
+            super.onResume();
+            ReturnToMain();
+        }
+
+        private void ReturnToMain()
+        {
+            Log.d(TAG, "Start Method: ReturnToMain");
+            Intent myIntent = new Intent(Items.this, MainActivity.class);
+            startActivity(myIntent);
+            finish();
+        }*/
+
     private void getItemDetails()
     {
         Log.d(TAG,"get item details");

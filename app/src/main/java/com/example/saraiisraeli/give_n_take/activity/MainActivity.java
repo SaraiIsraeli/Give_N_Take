@@ -35,6 +35,8 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -43,9 +45,8 @@ import java.util.Locale;
 import java.util.Map;
 
 public class MainActivity<userToken> extends AppCompatActivity implements View.OnClickListener,
-        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener{
-
-
+        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener
+{
     /// location
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     private GoogleApiClient mGoogleApiClient;
@@ -62,7 +63,6 @@ public class MainActivity<userToken> extends AppCompatActivity implements View.O
     private AddressResultReceiver resultReceiver;
     private static final String TAG = "activity main";
     Intent myIntnet;
-    TextView itemsText;
     ImageButton itemsButton,profileButton,searchButton;
     Button yesButton,noButton;
     ImageView imageView;
@@ -72,6 +72,10 @@ public class MainActivity<userToken> extends AppCompatActivity implements View.O
     String userToken = (mAppData.getCurrentUser().getUid());
     Address address;
     private FusedLocationProviderClient fusedLocationClient;
+    private TextView itemsText;
+
+    FirebaseStorage storage;
+    StorageReference storageReference;
 
     @SuppressLint("ClickableViewAccessibility")
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +92,15 @@ public class MainActivity<userToken> extends AppCompatActivity implements View.O
         yesButton = findViewById(R.id.yesButton);
         noButton =findViewById(R.id.noButoon);
         itemsText = findViewById(R.id.noItemsErrorMessage);
+        /*TextView searchText = findViewById(R.id.searchText);
+        TextView itemHeadlineText = findViewById(R.id.itemsText);
+        boolean shouldSeeSettings = shouldSeeSearchSettings();
+        if(!shouldSeeSettings)
+        {
+            searchButton.setVisibility(View.INVISIBLE);
+            searchText.setVisibility(View.INVISIBLE);
+        }*/
+
 
         mAppData.getUserDistance(userToken,this);
 
@@ -110,7 +123,8 @@ public class MainActivity<userToken> extends AppCompatActivity implements View.O
         }
         if (!imageView.getTag().equals("noItemsToShow")){// swipe is enable only if there is items
             itemsText.setText(itemsList.get(counter[0]).getItemName().concat(" ").concat(itemsList.get(counter[0]).getItemMoreInfo()));
-          //  yesButton.setVisibility(View.VISIBLE);
+            //FileDownloadTask fileDownloadTask = storageReference.child("images").getStorage;
+            //  yesButton.setVisibility(View.VISIBLE);
           //  noButton.setVisibility(View.VISIBLE);
             int finalSize = size;
             imageView.setOnTouchListener(new OnSwipeTouchListener(MainActivity.this) {
@@ -359,6 +373,16 @@ public class MainActivity<userToken> extends AppCompatActivity implements View.O
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
                 locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
+
+   /* private boolean shouldSeeSearchSettings()
+    {
+        AppData mAppData = new AppData();
+        String userToken = (mAppData.getCurrentUser().getUid());
+        String userRole = mAppData.getUserRole(userToken);
+        return userRole != null  && !(userRole.contains("1"));
+
+    }*/
+
 
 }
 

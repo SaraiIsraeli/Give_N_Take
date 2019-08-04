@@ -242,32 +242,77 @@ public class AppData {
         }
     }
 
-    public void getUserDistance(String userToken, MainActivity mainActivity) {
+    public void getUserDistance(String userToken, MainActivity mainActivity)
+    {
         final Map<String, Object> settingsValues = new HashMap<>();
         DatabaseReference settingsRef = FirebaseDatabase.getInstance().getReference().child("userSettings").child(userToken);
-        if (settingsRef == null) {
-            Log.i(TAG, "no settings for:" + userToken);
-        } else {
-            Log.i(TAG, "user settings for:" + userToken);
-            settingsRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    Map<String, Object> settings = (Map<String, Object>) dataSnapshot.getValue();
-                    Log.i(TAG, "dataSnapshot:" + dataSnapshot.getValue());
-                    if (settings != null) {
-                        settingsValues.put("distance", settings.get("distance").toString());
-                        mainActivity.getDistance(settingsValues.get("distance").toString());
-                    } else {
-                        Log.i(TAG, "settings is null! ");
+        Log.i(TAG, "user settings for:" + userToken);
+        settingsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Map<String, Object> settings = (Map<String, Object>) dataSnapshot.getValue();
+                Log.i(TAG, "dataSnapshot:" + dataSnapshot.getValue());
+                if (settings != null) {
+                    settingsValues.put("distance", settings.get("distance").toString());
+                    mainActivity.getDistance(settingsValues.get("distance").toString());
+                } else {
+                    Log.i(TAG, "settings is null! ");
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+
+        });
+    }
+
+    public String getUserRole(String userToken)
+    {
+        final String[] str = new String[1];
+        final Map<String, Object> userRole = new HashMap<>();
+        DatabaseReference userListener = FirebaseDatabase.getInstance().getReference().child("users").child(userToken);
+        Log.i(TAG, "user settings for:" + userToken);
+        userListener.addListenerForSingleValueEvent (new ValueEventListener()
+        {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Map<String, Object> dataMap = (Map<String, Object>) Objects.requireNonNull(dataSnapshot).getValue();
+                Log.i(TAG, "dataSnapshot:" + dataSnapshot.getValue());
+                try
+                {
+                    if (dataMap != null)
+                    {
+                        userRole.put("role", Objects.requireNonNull(Objects.requireNonNull(dataMap).get("role")).toString());
+                        str[0] = getUserRoleValue(userRole);
+                    }
+                    else
+                    {
+                        userRole.put("role","");
+                        str[0] = getUserRoleValue(userRole);
                     }
                 }
+                catch (ClassCastException cce)
+                {}
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.w(TAG, "getUserRole:onCancelled", databaseError.toException());
+            }
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                }
+        });
+        return str[0];
+    }
 
-            });
+
+    public String getUserRoleValue(Map<String, Object> userRole)
+    {
+        String role = "";
+        if (!userRole.isEmpty())
+        {
+            return (String) userRole.get("role");
         }
+        return role;
     }
 
 /*
