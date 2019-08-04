@@ -1,11 +1,10 @@
 package com.example.saraiisraeli.give_n_take.models;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
 
-import static android.support.v4.content.ContextCompat.startActivity;
+import static androidx.core.content.ContextCompat.startActivity;
 
 public class screens {
     public String screen_name;

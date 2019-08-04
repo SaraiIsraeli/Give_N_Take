@@ -1,36 +1,42 @@
 package com.example.saraiisraeli.give_n_take.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.example.saraiisraeli.give_n_take.R;
-import com.example.saraiisraeli.give_n_take.models.AppData;
 import com.example.saraiisraeli.give_n_take.models.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class EditProfile extends AppCompatActivity {
     private static final String TAG = "edit profile";
     String userId;
     EditText m_name;
     EditText m_phoneNumber;
-    Button m_start, m_back;
+    Button m_start, m_back, disconnect;
     Intent myIntnet;
+    private CheckBox give_Checkbox,get_Checkbox;
     private FirebaseAuth firebaseAuth;
     private FirebaseDatabase firebaseDatabase;
     private FirebaseAuth.AuthStateListener firebaseAuthListner;
     private DatabaseReference dbRef;
     String m_nameStr, m_phoneNumberStr;
+    private DatabaseReference mDatabaseUser_name,mDatabaseUser_phone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,16 +58,49 @@ public class EditProfile extends AppCompatActivity {
         m_phoneNumber = (EditText) findViewById(R.id.phone);
         m_start = (Button) findViewById(R.id.btnSave);
         m_back = (Button)findViewById(R.id.btnBack);
+        give_Checkbox = findViewById(R.id.Role_Give_checkbox_Edit);
+        get_Checkbox = findViewById(R.id.Role_Get_checkbox_Edit);
+        disconnect = findViewById(R.id.disconnect);
+        mDatabaseUser_name = FirebaseDatabase.getInstance().getReference().child("users").child(userId).child("name");
+        mDatabaseUser_phone = FirebaseDatabase.getInstance().getReference().child("users").child(userId).child("phoneNumber");
 
+        mDatabaseUser_name.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // Toast.makeText(getApplicationContext(),dataSnapshot.getValue().toString(), Toast.LENGTH_SHORT).show();
+                m_name.setText(dataSnapshot.getValue().toString());
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        mDatabaseUser_phone.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                m_phoneNumber.setText(dataSnapshot.getValue().toString());
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+
+
+        });
         m_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (validateFields()) {
                     Log.d(TAG, "form is filled successfuly" );
-                    User user = new User(m_nameStr, m_phoneNumberStr);
+                    String role = GetRoleValue();
+                    User user = new User(m_nameStr, m_phoneNumberStr,role);
                     dbRef.child("users").child(userId).setValue(user);
                     Log.d(TAG, "update user in Firebase - " + "user name: " +  user.getName()+
-                            " user phone number: "  + user.getPhoneNumber());
+                            " user phone number: "  + user.getPhoneNumber() +"User Role "+ user.getRole());
                     myIntnet = new Intent(EditProfile.this ,MainActivity.class);
                     startActivity(myIntnet);
                     finish();
@@ -78,6 +117,49 @@ public class EditProfile extends AppCompatActivity {
             }
         });
 
+        disconnect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                signOut();
+            }
+        });
+    }
+
+    private boolean ValidateRoleField()
+    {
+        Log.d(TAG, "Start Method: ValidateRoleField");
+        boolean checked = true;
+        if (!(get_Checkbox.isChecked()) && (!give_Checkbox.isChecked())) // both not checked
+        {
+            m_start.setError("Must choose at least one");
+            checked = false;
+        }
+        Log.d(TAG, "End Method: ValidateRoleField");
+        return checked;
+
+    }
+    private String GetRoleValue()
+    {
+        Log.d(TAG, "Start Method: GetRoleValue");
+        String role = "0"; // by defualt - Buyer
+        boolean RoleCheck = ValidateRoleField();
+        if (RoleCheck)
+        {
+            if (get_Checkbox.isChecked() && give_Checkbox.isChecked())
+            {// User is Seller and Buyer
+                role = "2";
+            }
+            else if (!(get_Checkbox.isChecked()) && give_Checkbox.isChecked())
+            {//User is Seller only
+                role = "1";
+            }
+            else
+            {//User is Buyer
+                role = "0";
+            }
+        }
+        Log.d(TAG, "End Method: GetRoleValue");
+        return role;
     }
 
     private boolean validateFields() {
@@ -106,7 +188,12 @@ public class EditProfile extends AppCompatActivity {
         } else {
             m_phoneNumber.setError(null);
         }
-
+        boolean isRoleValid = ValidateRoleField();
+        if (!isRoleValid)
+        {
+            isValid = false;
+            Log.d(TAG, "Must Choose At Least 1 Role");
+        }
         return  isValid;
     }
     public boolean isAlpha(String name) {
@@ -117,5 +204,26 @@ public class EditProfile extends AppCompatActivity {
             }
         }
         return true;
+    }
+    private void signOut() {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setMessage(R.string.logout);
+        alert.setCancelable(false);
+        alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                firebaseAuth.signOut();
+                myIntnet = new Intent(EditProfile.this ,LoginActivity.class);
+                startActivity(myIntnet);
+                finish();
+            }
+        });
+        alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        alert.show();
     }
 }

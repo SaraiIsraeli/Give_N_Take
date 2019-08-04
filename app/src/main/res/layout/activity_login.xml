@@ -1,96 +1,131 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorSplashbg">
+    android:background="@color/colorPrimary"
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/Login_HeadLine"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="0dp"
-        android:includeFontPadding="true"
-        android:text="@string/SignIn"
-        android:textAlignment="center"
-        android:textColor="@color/colorSplasheadline"
-        android:textSize="68sp"
-        android:textStyle="bold"
-        app:fontFamily="@font/comicbold" />
-
-
-    <!--EMAIL Input-->
-    <EditText
-        android:id="@+id/Input_email"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="150dp"
-        android:hint="אימייל"
-        android:inputType="textEmailAddress"
-        android:textAlignment="center"
-        android:textColor="@color/colorAccent"
-        android:textColorHint="@color/colorAccent" />
-
-
-    <!--Password Input-->
-    <EditText
-        android:id="@+id/input_password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/Input_email"
-        android:layout_alignLeft="@+id/Input_email"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="220dp"
-        android:ems="10"
-        android:hint="סיסמה"
-        android:inputType="textPassword"
-        android:textAlignment="center"
-        android:textColor="@color/colorAccent"
-        android:textColorHint="@color/colorAccent" />
-
-
-    <!--Login Button-->
-    <Button
-        android:id="@+id/btn_login"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="330dp"
-        android:text="@string/sign_in" />
-
-
-    <!--Sign UP Link-->
-    <TextView
-        android:id="@+id/link_signup"
-        android:layout_width="match_parent"
-        android:layout_height="32dp"
-        android:layout_marginStart="0dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="430dp"
         android:gravity="center"
-        android:text="\לא רשום עדיין ? צור חשבון"
-        android:textStyle=""
-        android:textColor="@color/colorAccent"
-        android:textSize="24dp" />
+        android:orientation="vertical"
+        android:paddingLeft="24dp"
+        android:paddingTop="56dp"
+        android:paddingRight="24dp">
 
-    <!--Down Text-->
-    <TextView
-        android:id="@+id/text_splash"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="500dp"
-        android:includeFontPadding="true"
-        android:text="@string/splash_screen"
-        android:textAlignment="center"
-        android:textColor="@color/colorSplashtext"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        app:fontFamily="@font/yehuda" />
+        <TextView
+            android:id="@+id/Login_HeadLine"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="0dp"
+            android:includeFontPadding="true"
+            android:paddingBottom="50dp"
+            android:text="@string/SignIn"
+            android:textAlignment="center"
+            android:textColor="@color/White"
+            android:textSize="68sp"
+            android:textStyle="bold"
+            app:fontFamily="@font/comicbold" />
 
+        <!--EMAIL Input -->
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/LoginTextInputLayoutStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColorHint="@color/White"
+            app:backgroundTint="@color/buttonbg"
+            app:boxBackgroundMode="outline"
+            app:hintTextColor="@color/colorAccent"
+            android:drawableLeft="@mipmap/account">
 
-</RelativeLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/Input_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:hint="@string/hint_email"
+                android:textAppearance="?android:textAppearanceLarge"
+                android:inputType="textEmailAddress"
+                android:maxLines="1"
+                android:textColor="@color/White"
+                android:textSize="22dp"
+                app:fontFamily="@font/comicbold" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!--Password Input -->
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/LoginTextInputLayoutStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:textColorHint="@color/White"
+            app:backgroundTint="@color/buttonbg"
+            app:boxBackgroundMode="outline"
+            app:hintTextColor="@color/colorAccent"
+            android:drawableRight="@mipmap/lock">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/input_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:textAppearance="?android:textAppearanceLarge"
+                android:ems="10"
+                android:hint="@string/hint_password"
+                android:inputType="textPassword"
+                android:textColor="@color/colorAccent"
+                android:textSize="22dp"
+                app:fontFamily="@font/comicbold" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!--Login Button-->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_login"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
+            android:text="@string/sign_in"
+            android:textAppearance="?android:textAppearanceLarge"
+            android:textColor="@color/White"
+            android:textStyle="bold"
+            app:backgroundTint="@color/buttonsColor"
+            app:fontFamily="@font/comicbold" />
+
+        <!--Sign UP Link-->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/link_signup"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:paddingTop="20dp"
+            android:text="@string/hint_register"
+            android:textColor="@color/White"
+            android:textSize="24sp"
+            app:fontFamily="@font/comicbold" />
+        <!--Down Text-->
+        <TextView
+            android:id="@+id/text_splash"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="true"
+            android:paddingTop="80dp"
+            android:text="@string/splash_screen"
+            android:textAlignment="center"
+            android:textColor="@color/White"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:fontFamily="@font/yehuda" />
+    </LinearLayout>
+
+</LinearLayout>

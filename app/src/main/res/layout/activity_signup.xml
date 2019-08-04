@@ -1,89 +1,116 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorSplashbg">
+    android:background="@color/colorPrimary"
+    android:orientation="vertical"
+    android:id="@+id/activity_signup">
 
-    <Button
-        android:id="@+id/Back"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginBottom="679dp"
-        android:text="חזור" />
-
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingLeft="24dp"
+        android:paddingTop="56dp"
+        android:paddingRight="24dp">
     <TextView
-        android:id="@+id/register_Headline"
-        android:layout_width="278dp"
-        android:layout_height="62dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="59dp"
-        android:layout_marginLeft="59dp"
-        android:layout_marginTop="67dp"
-        android:includeFontPadding="true"
-        android:text="@string/Register"
-        android:textAlignment="center"
-        android:textColor="@color/colorSplashtext"
-        android:textSize="62sp"
-        android:textStyle="bold"
-        app:fontFamily="@font/comicbold" />
+            android:id="@+id/register_Headline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="0dp"
+            android:includeFontPadding="true"
+            android:paddingBottom="50dp"
+            android:text="@string/Register"
+            android:textAlignment="center"
+            android:textColor="@color/White"
+            android:textSize="68sp"
+            android:textStyle="bold"
+            app:fontFamily="@font/comicbold" />
 
-    <TextView
-        android:id="@+id/text_splash"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="65dp"
-        android:includeFontPadding="true"
-        android:text="@string/splash_screen"
-        android:textAlignment="center"
-        android:textColor="@color/colorSplasheadline"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        app:fontFamily="@font/yehuda" />
-
-    <EditText
-        android:id="@+id/Input_email"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="207dp"
-        android:hint="אימייל"
-        android:inputType="textEmailAddress"
-        android:textAlignment="center"
-        android:textColor="@android:color/white"
-        android:textColorHighlight="@android:color/white"
-        android:textColorHint="@android:color/white" />
-
-    <EditText
-        android:id="@+id/input_password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="285dp"
-        android:ems="10"
-        android:hint="סיסמה"
-        android:inputType="textPassword"
-        android:textAlignment="center"
-        android:textColor="@android:color/white"
-        android:textColorHighlight="@android:color/white"
-        android:textColorHint="@android:color/white" />
-
-    <Button
-        android:id="@+id/btn_signup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="219dp"
-        android:text="@string/RegisterNow" />
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/LoginTextInputLayoutStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColorHint="@color/White"
+            app:backgroundTint="@color/buttonbg"
+            app:hintTextColor="@color/colorAccent"
+            app:boxBackgroundMode="outline">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/Input_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:hint="@string/hint_email"
+            android:textAppearance="?android:textAppearanceLarge"
+            android:inputType="textEmailAddress"
+            android:maxLines="1"
+            android:textColor="@color/White"
+            android:textSize="22dp"
+            app:fontFamily="@font/comicbold" />
+        </com.google.android.material.textfield.TextInputLayout>
 
 
-</RelativeLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/LoginTextInputLayoutStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:textColorHint="@color/White"
+            app:backgroundTint="@color/buttonbg"
+            app:hintTextColor="@color/colorAccent"
+            app:boxBackgroundMode="outline">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/input_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:textAppearance="?android:textAppearanceLarge"
+            android:ems="10"
+            android:hint="@string/hint_password"
+            android:inputType="textPassword"
+            android:textColor="@color/colorAccent"
+            android:textSize="22dp"
+            app:fontFamily="@font/comicbold" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.MaterialComponents.Button"
+            android:id="@+id/btn_signup"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
+            android:text="@string/RegisterNow"
+            android:textAppearance="?android:textAppearanceLarge"
+            android:textColor="@color/White"
+            android:textStyle="bold"
+            app:backgroundTint="@color/buttonsColor"
+            app:fontFamily="@font/comicbold" />
+
+        <TextView
+            android:id="@+id/text_splash"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="true"
+            android:paddingTop="80dp"
+            android:text="@string/splash_screen"
+            android:textAlignment="center"
+            android:textColor="@color/White"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:fontFamily="@font/yehuda" />
+
+    </LinearLayout>
+
+</LinearLayout>

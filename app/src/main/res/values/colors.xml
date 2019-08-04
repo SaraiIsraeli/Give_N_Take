@@ -3,14 +3,21 @@
     <color name="colorPrimary">#283D63</color>
     <color name="colorPrimaryDark">#283D63</color>
     <color name="colorAccent">#d2ddf1</color>
-    <color name="colorSplashbg">#283D63</color>
+    <color name="colorSplashbg">#d2ddf1</color>
     <color name="colorSplasheadline">#d2ddf1</color>
     <color name="colorSplashtext">#EAEAEA</color>
     <color name="colorIntroActive">#eec5d3</color>
     <color name="colorIntroInActive">#c9c4c5</color>
     <color name="myprofilebutton">#f7fbfa</color>
-    <color name="buttonsColor">#7aa4ef</color>
+    <color name="buttonsColor">#5A78A8</color>
     <color name="buttonLine">#FF2E394E</color>
     <color name="buttonbg">#FF324E82</color>
-    <color name="white">#FFFFFF</color>
+    <color name="textColorPrimary">#442C2E</color>
+    <color name="loginPageBackgroundColor">#FFFFFF</color>
+    <color name="productGridBackgroundColor">#FFFBFA</color>
+    <color name="textInputOutlineColor">#FBB8AC</color>
+    <color name="White">#FFFF</color>
+    <color name="mtrl_textinput_default_box_stroke_color" override="true">#fff</color>
+
+
 </resources>

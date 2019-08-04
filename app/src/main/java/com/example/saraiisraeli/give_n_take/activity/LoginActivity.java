@@ -1,49 +1,62 @@
 package com.example.saraiisraeli.give_n_take.activity;
 
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.saraiisraeli.give_n_take.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener
 {
-
+    private static final String TAG ="";
     Intent myIntnet;
-    public TextView linkToRegister;
-    private Button sign;
+    private Button sign,register;
     private EditText UserEmail;
     private EditText UserPassword;
     private FirebaseAuth firebaseAuth;
+    private FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+        FirebaseApp.initializeApp(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         UserEmail = findViewById(R.id.Input_email);
         UserPassword = findViewById(R.id.input_password);
-        linkToRegister = findViewById(R.id.link_signup);
-        linkToRegister.setOnClickListener(this);
         sign = findViewById(R.id.btn_login);
         sign.setOnClickListener(this);
+        register = findViewById(R.id.link_signup);
+        register.setOnClickListener(this);
         firebaseAuth = FirebaseAuth.getInstance();
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        //Presist Login:
+        if (user != null) {
+            // User is signed in
+            myIntnet = new Intent(LoginActivity.this ,MainActivity.class);
+            startActivity(myIntnet);
+            finish();
+        } else {
+            // User is signed out
+            Log.d(TAG, "onAuthStateChanged:signed_out");
+        }
     }
     @Override
-    public void onBackPressed() {
-    }
+    public void onBackPressed() { }
     @Override
     public void onClick(View view)
     {
@@ -96,12 +109,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }
             });
     }
-    private void updateUI(FirebaseUser user) {
+    private void updateUI(FirebaseUser user)
+    {
         if (user != null)
         {
-            // need to move to the main App!
             myIntnet = new Intent(LoginActivity.this ,MainActivity.class);
             startActivity(myIntnet);
+
             finish();
         }
         else

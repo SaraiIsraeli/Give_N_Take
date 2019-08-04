@@ -1,88 +1,177 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorSplashbg">
+    android:background="@color/colorPrimary"
+    android:orientation="vertical">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingLeft="24dp"
+    android:paddingRight="24dp"
+    android:paddingTop="20dp">
 
     <TextView
         android:id="@+id/my_profile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="36dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="0dp"
         android:includeFontPadding="true"
+        android:paddingBottom="10dp"
         android:text="עריכת פרופיל"
         android:textAlignment="center"
-        android:textColor="@color/colorSplashtext"
+        android:textColor="@color/White"
         android:textSize="68sp"
         android:textStyle="bold"
+        app:fontFamily="@font/comicbold" />
+
+    <TextView
+        android:id="@+id/txtview1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="פרטים אישיים:"
+        android:textColor="@color/colorSplashtext"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:fontFamily="@font/comicbold"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+            style="@style/LoginTextInputLayoutStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColorHint="@color/White"
+            app:backgroundTint="@color/buttonbg"
+            app:boxBackgroundMode="outline"
+            android:textAlignment="center">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:hint="טלפון ליצירת קשר"
+            android:textAppearance="?android:textAppearanceLarge"
+            android:inputType="phone"
+            android:ems="10"
+            android:textColor="@color/White"
+            android:textSize="22dp"
+            app:fontFamily="@font/comicbold" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/LoginTextInputLayoutStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:textColorHint="@color/White"
+        app:backgroundTint="@color/buttonbg"
+        app:boxBackgroundMode="outline">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="15dp"
+            android:textAppearance="?android:textAppearanceLarge"
+            android:ems="10"
+            android:hint="שם"
+            android:inputType="textPersonName"
+            android:textColor="@color/White"
+            android:textSize="22dp"
+            app:fontFamily="@font/comicbold" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/Role"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/IntrestingIn"
+        android:textColor="@color/colorSplashtext"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:fontFamily="@font/comicbold"/>
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/Role_Get_checkbox_Edit"
+        style="checkboxStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="95dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:buttonTint="@color/colorAccent"
+        android:saveEnabled="true"
+        android:text="@string/ProdSearch"
+        android:textColor="@color/colorAccent"
+        android:textStyle="bold"
         app:fontFamily="@font/comicbold"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp" />
+        android:textSize="20dp"/>
 
-    <EditText
-        android:id="@+id/name"
-        android:textColorHint="#ffffff"
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/Role_Give_checkbox_Edit"
         android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="242dp"
-        android:layout_marginEnd="92dp"
-        android:layout_marginRight="92dp"
-        android:ems="10"
-        android:hint="שם"
-        android:inputType="textPersonName"
-        android:textAlignment="center"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="99dp"
-        tools:layout_editor_absoluteY="230dp" />
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="95dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="7dp"
+        android:buttonTint="@color/colorAccent"
+        android:saveEnabled="true"
+        android:text="@string/ProdGive"
+        android:textColor="@color/colorAccent"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        app:fontFamily="@font/comicbold"/>
 
-    <EditText
-        android:id="@+id/phone"
-        android:layout_width="wrap_content"
-        android:layout_height="44dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="353dp"
-        android:layout_marginEnd="92dp"
-        android:layout_marginRight="92dp"
-        android:ems="10"
-        android:hint="טלפון ליצירת קשר"
-        android:inputType="phone"
-        android:textAlignment="center"
-        android:textColorHint="#ffffff"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="99dp"
-        tools:layout_editor_absoluteY="310dp" />
-
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnSave"
-        android:layout_width="wrap_content"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="157dp"
-        android:layout_marginRight="157dp"
-        android:layout_marginBottom="76dp"
-        android:text="שמור" />
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="6dp"
+        android:text="שמור"
+        android:textAppearance="?android:textAppearanceLarge"
+        android:textColor="@color/White"
+        android:textStyle="bold"
+        app:backgroundTint="@color/buttonsColor"
+        app:fontFamily="@font/comicbold"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnBack"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="6dp"
+        android:text="חזור"
+        android:textAppearance="?android:textAppearanceLarge"
+        android:textColor="@color/White"
+        android:textStyle="bold"
+        app:backgroundTint="@color/buttonsColor"
+        app:fontFamily="@font/comicbold"/>
 
     <Button
-        android:id="@+id/btnBack"
-        android:layout_width="wrap_content"
+        android:id="@+id/disconnect"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="159dp"
-        android:layout_marginRight="159dp"
-        android:layout_marginBottom="13dp"
-        android:text="חזור" />
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="6dp"
+        android:text="@string/disconnect"
+        android:textAppearance="?android:textAppearanceLarge"
+        android:textColor="@color/White"
+        android:textStyle="bold"
+        app:backgroundTint="@color/buttonsColor"
+        app:fontFamily="@font/comicbold"/>
 
-</RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

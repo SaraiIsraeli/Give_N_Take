@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">לתת ולקחת</string>
     <string name="splash_screen">&quot;לפעמים מחשבה על אחרים, עושה את כל ההבדל.&quot;</string>
     <string name="label_google_sign_in">Firebase + Google Sign In</string>
@@ -28,8 +28,17 @@
     <string name="SignIn">התחברות</string>
     <string name="SearchSettings">הגדרות חיפוש</string>
     <string name="Dis">KM</string>
+    <string name="back">חזור</string>
+    <string name="AdvnacedSettings">מתקדם</string>
+    <string name="LookingFor">..אני מחפש </string>
     <string name="Role">אני מעוניין</string>
-
+    <string name="hint_register">לא רשום עדיין ? הירשם כעת</string>
+    <string name="SearchDistance">מרחק חיפוש:</string>
+    <string name="TypeProdName">הקלד שם מוצר</string>
+    <string name="SaveSettings">שמור הגדרות</string>
+    <string name="ProdSearch">לחפש מוצר</string>
+    <string name="ProdGive">לתת מוצר</string>
+    <string name="IntrestingIn" tools:ignore="ExtraTranslation">אני מעוניין..</string>
 
     <string name="start_phone_auth">Start</string>
     <string name="verify_phone_auth">Verify</string>
@@ -54,4 +63,16 @@
     <string name="status_link_found">Link received, enter email to sign in.</string>
     <string name="id_fmt">User ID: %s</string>
     <string name="email_fmt">Email: %s</string>
+    <string name="upload_photo_header">בחר תמונה שברצונך להוסיף למוצר</string>
+    <string name="choose_photo">בחירת תמונה</string>
+    <string name="upload_photo">העלאת מוצר</string>
+    <string name="without_photo">העלאה מוצר ללא תמונה -></string>
+    <string name="items_history">היסטוריית מוצרים</string>
+    <string name="upload_item">העלאת מוצר חדש</string>
+    <string name="item_name">שם המוצר</string>
+    <string name="item_desc">תיאור המוצר</string>
+    <string name="choose_location">מיקום המוצר</string>
+    <string name="current_location">השתמש במיקום נוכחי</string>
+    <string name="add_photo">הוספת תמונה</string>
+
 </resources>
