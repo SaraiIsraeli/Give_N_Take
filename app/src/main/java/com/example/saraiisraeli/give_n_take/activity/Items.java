@@ -169,10 +169,10 @@ import java.util.UUID;
 }
 
 
-        @Override
-        public void onPause()
+        /*@Override
+        public void onResume()
         {
-            super.onPause();
+            super.onResume();
             ReturnToMain();
         }
 
@@ -182,7 +182,7 @@ import java.util.UUID;
             Intent myIntent = new Intent(Items.this, MainActivity.class);
             startActivity(myIntent);
             finish();
-        }
+        }*/
 
     private void getItemDetails()
     {

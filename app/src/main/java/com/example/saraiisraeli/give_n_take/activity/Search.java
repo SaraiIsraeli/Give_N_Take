@@ -28,7 +28,7 @@ public class Search extends AppCompatActivity implements View.OnClickListener
     Map<String, Object> SettingsValues;
     AppData mAppData = new AppData();
 
-    String userToken = (mAppData.getCurrentUser().getUid());
+    private String userToken = (mAppData.getCurrentUser().getUid());
     private String dis = " KM";
     private String afterSaveMsg = "Save Succeed ";
     private Button SaveSettings_btn;
