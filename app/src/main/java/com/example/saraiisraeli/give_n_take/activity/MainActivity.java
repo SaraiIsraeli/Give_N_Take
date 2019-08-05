@@ -26,6 +26,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import com.bumptech.glide.Glide;
 import com.example.saraiisraeli.give_n_take.R;
 import com.example.saraiisraeli.give_n_take.models.AppData;
 import com.example.saraiisraeli.give_n_take.models.Item;
@@ -71,6 +72,7 @@ public class MainActivity<userToken> extends AppCompatActivity implements View.O
     List<Item> itemsList = new ArrayList<>();
     String userToken = (mAppData.getCurrentUser().getUid());
     Address address;
+    int size,counter=0;
     private FusedLocationProviderClient fusedLocationClient;
     private TextView itemsText;
 
@@ -112,38 +114,39 @@ public class MainActivity<userToken> extends AppCompatActivity implements View.O
                 .build();
 
         mLocationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-    }
 
-    private void checkSwipes() {
-        int size = 0;
-        final int[] counter = {0};
-        if (itemsList.size() > 0){
-            imageView.setTag("thereAreItemsToShow");
-            size = itemsList.size();
-        }
-        if (!imageView.getTag().equals("noItemsToShow")){// swipe is enable only if there is items
-            itemsText.setText(itemsList.get(counter[0]).getItemName().concat(" ").concat(itemsList.get(counter[0]).getItemMoreInfo()));
-            //FileDownloadTask fileDownloadTask = storageReference.child("images").getStorage;
-            //  yesButton.setVisibility(View.VISIBLE);
-          //  noButton.setVisibility(View.VISIBLE);
-            int finalSize = size;
-            imageView.setOnTouchListener(new OnSwipeTouchListener(MainActivity.this) {
+        imageView.setOnTouchListener(new OnSwipeTouchListener(MainActivity.this) {
                 public void onSwipeRight() {
                     //////// sms to the seller !!!!
                     Toast.makeText(MainActivity.this, "right", Toast.LENGTH_SHORT).show();
                 }
                 public void onSwipeLeft() {
-                    itemsList.remove(counter[0]);
-                    counter[0]++;
-                    if (counter[0]>= finalSize){
-                        itemsText.setText("לא נשארו עוד פריטים מתאימים עבורך ברגע זה");
+                    counter++;
+                    if (counter >= size) {
+                        itemsText.setText("לא נשארו עוד פריטים מתאימים".concat("\n").concat("עבורך ברגע זה"));
+                       // imageView.setImageDrawable(Drawable.createFromPath("\\Give_N_Take\\app\\src\\main\\res\\drawable\\error3"));
                     } else {
-                        itemsText.setText(itemsList.get(counter[0]).getItemName().concat(" ").concat(itemsList.get(counter[0]).getItemMoreInfo()));
-                    }
-                    /////// delete item from user items list !!!!
-                    Toast.makeText(MainActivity.this, "left", Toast.LENGTH_SHORT).show();
+                        itemsText.setText(itemsList.get(counter).getItemName().concat(" ").concat(itemsList.get(counter).getItemMoreInfo()).
+                                concat("\n").concat(itemsList.get(counter).getItemLocation()));
+                        Glide.with(MainActivity.this)
+                                .load(itemsList.get(counter).getPhotoStr())
+                                .into(imageView);
+                    }////// delete item from user items list !!!!
+                    //Toast.makeText(MainActivity.this, "left", Toast.LENGTH_SHORT).show();
                 }
-            });}
+            });
+    }
+
+    private void checkSwipes() {
+        size = itemsList.size();
+        if (itemsList.size()>0) {
+            size=itemsList.size();
+            itemsText.setText(itemsList.get(counter).getItemName().concat(" ").concat(itemsList.get(counter).getItemMoreInfo()).
+                    concat("\n").concat(itemsList.get(counter).getItemLocation()));
+            Glide.with(this)
+                    .load(itemsList.get(counter).getPhotoStr())
+                    .into(imageView);
+        }
     }
 
     public void getDistance (String distanceToSearch){
@@ -164,7 +167,7 @@ public class MainActivity<userToken> extends AppCompatActivity implements View.O
                 int d = Integer.parseInt(distanceToSearch);
                 if (result[0]/1000 <= d) {
                     Item item = new Item(itemsMap.get("itemName").toString(), itemsMap.get("itemLocation").toString(),
-                            itemsMap.get("itemDescription").toString());
+                            itemsMap.get("itemDescription").toString(), itemsMap.get("photoURL").toString());
                     itemsList.add(item);
                 }
             }

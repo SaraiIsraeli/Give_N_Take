@@ -172,12 +172,12 @@ import java.util.UUID;
         public void onPause()
         {
             super.onPause();
-            ReturnToMain();
+            //ReturnToMain();
         }
 
         private void ReturnToMain()
         {
-            Log.d(TAG, "Start Method: ReturnToMain");
+       //     Log.d(TAG, "Start Method: ReturnToMain");
             Intent myIntent = new Intent(Items.this, MainActivity.class);
             startActivity(myIntent);
             finish();
