@@ -7,17 +7,18 @@ import java.util.Map;
 
 public class Item {
     private static final String TAG = "";
-    private String itemName,itemLocation,itemDescription,photoStr;
+    private String itemName,itemLocation,itemDescription;
+    private String photoURL;
 // without photo for now..
 // only the name, location and a general explanation about the item.
-    public Item(String itemName, String itemLocation, String itemMoreInfo,String photoStr) {
+    public Item(String itemName, String itemLocation, String itemMoreInfo,String photoURL) {
         this.itemName = itemName;
         this.itemLocation = itemLocation;
         this.itemDescription = itemMoreInfo;
-        this.photoStr = photoStr;
+        this.photoURL = photoURL;
     }
 
-    public Item(String itemName, String itemLocation, String itemMoreInfo) {
+    public Item(String itemName, String itemLocation, String itemMoreInfo, Object photoURL) {
         this.itemName = itemName;
         this.itemLocation = itemLocation;
         this.itemDescription = itemMoreInfo;
@@ -33,6 +34,7 @@ public class Item {
         result.put("itemName",itemName);
         result.put("itemLocation",itemLocation);
         result.put("itemDescription",itemDescription);
+        result.put("photoURL",photoURL);
 
         Log.d(TAG, "End Method: toMap");
         return result;
@@ -63,10 +65,10 @@ public class Item {
     }
 
     public String getPhotoStr() {
-        return photoStr;
+        return photoURL;
     }
 
     public void setPhotoStr(String photoStr) {
-        this.photoStr = photoStr;
+        this.photoURL = photoStr;
     }
 }

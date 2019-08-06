@@ -38,7 +38,6 @@
             android:layout_height="wrap_content"
             android:textColorHint="@color/White"
             app:backgroundTint="@color/buttonbg"
-            app:hintTextColor="@color/colorAccent"
             app:boxBackgroundMode="outline">
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/Input_email"
@@ -64,7 +63,6 @@
             android:maxLines="1"
             android:textColorHint="@color/White"
             app:backgroundTint="@color/buttonbg"
-            app:hintTextColor="@color/colorAccent"
             app:boxBackgroundMode="outline">
 
         <com.google.android.material.textfield.TextInputEditText

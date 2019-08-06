@@ -3,8 +3,6 @@ package com.example.saraiisraeli.give_n_take.activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -12,6 +10,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.saraiisraeli.give_n_take.R;
 import com.example.saraiisraeli.give_n_take.models.User;
@@ -61,9 +62,9 @@ public class EditProfile extends AppCompatActivity {
         give_Checkbox = findViewById(R.id.Role_Give_checkbox_Edit);
         get_Checkbox = findViewById(R.id.Role_Get_checkbox_Edit);
         disconnect = findViewById(R.id.disconnect);
-        mDatabaseUser_name = FirebaseDatabase.getInstance().getReference().child("users").child(userId).child("name");
-        mDatabaseUser_phone = FirebaseDatabase.getInstance().getReference().child("users").child(userId).child("phoneNumber");
-
+        DatabaseReference mDatabaseUser_name = FirebaseDatabase.getInstance().getReference().child("users").child(userId).child("name");
+        DatabaseReference mDatabaseUser_phone = FirebaseDatabase.getInstance().getReference().child("users").child(userId).child("phoneNumber");
+        DatabaseReference mDatabaseUser_Role = FirebaseDatabase.getInstance().getReference().child("users").child(userId).child("role");
         mDatabaseUser_name.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -74,6 +75,32 @@ public class EditProfile extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        mDatabaseUser_Role.addValueEventListener(new ValueEventListener()
+        {
+            String role="";
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                role = dataSnapshot.getValue().toString();
+                if (role.equals("2"))
+                {
+                    get_Checkbox.setChecked(true);
+                    give_Checkbox.setChecked(true);
+                }
+                else if (role.equals("1"))
+                {
+                    give_Checkbox.setChecked(true);
+                }
+                else
+                {
+                    get_Checkbox.setChecked(true);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
 
             }
         });
@@ -89,7 +116,7 @@ public class EditProfile extends AppCompatActivity {
 
             }
 
-
+            
         });
         m_start.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -160,6 +187,20 @@ public class EditProfile extends AppCompatActivity {
         }
         Log.d(TAG, "End Method: GetRoleValue");
         return role;
+    }
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+        ReturnToMain();
+    }
+
+    private void ReturnToMain()
+    {
+        Log.d(TAG, "Start Method: ReturnToMain");
+        Intent myIntent = new Intent(EditProfile.this, MainActivity.class);
+        startActivity(myIntent);
+        finish();
     }
 
     private boolean validateFields() {

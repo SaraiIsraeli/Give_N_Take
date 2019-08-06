@@ -90,9 +90,7 @@
         android:layout_marginBottom="220dp"
         android:layout_weight="1"
         android:background="@color/colorPrimary"
-        android:src="@drawable/error3"
-        android:tag="noItemsToShow" />
-
+        android:src="@drawable/error3"/>
     <TextView
         android:id="@+id/noItemsErrorMessage"
         android:layout_width="match_parent"
