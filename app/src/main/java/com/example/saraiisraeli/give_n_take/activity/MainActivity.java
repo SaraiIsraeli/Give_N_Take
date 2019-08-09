@@ -10,6 +10,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
@@ -167,7 +168,7 @@ public class MainActivity<userToken> extends AppCompatActivity implements View.O
                 int d = Integer.parseInt(distanceToSearch);
                 if (result[0]/1000 <= d) {
                     Item item = new Item(itemsMap.get("itemName").toString(), itemsMap.get("itemLocation").toString(),
-                            itemsMap.get("itemDescription").toString(), itemsMap.get("photoURL").toString());
+                            itemsMap.get("itemDescription").toString(), Uri.parse(String.valueOf(itemsMap.get("photoURL"))));
                     itemsList.add(item);
                 }
             }
