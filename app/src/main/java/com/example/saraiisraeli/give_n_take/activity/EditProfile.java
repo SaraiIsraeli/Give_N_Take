@@ -24,7 +24,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class EditProfile extends AppCompatActivity {
+public class EditProfile extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "edit profile";
     String userId;
     EditText m_name;
@@ -36,8 +36,9 @@ public class EditProfile extends AppCompatActivity {
     private FirebaseDatabase firebaseDatabase;
     private FirebaseAuth.AuthStateListener firebaseAuthListner;
     private DatabaseReference dbRef;
-    String m_nameStr, m_phoneNumberStr;
+    String m_nameStr, m_phoneNumberStr, role;
     private DatabaseReference mDatabaseUser_name,mDatabaseUser_phone;
+    boolean isFieldsValid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,8 +70,12 @@ public class EditProfile extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // Toast.makeText(getApplicationContext(),dataSnapshot.getValue().toString(), Toast.LENGTH_SHORT).show();
-                m_name.setText(dataSnapshot.getValue().toString());
-
+                if (dataSnapshot.getValue() == null) {
+                    m_name.setText("שם");
+                }
+                else{
+                    m_name.setText(dataSnapshot.getValue().toString());
+                }
             }
 
             @Override
@@ -104,7 +109,12 @@ public class EditProfile extends AppCompatActivity {
         mDatabaseUser_phone.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                m_phoneNumber.setText(dataSnapshot.getValue().toString());
+                if (dataSnapshot.getValue() == null) {
+                    m_phoneNumber.setText("טלפון ליצירת קשר");
+                }
+                else{
+                    m_phoneNumber.setText(dataSnapshot.getValue().toString());
+                }
 
             }
 
@@ -115,38 +125,60 @@ public class EditProfile extends AppCompatActivity {
 
             
         });
-        m_start.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (validateFields()) {
-                    Log.d(TAG, "form is filled successfuly" );
-                    String role = GetRoleValue();
-                    User user = new User(m_nameStr, m_phoneNumberStr,role);
-                    dbRef.child("users").child(userId).setValue(user);
-                    Log.d(TAG, "update user in Firebase - " + "user name: " +  user.getName()+
-                            " user phone number: "  + user.getPhoneNumber() +"User Role "+ user.getRole());
-                    myIntnet = new Intent(EditProfile.this ,MainActivity.class);
+        m_start.setOnClickListener(this);
+
+        m_back.setOnClickListener(this);
+
+        disconnect.setOnClickListener(this);
+    }
+
+    @Override
+    public  void onClick(View view){
+        switch (view.getId()){
+            case R.id.btnSave: {
+                try {
+                    isFieldsValid = validateFields();
+                    role = GetRoleValue();
+                    Thread.sleep(2000);
+                }
+                catch (InterruptedException e)
+                {
+                    e.printStackTrace();
+                }
+                if (isFieldsValid) {
+                    Log.d(TAG, "form is filled successfuly");
+                    User user = new User(m_nameStr, m_phoneNumberStr, role);
+                    try {
+                        Thread.sleep(2000);
+                        dbRef.child("users").child(userId).setValue(user);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        Thread.sleep(1500);
+                        dbRef.child("users").child(userId).setValue(user);
+                        Log.d(TAG, "update user in Firebase - " + "user name: " + user.getName() +
+                                " user phone number: " + user.getPhoneNumber() + "User Role " + user.getRole());
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    myIntnet = new Intent(EditProfile.this, MainActivity.class);
                     startActivity(myIntnet);
                     finish();
+                    break;
                 }
             }
-        });
-
-        m_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+            case R.id.btnBack: {
                 myIntnet = new Intent(EditProfile.this ,MainActivity.class);
                 startActivity(myIntnet);
                 finish();
+                break;
             }
-        });
-
-        disconnect.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+            case R.id.disconnect: {
                 signOut();
+                break;
             }
-        });
+        }
     }
 
     private boolean ValidateRoleField()
@@ -200,9 +232,9 @@ public class EditProfile extends AppCompatActivity {
         finish();
     }
 
-    private boolean validateFields() {
+    public boolean validateFields() {
         boolean isValid = true;
-
+        Log.d(TAG, "Start Method: ValidateFields");
         m_nameStr = m_name.getText().toString();
         m_phoneNumberStr = m_phoneNumber.getText().toString();
 
@@ -263,5 +295,10 @@ public class EditProfile extends AppCompatActivity {
             }
         });
         alert.show();
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
     }
 }
