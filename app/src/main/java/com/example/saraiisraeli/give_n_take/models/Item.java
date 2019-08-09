@@ -1,5 +1,6 @@
 package com.example.saraiisraeli.give_n_take.models;
 
+import android.net.Uri;
 import android.util.Log;
 
 import java.util.HashMap;
@@ -8,17 +9,17 @@ import java.util.Map;
 public class Item {
     private static final String TAG = "";
     private String itemName,itemLocation,itemDescription;
-    private String photoURL;
+    private Uri photoURL;
 // without photo for now..
 // only the name, location and a general explanation about the item.
-    public Item(String itemName, String itemLocation, String itemMoreInfo,String photoURL) {
+    public Item(String itemName, String itemLocation, String itemMoreInfo, Uri photoURL) {
         this.itemName = itemName;
         this.itemLocation = itemLocation;
         this.itemDescription = itemMoreInfo;
         this.photoURL = photoURL;
     }
 
-    public Item(String itemName, String itemLocation, String itemMoreInfo, Object photoURL) {
+    public Item(String itemName, String itemLocation, String itemMoreInfo) {
         this.itemName = itemName;
         this.itemLocation = itemLocation;
         this.itemDescription = itemMoreInfo;
@@ -64,11 +65,11 @@ public class Item {
         this.itemDescription = itemMoreInfo;
     }
 
-    public String getPhotoStr() {
+    public Uri getPhotoStr() {
         return photoURL;
     }
 
-    public void setPhotoStr(String photoStr) {
-        this.photoURL = photoStr;
+    public void setPhotoStr(Uri photoURL) {
+        this.photoURL = photoURL;
     }
 }
