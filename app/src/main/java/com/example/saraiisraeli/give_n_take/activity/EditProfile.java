@@ -80,22 +80,19 @@ public class EditProfile extends AppCompatActivity {
         });
         mDatabaseUser_Role.addValueEventListener(new ValueEventListener()
         {
-            String role="";
+            String role;
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                role = dataSnapshot.getValue().toString();
-                if (role.equals("2"))
-                {
-                    get_Checkbox.setChecked(true);
-                    give_Checkbox.setChecked(true);
-                }
-                else if (role.equals("1"))
-                {
-                    give_Checkbox.setChecked(true);
-                }
-                else
-                {
-                    get_Checkbox.setChecked(true);
+                if (dataSnapshot.getValue()!=null) {
+                    role = dataSnapshot.getValue().toString();
+                    if (role.equals("2")) {
+                        get_Checkbox.setChecked(true);
+                        give_Checkbox.setChecked(true);
+                    } else if (role.equals("1")) {
+                        give_Checkbox.setChecked(true);
+                    } else {
+                        get_Checkbox.setChecked(true);
+                    }
                 }
             }
             @Override

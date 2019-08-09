@@ -124,7 +124,7 @@ public class MainActivity<userToken> extends AppCompatActivity implements View.O
                     counter++;
                     if (counter >= size) {
                         itemsText.setText("לא נשארו עוד פריטים מתאימים".concat("\n").concat("עבורך ברגע זה"));
-                       // imageView.setImageDrawable(Drawable.createFromPath("\\Give_N_Take\\app\\src\\main\\res\\drawable\\error3"));
+                        imageView.setImageResource(R.drawable.error3);
                     } else {
                         itemsText.setText(itemsList.get(counter).getItemName().concat(" ").concat(itemsList.get(counter).getItemMoreInfo()).
                                 concat("\n").concat(itemsList.get(counter).getItemLocation()));
