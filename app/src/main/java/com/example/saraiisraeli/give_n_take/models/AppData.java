@@ -112,7 +112,7 @@ public class AppData {
             mDatabase.child("items").child(userToken).child("itemName").setValue(itemName);
             mDatabase.child("items").child(userToken).child("itemLocation").setValue(itemLocation);
             mDatabase.child("items").child(userToken).child("itemDescription").setValue(itemDescription);
-            mDatabase.child("items").child(userToken).child("photoURL").setValue(String.valueOf(photoURL));
+            mDatabase.child("items").child(userToken).child("photoURL").setValue(photoURL);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

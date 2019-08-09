@@ -18,6 +18,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.Settings;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -90,7 +91,7 @@ import java.util.UUID;
     private Snackbar saveMsg;
     ImageView IDProf;
     Uri selectedImage;
-    Button Upload_Btn, Choose_Btn;
+    Button Upload_Btn, Choose_Btn, m_back;
     FirebaseStorage storage;
     StorageReference storageReference;
     private String Document_img1 = "";
@@ -133,6 +134,7 @@ import java.util.UUID;
         IDProf = (ImageView) findViewById(R.id.IdProf);
         Upload_Btn = (Button) findViewById(R.id.UploadBtn);
         Choose_Btn = (Button) findViewById(R.id.ChooseBtn);
+        m_back = (Button)findViewById(R.id.btnBack);
         m_historyItemsBtn = (Button)findViewById(R.id.HistoryBtn);
         m_currentLocation = (CheckBox)findViewById(R.id.LocationRB);
         m_location = (EditText)findViewById(R.id.LocationET);
@@ -143,6 +145,7 @@ import java.util.UUID;
         Choose_Btn.setOnClickListener(this);
         Upload_Btn.setOnClickListener(this);
         m_currentLocation.setOnClickListener(this);
+        m_back.setOnClickListener(this);
         m_currentLocation.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
@@ -255,6 +258,12 @@ import java.util.UUID;
                 //  setLocationBoolean();
                 break;
             }
+            case R.id.btnBack: {
+                myIntnet = new Intent(Items.this ,MainActivity.class);
+                startActivity(myIntnet);
+                finish();
+                break;
+            }
 
         }
     }
@@ -274,12 +283,18 @@ import java.util.UUID;
         Log.d(TAG, "Start Method: saveItemToDB");
         //validate Distance field contains a valid value
         //save the settings to DB
-        boolean itemName = true;
-        boolean itemDesc  = true;
-        boolean itemLocation = true;
+        boolean areFieldsValid = false;
+        try{
+            areFieldsValid = validateFields();
+            Thread.sleep(1000);
+        }
+        catch (InterruptedException e)
+        {
+            e.printStackTrace();
+        }
         downloadURL = uri;
 
-        if(itemName && itemDesc && itemLocation)
+        if(areFieldsValid)
         {
             try
             {
@@ -309,6 +324,19 @@ import java.util.UUID;
 
     private Boolean validateFields() {
         boolean isValid = true;
+        Log.d(TAG, "Start Method: ValidateFields");
+        if (TextUtils.isEmpty(m_locationStr) || TextUtils.isEmpty(m_itemDecStr) || TextUtils.isEmpty(m_itemNameStr)) {
+            m_itemName.setError("נא להכניס שם מוצר");
+            m_itemDesc.setError("נא להכניס פירוט מוצרר");
+            m_location.setError("נא לבחור מיקום למסירת המוצר");
+            Log.d(TAG, "There are 1 or more empty fields");
+            isValid = false;
+        }
+        else{
+            m_itemName.setError(null);
+            m_itemDesc.setError(null);
+            m_location.setError(null);
+        }
         return isValid;
     }
 

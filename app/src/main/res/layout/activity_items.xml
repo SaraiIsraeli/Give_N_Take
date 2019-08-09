@@ -176,6 +176,20 @@
             android:textColor="@color/White"
             app:fontFamily="@font/comicbold" />
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnBack"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="6dp"
+            android:text="חזור"
+            android:textAppearance="?android:textAppearanceLarge"
+            android:textColor="@color/White"
+            android:textStyle="bold"
+            app:backgroundTint="@color/buttonsColor"
+            app:fontFamily="@font/comicbold"/>
+
     </LinearLayout>
 
 </LinearLayout>
