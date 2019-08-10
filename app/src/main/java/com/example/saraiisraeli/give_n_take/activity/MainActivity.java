@@ -23,6 +23,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.telephony.SmsManager;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -120,6 +121,7 @@ public class MainActivity<userToken> extends AppCompatActivity implements View.O
         imageView.setOnTouchListener(new OnSwipeTouchListener(MainActivity.this) {
                 public void onSwipeRight() {
                 mAppData.getUserNameAndPhoneNumber(itemsList.get(counter).getUserToken(), MainActivity.this);
+
                 }
                 public void onSwipeLeft() {
                     counter++;
@@ -140,6 +142,21 @@ public class MainActivity<userToken> extends AppCompatActivity implements View.O
     public void sendSms(Map<String, Object> userNameAndPhone) {
         String userName = userNameAndPhone.get("name").toString();
         String phoneNumber = userNameAndPhone.get("phoneNumber").toString();
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+
+            try {
+                Log.d(TAG, "start method sendsms");
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse("smsto:"));
+                i.setType("vnd.android-dir/mms-sms");
+                i.putExtra("address", new String(phoneNumber));
+                i.putExtra("sms_body", userName.concat(" שלום, אני מעוניין במוצר: ").concat(itemsList.get(counter).getItemName()).concat(" שפרסמת בתן וקח"));
+                startActivity(Intent.createChooser(i, "Send sms via:"));
+            } catch (Exception e) {
+                Toast.makeText(MainActivity.this, "SMS Failed to Send, Please try again", Toast.LENGTH_SHORT).show();
+            }
+            Log.d(TAG, "end method sendsms");
+        }
     }
 
 
