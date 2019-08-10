@@ -8,10 +8,45 @@ import java.util.Map;
 
 public class Item {
     private static final String TAG = "";
-    private String itemName,itemLocation,itemDescription;
+    private String itemName,itemLocation,itemDescription,userToken;
     private Uri photoURL;
-// without photo for now..
-// only the name, location and a general explanation about the item.
+
+    public Item(String itemName, String itemLocation, String itemDescription, String userToken, Uri photoURL) {
+        this.itemName = itemName;
+        this.itemLocation = itemLocation;
+        this.itemDescription = itemDescription;
+        this.userToken = userToken;
+        this.photoURL = photoURL;
+    }
+
+    public static String getTAG() {
+        return TAG;
+    }
+
+    public String getItemDescription() {
+        return itemDescription;
+    }
+
+    public void setItemDescription(String itemDescription) {
+        this.itemDescription = itemDescription;
+    }
+
+    public String getUserToken() {
+        return userToken;
+    }
+
+    public void setUserToken(String userToken) {
+        this.userToken = userToken;
+    }
+
+    public Uri getPhotoURL() {
+        return photoURL;
+    }
+
+    public void setPhotoURL(Uri photoURL) {
+        this.photoURL = photoURL;
+    }
+
     public Item(String itemName, String itemLocation, String itemMoreInfo, Uri photoURL) {
         this.itemName = itemName;
         this.itemLocation = itemLocation;

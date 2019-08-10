@@ -119,7 +119,7 @@ public class MainActivity<userToken> extends AppCompatActivity implements View.O
         imageView.setOnTouchListener(new OnSwipeTouchListener(MainActivity.this) {
                 public void onSwipeRight() {
                     //////// sms to the seller !!!!
-                    Toast.makeText(MainActivity.this, "right", Toast.LENGTH_SHORT).show();
+                mAppData.getUserNameAndPhoneNumber(itemsList.get(counter).getUserToken(), MainActivity.this);
                 }
                 public void onSwipeLeft() {
                     counter++;
@@ -138,6 +138,12 @@ public class MainActivity<userToken> extends AppCompatActivity implements View.O
             });
     }
 
+    public void sendSms(Map<String, Object> userNameAndPhone) {
+        String userName = userNameAndPhone.get("name").toString();
+        String phoneNumber = userNameAndPhone.get("phoneNumber").toString();
+    }
+
+
     private void checkSwipes() {
         size = itemsList.size();
         if (itemsList.size()>0) {
@@ -153,11 +159,11 @@ public class MainActivity<userToken> extends AppCompatActivity implements View.O
     public void getDistance (String distanceToSearch){
         mAppData.getAllItems(itemsValues,this,distanceToSearch);
     }
-    public void checkItemsToShow(List<Map<String, Object>> itemsValues,String distanceToSearch) throws IOException {
+    public void checkItemsToShow(List<Map<String, Object>> itemsValues, String distanceToSearch, List<String> tokensList) throws IOException {
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
         float [] result = new float[1];
         List<Address> inputAddressFragments;
-
+        int counter = 0;
         for (Map<String,Object> itemsMap : itemsValues)
         {
             inputAddressFragments = geocoder.getFromLocationName(itemsMap.get("itemLocation").toString(),2);
@@ -168,10 +174,11 @@ public class MainActivity<userToken> extends AppCompatActivity implements View.O
                 int d = Integer.parseInt(distanceToSearch);
                 if (result[0]/1000 <= d) {
                     Item item = new Item(itemsMap.get("itemName").toString(), itemsMap.get("itemLocation").toString(),
-                            itemsMap.get("itemDescription").toString(), Uri.parse(String.valueOf(itemsMap.get("photoURL"))));
+                            itemsMap.get("itemDescription").toString(),tokensList.get(counter), Uri.parse(String.valueOf(itemsMap.get("photoURL"))));
                     itemsList.add(item);
                 }
             }
+            counter++;
         }
         checkSwipes();
     }
@@ -207,6 +214,7 @@ public class MainActivity<userToken> extends AppCompatActivity implements View.O
         intent.putExtra(Constants.LOCATION_DATA_EXTRA, lastLocation);
         startService(intent);
     }
+
     class AddressResultReceiver extends ResultReceiver {
         public AddressResultReceiver(Handler handler) {
             super(handler);
