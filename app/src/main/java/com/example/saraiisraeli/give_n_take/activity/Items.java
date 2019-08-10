@@ -229,8 +229,11 @@ import java.util.UUID;
     {
         switch (view.getId()) {
             case R.id.UploadBtn:{
-                pgsBar.setVisibility(View.VISIBLE);
+                //pgsBar.setVisibility(View.VISIBLE);
                 Log.d(TAG, "Uploading image");
+                if(!validateFields()){
+                    setErrorMessage();
+                }
                 uploadImage();
                 break;
             }
@@ -316,9 +319,7 @@ import java.util.UUID;
         boolean isValid = true;
         Log.d(TAG, "Start Method: ValidateFields");
         if (TextUtils.isEmpty(m_locationStr) || TextUtils.isEmpty(m_itemDecStr) || TextUtils.isEmpty(m_itemNameStr)) {
-            m_itemName.setError("נא להכניס שם מוצר");
-            m_itemDesc.setError("נא להכניס פירוט מוצרר");
-            m_location.setError("נא לבחור מיקום למסירת המוצר");
+            //setErrorMessage();
             Log.d(TAG, "There are 1 or more empty fields");
             isValid = false;
         }
@@ -328,6 +329,19 @@ import java.util.UUID;
             m_location.setError(null);
         }
         return isValid;
+    }
+
+    private void setErrorMessage(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("אופס...");
+        builder.setMessage("אנא ודא כי הזנת נתונים בכל השדות ונסה שנית, תודה!")
+                .setPositiveButton("הבנתי!", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
+        builder.show();
     }
 
     private void selectImage() {
