@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
 import android.provider.Settings;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -105,7 +106,7 @@ public class MainActivity<userToken> extends AppCompatActivity implements View.O
         }*/
 
 
-        mAppData.getUserDistance(userToken,this);
+        mAppData.getUserDistanceAndNameToSearch(userToken,this);
 
         // location
         mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -154,10 +155,10 @@ public class MainActivity<userToken> extends AppCompatActivity implements View.O
         }
     }
 
-    public void getDistance (String distanceToSearch){
-        mAppData.getAllItems(itemsValues,this,distanceToSearch);
+    public void getDistance (String distanceToSearch,String prodQuery){
+        mAppData.getAllItems(itemsValues,this,distanceToSearch,prodQuery);
     }
-    public void checkItemsToShow(List<Map<String, Object>> itemsValues, String distanceToSearch, List<String> tokensList) throws IOException {
+    public void checkItemsToShow(List<Map<String, Object>> itemsValues, String distanceToSearch, List<String> tokensList,String prodQuery) throws IOException {
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
         float [] result = new float[1];
         List<Address> inputAddressFragments;
@@ -169,11 +170,13 @@ public class MainActivity<userToken> extends AppCompatActivity implements View.O
                     inputAddressFragments.get(0).getLatitude(),inputAddressFragments.get(0).getLongitude(),result);
             Log.i(TAG,"Found address , distance = "  +  result[0]/1000);
             if (distanceToSearch != null) {
-                int d = Integer.parseInt(distanceToSearch);
-                if (result[0]/1000 <= d) {
-                    Item item = new Item(itemsMap.get("itemName").toString(), itemsMap.get("itemLocation").toString(),
-                            itemsMap.get("itemDescription").toString(),tokensList.get(counter), Uri.parse(String.valueOf(itemsMap.get("photoURL"))));
-                    itemsList.add(item);
+                if (prodQuery != null) {
+                    int d = Integer.parseInt(distanceToSearch);
+                    if (result[0] / 1000 <= d && itemsMap.get("itemName").toString().contains(prodQuery)) {
+                        Item item = new Item(itemsMap.get("itemName").toString(), itemsMap.get("itemLocation").toString(),
+                                itemsMap.get("itemDescription").toString(), tokensList.get(counter), Uri.parse(String.valueOf(itemsMap.get("photoURL"))));
+                        itemsList.add(item);
+                    }
                 }
             }
             counter++;
