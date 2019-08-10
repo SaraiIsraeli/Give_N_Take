@@ -56,12 +56,12 @@ public class SignUpActivity extends LoginActivity implements View.OnClickListene
             }
         }
     }
-    @Override
-    public void onPause()
+
+   /* public void onPause()
     {
         super.onPause();
         returnToLogin();
-    }
+    }*/
 
     private void returnToLogin()
     {
@@ -162,7 +162,7 @@ public class SignUpActivity extends LoginActivity implements View.OnClickListene
         Log.d(TAG, "Start Method: updateUI");
         if (user != null)
         {
-            myIntnet = new Intent(SignUpActivity.this ,MyProfileActivity.class);
+            myIntnet = new Intent(SignUpActivity.this ,EditProfile.class);
             startActivity(myIntnet);
             finish();
         }

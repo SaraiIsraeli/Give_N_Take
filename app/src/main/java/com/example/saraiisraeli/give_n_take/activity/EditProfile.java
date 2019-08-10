@@ -162,16 +162,14 @@ public class EditProfile extends AppCompatActivity implements View.OnClickListen
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    myIntnet = new Intent(EditProfile.this, MainActivity.class);
+                    myIntnet = new Intent(EditProfile.this, Search.class);
                     startActivity(myIntnet);
                     finish();
                     break;
                 }
             }
             case R.id.btnBack: {
-                myIntnet = new Intent(EditProfile.this ,MainActivity.class);
-                startActivity(myIntnet);
-                finish();
+                ReturnToMain();
                 break;
             }
             case R.id.disconnect: {
@@ -217,12 +215,27 @@ public class EditProfile extends AppCompatActivity implements View.OnClickListen
         Log.d(TAG, "End Method: GetRoleValue");
         return role;
     }
-    @Override
+    /*@Override
     public void onPause()
     {
         super.onPause();
         ReturnToMain();
+    }*/
+  /*  @Override
+    public void onDestroy()
+    {
+        super.onDestroy();
+        returnToLogin();
+    }*/
+
+    private void returnToLogin()
+    {
+        Log.d(TAG, "Start Method: returnToLogin");
+        Intent myIntent = new Intent(EditProfile.this, LoginActivity.class);
+        startActivity(myIntent);
     }
+
+
 
     private void ReturnToMain()
     {
@@ -278,7 +291,7 @@ public class EditProfile extends AppCompatActivity implements View.OnClickListen
     private void signOut() {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setMessage(R.string.logout);
-        alert.setCancelable(false);
+        //alert.setCancelable(false);V
         alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
