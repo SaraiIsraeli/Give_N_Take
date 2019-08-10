@@ -118,7 +118,6 @@ public class MainActivity<userToken> extends AppCompatActivity implements View.O
 
         imageView.setOnTouchListener(new OnSwipeTouchListener(MainActivity.this) {
                 public void onSwipeRight() {
-                    //////// sms to the seller !!!!
                 mAppData.getUserNameAndPhoneNumber(itemsList.get(counter).getUserToken(), MainActivity.this);
                 }
                 public void onSwipeLeft() {
@@ -132,8 +131,7 @@ public class MainActivity<userToken> extends AppCompatActivity implements View.O
                         Glide.with(MainActivity.this)
                                 .load(itemsList.get(counter).getPhotoStr())
                                 .into(imageView);
-                    }////// delete item from user items list !!!!
-                    //Toast.makeText(MainActivity.this, "left", Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
     }
