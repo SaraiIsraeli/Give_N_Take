@@ -1,6 +1,7 @@
 package com.example.saraiisraeli.give_n_take.activity;
 
 import android.content.Context;
+import android.telephony.SmsManager;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -60,6 +61,7 @@ public class OnSwipeTouchListener implements View.OnTouchListener {
     }
 
     public void onSwipeRight() {
+        SmsManager smsManager = SmsManager.getDefault(); smsManager.sendTextMessage("phoneNo", null, "היי, אשמח לקבל פרטים נוספים בקשר למוצר", null, null);
     }
 
     public void onSwipeLeft() {
