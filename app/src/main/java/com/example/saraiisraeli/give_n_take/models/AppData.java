@@ -173,6 +173,7 @@ public class AppData {
     }
 
     public void getAllItems(List<Map<String, Object>> itemsValues, MainActivity mainActivity, String distance) {
+        List<String> tokensList = new ArrayList<>();
         DatabaseReference itemsRef = FirebaseDatabase.getInstance().getReference().child("items");
         if (itemsRef == null) {
             Log.i(TAG, "no items found");
@@ -189,9 +190,10 @@ public class AppData {
                         for (DataSnapshot dataSnapshotItem : dataSnapshot.getChildren()){
                             items = (Map<String, Object>) dataSnapshotItem.getValue();
                             itemsValues.add(items);
+                            tokensList.add(dataSnapshotItem.getKey());
                         }
                         try {
-                            mainActivity.checkItemsToShow(itemsValues,distance);
+                            mainActivity.checkItemsToShow(itemsValues,distance,tokensList);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -313,6 +315,31 @@ public class AppData {
             return (String) userRole.get("role");
         }
         return role;
+    }
+
+    public void getUserNameAndPhoneNumber(String userToken,MainActivity mainActivity) {
+        final Map<String, Object> userNameAndPhone = new HashMap<>();
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("users").child(userToken);
+        Log.i(TAG, "userNameAndPhone: " + userToken);
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Map<String, Object> userValues = (Map<String, Object>) dataSnapshot.getValue();
+                Log.i(TAG, "dataSnapshot:" + dataSnapshot.getValue());
+                if (userValues != null) {
+                    userNameAndPhone.put("phoneNumber", userValues.get("phoneNumber").toString());
+                    userNameAndPhone.put("name", userValues.get("name").toString());
+                    mainActivity.sendSms(userNameAndPhone);
+                } else {
+                    Log.i(TAG, "userValues is null! ");
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+
+        });
     }
 
 /*

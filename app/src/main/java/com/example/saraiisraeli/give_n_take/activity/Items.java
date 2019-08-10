@@ -27,6 +27,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -81,7 +82,9 @@ import java.util.UUID;
     private long UPDATE_INTERVAL = 2 * 1000;
     private long FASTEST_INTERVAL = 1000;
     private LocationManager locationManager;
-    //---------------------------------------------//
+    private ProgressBar pgsBar;
+
+        //---------------------------------------------//
     private static final String TAG = "Items";
     public static final String KEY_User_Document1 = "doc1";
     Map<String, Object> itemValues;
@@ -135,12 +138,11 @@ import java.util.UUID;
         Upload_Btn = (Button) findViewById(R.id.UploadBtn);
         Choose_Btn = (Button) findViewById(R.id.ChooseBtn);
         m_back = (Button)findViewById(R.id.btnBack);
-        m_historyItemsBtn = (Button)findViewById(R.id.HistoryBtn);
         m_currentLocation = (CheckBox)findViewById(R.id.LocationRB);
         m_location = (EditText)findViewById(R.id.LocationET);
         m_itemName = (EditText)findViewById(R.id.ItemName);
         m_itemDesc = (EditText)findViewById(R.id.ItemDesc);
-        m_historyItemsBtn.setOnClickListener(this);
+        pgsBar = (ProgressBar)findViewById(R.id.progress_loader);
         IDProf.setOnClickListener(this);
         Choose_Btn.setOnClickListener(this);
         Upload_Btn.setOnClickListener(this);
@@ -226,20 +228,8 @@ import java.util.UUID;
     public void onClick(View view)
     {
         switch (view.getId()) {
-            case R.id.HistoryBtn: {
-                Log.d(TAG, "HistoryItems button pressed");
-                myIntnet = new Intent(Items.this, HistoryItems.class);
-                startActivity(myIntnet);
-                finish();
-                break;
-            }
             case R.id.UploadBtn:{
-                Toast.makeText(Items.this, "תודה על תרומתך! אנא המתן בזמן שהמוצר מתעדכן בשרת..", Toast.LENGTH_SHORT).show();
-                try {
-                    Thread.sleep(3000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                pgsBar.setVisibility(View.VISIBLE);
                 Log.d(TAG, "Uploading image");
                 uploadImage();
                 break;
@@ -454,12 +444,14 @@ import java.util.UUID;
                 final ProgressDialog progressDialog = new ProgressDialog(this);
                 progressDialog.setTitle("Uploading...");
                // progressDialog.show();
+                pgsBar.setVisibility(View.VISIBLE);
                 StorageReference ref = storageReference.child("images"+ UUID.randomUUID().toString());
                 ref.putFile(selectedImage)
                         .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                                // progressDialog.dismiss();
+                                pgsBar.setVisibility(View.VISIBLE);
                                 Toast.makeText(Items.this, "המוצר שלך עודכן בהצלחה!", Toast.LENGTH_SHORT).show();
                                 ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                     @Override
@@ -473,6 +465,7 @@ import java.util.UUID;
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
+                                pgsBar.setVisibility(View.GONE);
                                 progressDialog.dismiss();
                                 Toast.makeText(Items.this, "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
                             }
@@ -486,11 +479,13 @@ import java.util.UUID;
                             }
                         });
                  try {
-                    Thread.sleep(20000);
+                     pgsBar.setVisibility(View.VISIBLE);
+                     Thread.sleep(20000);
                 } catch (InterruptedException e) {
                    e.printStackTrace();
                  }
                 Log.d(TAG, "Uploading item");
+                pgsBar.setVisibility(View.GONE);
                 uploadItem();
             }
         }
