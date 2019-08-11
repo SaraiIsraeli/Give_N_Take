@@ -3,23 +3,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorSplashbg">
-    <ImageView
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:src="@drawable/hands_shake"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/image_intro1" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="מסך 1"
-        android:textColor="@android:color/white"
-        android:textSize="50dp"
-        android:textStyle="bold"
-        android:layout_below="@+id/image_intro1"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="32dp">
 
-    </TextView>
+    <ImageView
+        android:id="@+id/image_intro1"
+        android:layout_width="match_parent"
+        android:layout_height="478dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="75dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginBottom="116dp"
+        android:src="@drawable/search_screen" />
 </RelativeLayout>

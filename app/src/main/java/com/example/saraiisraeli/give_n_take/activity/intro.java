@@ -26,7 +26,7 @@ public class intro extends AppCompatActivity {
     LinearLayout Layout_bars;
     TextView[] bottomBars;
     int[] screens;
-    Button Skip, Next;
+    Button Skip, Next,back;
     ViewPager vp;
     MyViewPagerAdapter myvpAdapter;
     private static final String TAG = "intro";
@@ -53,6 +53,7 @@ public class intro extends AppCompatActivity {
         Layout_bars = (LinearLayout) findViewById(R.id.layoutBars);
         Skip = (Button) findViewById(R.id.skip);
         Next = (Button) findViewById(R.id.next);
+        back =  (Button) findViewById(R.id.back);
         myvpAdapter = new MyViewPagerAdapter();
         screens = new int[]{
                 R.layout.intro_screen1,
@@ -73,6 +74,15 @@ public class intro extends AppCompatActivity {
     public void next(View v) {
         int i = getItem(+1);
         if (i < screens.length) {
+            vp.setCurrentItem(i);
+        } else {
+            launchMain();
+        }
+    }
+
+    public void back(View v) {
+        int i = getItem(-1);
+        if (i > -1) {
             vp.setCurrentItem(i);
         } else {
             launchMain();
@@ -104,10 +114,10 @@ public class intro extends AppCompatActivity {
             bottomBars[i].setTextSize(100);
             bottomBars[i].setText(Html.fromHtml(("¯")));
             Layout_bars.addView(bottomBars[i]);
-            bottomBars[i].setTextColor(colorsInactive[i]);
+            bottomBars[i].setTextColor(colorsActive[i]);
         }
         if (bottomBars.length > 0)
-            bottomBars[thisScreen].setTextColor(colorsActive[thisScreen]);
+            bottomBars[thisScreen].setTextColor(colorsInactive[0]);
     }
 
     private int getItem(int i) {
@@ -125,9 +135,14 @@ public class intro extends AppCompatActivity {
         @Override
         public void onPageSelected(int position) {
            ColoredBars(position);
-            if (position == screens.length - 1) {
+           if (position == 0){
+               back.setVisibility(View.INVISIBLE);
+           } else {
+               back.setVisibility(View.VISIBLE);
+           }
+            if (position == 1) {
                 Log.d(TAG, "3rd intro screen" );
-                Next.setText("start");
+                Next.setText("התחל");
             } else if (position==1){ Log.d(TAG, "2nd intro screen" );}
                 Next.setText(getString(R.string.next));
                 Skip.setVisibility(View.VISIBLE);
