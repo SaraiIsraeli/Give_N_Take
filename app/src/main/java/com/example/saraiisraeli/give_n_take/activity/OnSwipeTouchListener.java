@@ -61,7 +61,7 @@ public class OnSwipeTouchListener implements View.OnTouchListener {
     }
 
     public void onSwipeRight() {
-        SmsManager smsManager = SmsManager.getDefault(); smsManager.sendTextMessage("phoneNo", null, "היי, אשמח לקבל פרטים נוספים בקשר למוצר", null, null);
+        SmsManager smsManager = SmsManager.getDefault(); smsManager.sendTextMessage("phoneNumber", null, "שלום, אשמח לקבל פרטים נוספים בקשר למוצר", null, null);
     }
 
     public void onSwipeLeft() {

@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
 import android.provider.Settings;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -22,6 +23,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.telephony.SmsManager;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -105,7 +107,7 @@ public class MainActivity<userToken> extends AppCompatActivity implements View.O
         }*/
 
 
-        mAppData.getUserDistance(userToken,this);
+        mAppData.getUserDistanceAndNameToSearch(userToken,this);
 
         // location
         mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -118,8 +120,8 @@ public class MainActivity<userToken> extends AppCompatActivity implements View.O
 
         imageView.setOnTouchListener(new OnSwipeTouchListener(MainActivity.this) {
                 public void onSwipeRight() {
-                    //////// sms to the seller !!!!
                 mAppData.getUserNameAndPhoneNumber(itemsList.get(counter).getUserToken(), MainActivity.this);
+
                 }
                 public void onSwipeLeft() {
                     counter++;
@@ -132,8 +134,7 @@ public class MainActivity<userToken> extends AppCompatActivity implements View.O
                         Glide.with(MainActivity.this)
                                 .load(itemsList.get(counter).getPhotoStr())
                                 .into(imageView);
-                    }////// delete item from user items list !!!!
-                    //Toast.makeText(MainActivity.this, "left", Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
     }
@@ -141,6 +142,21 @@ public class MainActivity<userToken> extends AppCompatActivity implements View.O
     public void sendSms(Map<String, Object> userNameAndPhone) {
         String userName = userNameAndPhone.get("name").toString();
         String phoneNumber = userNameAndPhone.get("phoneNumber").toString();
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+
+            try {
+                Log.d(TAG, "start method sendsms");
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse("smsto:"));
+                i.setType("vnd.android-dir/mms-sms");
+                i.putExtra("address", new String(phoneNumber));
+                i.putExtra("sms_body", userName.concat(" שלום, אני מעוניין במוצר: ").concat(itemsList.get(counter).getItemName()).concat(" שפרסמת בתן וקח"));
+                startActivity(Intent.createChooser(i, "Send sms via:"));
+            } catch (Exception e) {
+                Toast.makeText(MainActivity.this, "SMS Failed to Send, Please try again", Toast.LENGTH_SHORT).show();
+            }
+            Log.d(TAG, "end method sendsms");
+        }
     }
 
 
@@ -156,10 +172,10 @@ public class MainActivity<userToken> extends AppCompatActivity implements View.O
         }
     }
 
-    public void getDistance (String distanceToSearch){
-        mAppData.getAllItems(itemsValues,this,distanceToSearch);
+    public void getDistance (String distanceToSearch,String prodQuery){
+        mAppData.getAllItems(itemsValues,this,distanceToSearch,prodQuery);
     }
-    public void checkItemsToShow(List<Map<String, Object>> itemsValues, String distanceToSearch, List<String> tokensList) throws IOException {
+    public void checkItemsToShow(List<Map<String, Object>> itemsValues, String distanceToSearch, List<String> tokensList,String prodQuery) throws IOException {
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
         float [] result = new float[1];
         List<Address> inputAddressFragments;
@@ -171,11 +187,13 @@ public class MainActivity<userToken> extends AppCompatActivity implements View.O
                     inputAddressFragments.get(0).getLatitude(),inputAddressFragments.get(0).getLongitude(),result);
             Log.i(TAG,"Found address , distance = "  +  result[0]/1000);
             if (distanceToSearch != null) {
-                int d = Integer.parseInt(distanceToSearch);
-                if (result[0]/1000 <= d) {
-                    Item item = new Item(itemsMap.get("itemName").toString(), itemsMap.get("itemLocation").toString(),
-                            itemsMap.get("itemDescription").toString(),tokensList.get(counter), Uri.parse(String.valueOf(itemsMap.get("photoURL"))));
-                    itemsList.add(item);
+                if (prodQuery != null) {
+                    int d = Integer.parseInt(distanceToSearch);
+                    if (result[0] / 1000 <= d && itemsMap.get("itemName").toString().contains(prodQuery)) {
+                        Item item = new Item(itemsMap.get("itemName").toString(), itemsMap.get("itemLocation").toString(),
+                                itemsMap.get("itemDescription").toString(), tokensList.get(counter), Uri.parse(String.valueOf(itemsMap.get("photoURL"))));
+                        itemsList.add(item);
+                    }
                 }
             }
             counter++;

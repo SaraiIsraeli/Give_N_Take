@@ -172,7 +172,7 @@ public class AppData {
         return maxID;
     }
 
-    public void getAllItems(List<Map<String, Object>> itemsValues, MainActivity mainActivity, String distance) {
+    public void getAllItems(List<Map<String, Object>> itemsValues, MainActivity mainActivity, String distance,String prodQuery) {
         List<String> tokensList = new ArrayList<>();
         DatabaseReference itemsRef = FirebaseDatabase.getInstance().getReference().child("items");
         if (itemsRef == null) {
@@ -193,7 +193,7 @@ public class AppData {
                             tokensList.add(dataSnapshotItem.getKey());
                         }
                         try {
-                            mainActivity.checkItemsToShow(itemsValues,distance,tokensList);
+                            mainActivity.checkItemsToShow(itemsValues,distance,tokensList,prodQuery);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -244,7 +244,7 @@ public class AppData {
         }
     }
 
-    public void getUserDistance(String userToken, MainActivity mainActivity)
+    public void getUserDistanceAndNameToSearch(String userToken, MainActivity mainActivity)
     {
         final Map<String, Object> settingsValues = new HashMap<>();
         DatabaseReference settingsRef = FirebaseDatabase.getInstance().getReference().child("userSettings").child(userToken);
@@ -256,7 +256,8 @@ public class AppData {
                 Log.i(TAG, "dataSnapshot:" + dataSnapshot.getValue());
                 if (settings != null) {
                     settingsValues.put("distance", settings.get("distance").toString());
-                    mainActivity.getDistance(settingsValues.get("distance").toString());
+                    settingsValues.put("prodQuery", settings.get("prodQuery").toString());
+                    mainActivity.getDistance(settingsValues.get("distance").toString(),settingsValues.get("prodQuery").toString());
                 } else {
                     Log.i(TAG, "settings is null! ");
                 }
